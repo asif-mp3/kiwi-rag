@@ -1,0 +1,20 @@
+# Core Dependencies
+google-generativeai>=0.3.0
+pyyaml>=6.0
+jsonschema>=4.0.0
+
+# Database
+duckdb>=0.9.0
+
+# Vector Store
+chromadb>=0.4.0
+
+# Google Sheets Integration
+gspread>=5.0.0
+google-auth>=2.0.0
+
+# Data Processing
+pandas>=2.0.0
+
+# Existing dependencies (if any)
+# Add other dependencies as needed

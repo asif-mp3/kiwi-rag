@@ -1,0 +1,11 @@
+{
+  "spreadsheet_id": "1U9Zi0aVc7vyCiasyZqvM7rVUZJeaUq7xevQDTJUq-R8",
+  "sheets": [
+    "Sheet1",
+    "Sheet2"
+  ],
+  "fingerprints": {
+    "Sheet2": "153486c1bd24d4b28ae3dc64179d740e22c5d53eddcc28820cc68a8bd64f799f",
+    "Sheet1": "c16786de6ac60d775b36c4f4e4c18eb51cdd44b24801c28fa80d297097ec6d2b"
+  }
+}

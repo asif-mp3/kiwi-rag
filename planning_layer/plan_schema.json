@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "query_type",
+    "table"
+  ],
+  "properties": {
+    "query_type": {
+      "type": "string",
+      "enum": [
+        "metric",
+        "lookup",
+        "filter",
+        "extrema_lookup",
+        "rank",
+        "list",
+        "aggregation_on_subset"
+      ]
+    },
+    "table": {
+      "type": "string"
+    },
+    "select_columns": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "metrics": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "filters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "column": {
+            "type": "string"
+          },
+          "operator": {
+            "type": "string",
+            "enum": [
+              "=",
+              ">",
+              "<",
+              ">=",
+              "<=",
+              "!=",
+              "LIKE"
+            ]
+          },
+          "value": {}
+        },
+        "required": [
+          "column",
+          "operator",
+          "value"
+        ]
+      }
+    },
+    "group_by": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "order_by": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "ASC",
+              "DESC"
+            ]
+          }
+        ]
+      }
+    },
+    "limit": {
+      "type": "integer"
+    },
+    "aggregation_function": {
+      "type": "string"
+    },
+    "aggregation_column": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "subset_filters": {
+      "type": "array"
+    },
+    "subset_order_by": {
+      "type": "array"
+    },
+    "subset_limit": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    }
+  }
+}
