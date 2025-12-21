@@ -2,7 +2,7 @@ from schema_intelligence.hybrid_retriever import retrieve_schema
 from planning_layer.planner_client import generate_plan  # Changed from rule_based_planner
 from validation_layer.plan_validator import validate_plan
 from execution_layer.executor import execute_plan
-from explanation_layer.explainer_client import explain_results
+from explanation_layer.explainer_client import generate_explanation
 from data_sources.gsheet.change_detector import needs_refresh, mark_synced
 from data_sources.gsheet.snapshot_loader import load_snapshot
 from schema_intelligence.chromadb_client import SchemaVectorStore # Moved import to top
@@ -109,7 +109,15 @@ def run(question: str):
     print(result)
 
     # 4. Explanation
-    explanation = explain_results(result)
+    # Extract text from schema context for explanation
+    schema_text_list = [item["text"] for item in schema_context]
+    
+    # Generate explanation with full context
+    explanation = generate_explanation(
+        question=question,
+        schema_context=schema_text_list,
+        execution_df=result
+    )
     print("\n" + "="*80)
     print("ANSWER:")
     print("="*80)
@@ -118,4 +126,4 @@ def run(question: str):
 
 
 if __name__ == "__main__":
-    run("who has the second least CGPA in chennai campus?")  
+    run("What is the temperature difference between 12:00 and 13:00 on 01/01/2017?")
