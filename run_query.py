@@ -71,7 +71,7 @@ def run(question: str):
     # 3. Execution
     result = execute_plan(plan)
     
-    # Fallback: If lookup/filter query returns empty, try alternative tables
+    # Fallback: If lookup/filter query returns empty, try alternative tables.
     if result.empty and plan["query_type"] in ["lookup", "filter"]:
         print("\n⚠️  No results found. Trying alternative tables...")
         
