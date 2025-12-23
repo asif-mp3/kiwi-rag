@@ -228,14 +228,27 @@ def _compile_aggregation_on_subset(plan):
         order_parts = [f"{quote_identifier(col)} {direction}" for col, direction in subset_order_by]
         order_clause = "ORDER BY " + ", ".join(order_parts)
     
-    # Build SQL that returns the subset with all columns
-    # The executor will calculate the aggregation and show the breakdown
+    # Build LIMIT clause
+    limit_clause = ""
+    if subset_limit is not None:
+        limit_clause = f"LIMIT {subset_limit}"
+    
+    # Build SQL with subquery that calculates the aggregation in the database
+    # The outer query calculates the aggregation on the subset
+    # The inner query (subquery) gets the subset of rows
     sql = f"""
-SELECT *
-FROM {table}
-{where_clause}
-{order_clause}
-LIMIT {subset_limit}
+SELECT 
+    {aggregation_function}({aggregation_column}) as result,
+    COUNT(*) as row_count,
+    MIN({aggregation_column}) as min_value,
+    MAX({aggregation_column}) as max_value
+FROM (
+    SELECT *
+    FROM {table}
+    {where_clause}
+    {order_clause}
+    {limit_clause}
+) subset
     """
     
     return sql.strip()

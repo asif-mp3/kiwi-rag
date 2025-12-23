@@ -55,7 +55,7 @@ def explain_results(result_df, query_plan=None, original_question=None):
         query_plan: Optional dict containing the query plan (for context)
         original_question: Optional string containing the user's original question
     
-    Returns:
+    Returns:    
         str: Natural language explanation of the results
     """
     if result_df.empty:

@@ -12,15 +12,16 @@ def execute_plan(plan: dict):
     run_sanity_checks(result_df, query_type=plan.get("query_type"))
 
     
-    # For aggregation_on_subset, calculate the aggregation and attach metadata
+    # For aggregation_on_subset, the result is already calculated by DuckDB
+    # Just attach metadata for the explainer
     if plan.get("query_type") == "aggregation_on_subset":
         aggregation_function = plan["aggregation_function"]
         aggregation_column = plan["aggregation_column"]
         
-        # Store the original data for breakdown
+        # Store metadata for the explainer
         result_df.attrs['aggregation_function'] = aggregation_function
         result_df.attrs['aggregation_column'] = aggregation_column
-        result_df.attrs['subset_limit'] = plan.get('subset_limit', len(result_df))
+        result_df.attrs['query_type'] = 'aggregation_on_subset'
 
     return result_df
 
