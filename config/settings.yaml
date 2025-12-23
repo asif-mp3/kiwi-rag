@@ -1,0 +1,21 @@
+project:
+  name: rag_gsheet_analytics
+  environment: local
+
+google_sheets:
+  spreadsheet_id: "1JQ5xuJWzlaQgtt8ShoyXKXDClsNof6_Ai3IXWe5qifo"
+  credentials_path: "credentials/service_account.json"
+
+duckdb:
+  snapshot_path: "data_sources/snapshots/latest.duckdb"
+
+schema_intelligence:
+  embedding_model: "text-embedding-3-large"
+  top_k: 5
+
+llm:
+  provider: gemini
+  api_key_env: GEMINI_API_KEY
+  model: gemini-2.5-pro
+  temperature: 0.0
+  max_retries: 3

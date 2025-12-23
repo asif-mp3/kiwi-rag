@@ -1,0 +1,20 @@
+# Metric Definitions (Optional)
+#
+# Metrics are OPTIONAL. The system can work without any predefined metrics.
+# Only "metric" query type requires metrics. Other query types (lookup, filter, 
+# list, rank, extrema_lookup, aggregation_on_subset) work without metrics.
+#
+# Define metrics here if you want to use the "metric" query type for aggregations.
+#
+# Example format:
+# metrics:
+#   student_count:
+#     description: "Total number of students"
+#     sql: "COUNT(*)"
+#     base_table: "sales"
+#     allowed_dimensions:
+#       - campus
+#       - major
+#       - degree
+
+metrics: {}
