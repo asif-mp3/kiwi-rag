@@ -31,6 +31,17 @@ def run(question: str):
     # Initialize schema store
     store = SchemaVectorStore()
     
+    # SAFETY CHECK: Ensure DuckDB has tables even if fingerprint says "synced"
+    # This handles cases where DuckDB was deleted/corrupted but fingerprint still exists
+    from analytics_engine.duckdb_manager import DuckDBManager
+    db = DuckDBManager()
+    tables = db.list_tables()
+    
+    if not tables and not needs_refresh_flag:
+        print("⚠️  DuckDB is empty but fingerprint exists - forcing full reload...")
+        needs_refresh_flag = True
+        full_reset = True
+    
     if needs_refresh_flag:
         if full_reset:
             # Full reset: Clear everything and rebuild from scratch
@@ -71,7 +82,7 @@ def run(question: str):
     # 3. Execution
     result = execute_plan(plan)
     
-    # Fallback: If lookup/filter query returns empty, try alternative tables.
+    # Fallback: If lookup/filter query returns empty, try alternative tables
     if result.empty and plan["query_type"] in ["lookup", "filter"]:
         print("\n⚠️  No results found. Trying alternative tables...")
         
