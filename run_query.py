@@ -118,4 +118,4 @@ def run(question: str):
 
 
 if __name__ == "__main__":
-    run("What was the average ozone level between 06:00 and 12:00 on 01/01/2017?")  
+    run("What was the temperature at 10:00 on 02/01/2017?")  
