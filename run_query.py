@@ -109,7 +109,7 @@ def run(question: str):
     print(result)
 
     # 4. Explanation
-    explanation = explain_results(result)
+    explanation = explain_results(result, query_plan=plan, original_question=question)
     print("\n" + "="*80)
     print("ANSWER:")
     print("="*80)
@@ -118,4 +118,4 @@ def run(question: str):
 
 
 if __name__ == "__main__":
-    run("What was the average NO2 level between 08:00 and 16:00 on 2nd January 2017")  
+    run("What was the minimum Ozone level on 02/01/2017?")  

@@ -1,144 +1,190 @@
-def explain_results(result_df):
+import os
+import json
+import yaml
+import google.generativeai as genai
+from pathlib import Path
+from explanation_layer.explanation_prompt import EXPLANATION_SYSTEM_PROMPT
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+
+def load_config():
+    """Load LLM configuration from settings.yaml"""
+    config_path = Path("config/settings.yaml")
+    with open(config_path) as f:
+        config = yaml.safe_load(f)
+    return config.get("llm", {})
+
+
+def initialize_gemini_client(config):
+    """Initialize Gemini API client with configuration"""
+    api_key_env = config.get("api_key_env", "GEMINI_API_KEY")
+    api_key = os.getenv(api_key_env)
+    
+    if not api_key:
+        raise ValueError(
+            f"Gemini API key not found. Please set the {api_key_env} environment variable."
+        )
+    
+    genai.configure(api_key=api_key)
+    
+    model_name = config.get("model", "gemini-2.0-flash-exp")
+    temperature = config.get("temperature", 0.0)
+    
+    generation_config = {
+        "temperature": temperature,
+    }
+    
+    model = genai.GenerativeModel(
+        model_name=model_name,
+        generation_config=generation_config,
+        system_instruction=EXPLANATION_SYSTEM_PROMPT
+    )
+    
+    return model
+
+
+def explain_results(result_df, query_plan=None, original_question=None):
     """
-    Generate a natural language explanation of query results.
-    Handles both single and multiple row results appropriately.
+    Generate a natural language explanation of query results using LLM.
+    
+    Args:
+        result_df: DataFrame containing query results
+        query_plan: Optional dict containing the query plan (for context)
+        original_question: Optional string containing the user's original question
+    
+    Returns:
+        str: Natural language explanation of the results
     """
     if result_df.empty:
         return "No data is available for the requested criteria."
     
-    # Special handling for aggregation_on_subset queries
-    if hasattr(result_df, 'attrs') and 'aggregation_function' in result_df.attrs:
-        aggregation_function = result_df.attrs['aggregation_function']
-        aggregation_column = result_df.attrs['aggregation_column']
-        subset_limit = result_df.attrs.get('subset_limit', len(result_df))
+    # Build context for the LLM
+    context = {
+        "row_count": len(result_df),
+        "columns": list(result_df.columns),
+        "data_sample": result_df.head(10).to_dict('records')  # Show up to 10 rows
+    }
+    
+    # Add query plan context if available
+    if query_plan:
+        context["query_type"] = query_plan.get("query_type")
+        context["aggregation_function"] = query_plan.get("aggregation_function")
+        context["aggregation_column"] = query_plan.get("aggregation_column")
+        context["filters"] = query_plan.get("filters", [])
+        context["subset_filters"] = query_plan.get("subset_filters", [])
+    
+    # Add aggregation metadata if present (from executor)
+    if hasattr(result_df, 'attrs'):
+        if 'aggregation_function' in result_df.attrs:
+            context["aggregation_function"] = result_df.attrs['aggregation_function']
+        if 'aggregation_column' in result_df.attrs:
+            context["aggregation_column"] = result_df.attrs['aggregation_column']
+    
+    # Build the prompt for the LLM
+    prompt = f"""Given the following query results, generate a concise, natural language explanation.
+
+Context:
+{json.dumps(context, indent=2, default=str)}
+"""
+    
+    if original_question:
+        prompt += f"\nOriginal Question: {original_question}\n"
+    
+    prompt += """
+Instructions:
+1. If this is an aggregation query (AVG, SUM, MIN, MAX, COUNT), state the result clearly using the correct aggregation type
+2. For MIN/MAX queries, also mention which row(s) had that value
+3. For multiple rows, provide a brief summary and list key data points
+4. Be concise and direct - no unnecessary elaboration
+5. Use the exact aggregation function name from the context (e.g., "minimum" for MIN, "maximum" for MAX, "average" for AVG)
+6. Format numbers to 2 decimal places when appropriate
+
+Generate the explanation:"""
+    
+    try:
+        # Initialize LLM
+        config = load_config()
+        model = initialize_gemini_client(config)
         
-        # Calculate the aggregation
-        if aggregation_column not in result_df.columns:
-            return f"Error: Column '{aggregation_column}' not found in results"
+        # Generate explanation
+        response = model.generate_content(prompt)
+        explanation = response.text.strip()
         
-        values = result_df[aggregation_column].dropna()
+        return explanation
+        
+    except Exception as e:
+        # Fallback to simple explanation if LLM fails
+        print(f"Warning: LLM explanation failed ({e}), using fallback")
+        return _fallback_explanation(result_df, context)
+
+
+def _fallback_explanation(result_df, context):
+    """
+    Simple fallback explanation when LLM is unavailable.
+    This is much simpler and just presents the data.
+    """
+    if result_df.empty:
+        return "No data is available for the requested criteria."
+    
+    # Check for aggregation
+    agg_func = context.get("aggregation_function")
+    agg_col = context.get("aggregation_column")
+    
+    if agg_func and agg_col and agg_col in result_df.columns:
+        values = result_df[agg_col].dropna()
         
         if len(values) == 0:
-            return f"No valid values found in '{aggregation_column}' column"
+            return f"No valid values found in '{agg_col}' column"
         
-        if aggregation_function == "AVG":
-            agg_result = values.mean()
-            agg_name = "average"
-        elif aggregation_function == "SUM":
-            agg_result = values.sum()
-            agg_name = "total"
-        elif aggregation_function == "COUNT":
-            agg_result = len(values)
-            agg_name = "count"
-        elif aggregation_function == "MAX":
-            agg_result = values.max()
-            agg_name = "maximum"
-        elif aggregation_function == "MIN":
-            agg_result = values.min()
-            agg_name = "minimum"
+        # Calculate based on aggregation function
+        if agg_func == "AVG":
+            result = values.mean()
+            func_name = "average"
+        elif agg_func == "SUM":
+            result = values.sum()
+            func_name = "total"
+        elif agg_func == "COUNT":
+            result = len(values)
+            func_name = "count"
+        elif agg_func == "MAX":
+            result = values.max()
+            func_name = "maximum"
+        elif agg_func == "MIN":
+            result = values.min()
+            func_name = "minimum"
         else:
-            agg_result = values.mean()
-            agg_name = "result"
+            result = values.mean()
+            func_name = "result"
         
-        # Format the aggregation result
-        if isinstance(agg_result, float):
-            formatted_result = f"{agg_result:.2f}"
+        # Format result
+        if isinstance(result, float):
+            formatted_result = f"{result:.2f}"
         else:
-            formatted_result = str(agg_result)
+            formatted_result = str(result)
         
-        # Build the explanation with breakdown
-        explanation = f"The {agg_name} is {formatted_result}\n\n"
-        actual_count = len(result_df)
-        explanation += f"data points ({actual_count} total):\n"
+        explanation = f"The {func_name} is {formatted_result}"
         
-        # Show each item with relevant columns
-        for i, (idx, row) in enumerate(result_df.iterrows()):
-            item_parts = []
-            
-            # Try to find a name/identifier column
-            name_columns = ['Lineitem name', 'Name', 'name', 'item', 'Item', 'product', 'Product']
-            name_value = None
-            for col in name_columns:
-                if col in result_df.columns:
-                    name_value = row[col]
-                    break
-            
-            if name_value:
-                item_parts.append(f"{name_value}")
-            
-            # Add the aggregation column value
-            item_parts.append(f"{aggregation_column} = {row[aggregation_column]}")
-            
-            # Add date/time if available
-            date_columns = ['Created at', 'Date', 'date', 'created_at', 'timestamp']
-            for col in date_columns:
-                if col in result_df.columns and col != aggregation_column:
-                    item_parts.append(f"{col} = {row[col]}")
-                    break
-            
-            explanation += f"  {i+1}. {', '.join(item_parts)}\n"
+        # Add breakdown for MIN/MAX
+        if agg_func in ["MIN", "MAX"]:
+            matching_rows = result_df[result_df[agg_col] == result]
+            if len(matching_rows) > 0:
+                explanation += f"\n\nThis value appears in {len(matching_rows)} row(s)"
         
-        return explanation.strip()
+        return explanation
     
-    # Special handling for aggregation results (single value with column name like 'result', 'avg_cgpa', etc.)
-    if len(result_df) == 1 and len(result_df.columns) == 1:
-        col_name = result_df.columns[0]
-        value = result_df[col_name].iloc[0]
-        
-        # Format the value nicely
-        if isinstance(value, float):
-            formatted_value = f"{value:.2f}"
-        else:
-            formatted_value = str(value)
-        
-        # Create a user-friendly explanation based on column name
-        if col_name == "result":
-            return f"The result is {formatted_value}"
-        elif "avg" in col_name.lower() or "average" in col_name.lower():
-            return f"The average is {formatted_value}"
-        elif "sum" in col_name.lower() or "total" in col_name.lower():
-            return f"The total is {formatted_value}"
-        elif "count" in col_name.lower():
-            return f"The count is {formatted_value}"
-        elif "max" in col_name.lower() or "maximum" in col_name.lower():
-            return f"The maximum is {formatted_value}"
-        elif "min" in col_name.lower() or "minimum" in col_name.lower():
-            return f"The minimum is {formatted_value}"
-        else:
-            return f"{col_name} = {formatted_value}"
+    # For non-aggregation queries
+    row_count = len(result_df)
     
-    # For single row results with multiple columns
-    if len(result_df) == 1:
+    if row_count == 1:
+        # Single row result
         parts = []
         for col in result_df.columns:
             value = result_df[col].iloc[0]
             parts.append(f"{col} = {value}")
         return ", ".join(parts)
-    
-    # For multiple row results
-    row_count = len(result_df)
-    
-    # If it's a simple single-column result, list all values
-    if len(result_df.columns) == 1:
-        col_name = result_df.columns[0]
-        values = result_df[col_name].tolist()
-        items_list = "\n".join([f"  {i+1}. {val}" for i, val in enumerate(values)])
-        return f"Found {row_count} results for {col_name}:\n{items_list}"
-    
-    # For multi-column results, show count and first few rows
-    if row_count <= 5:
-        # Show all rows if 5 or fewer
-        explanation = f"Found {row_count} results:\n"
-        for i, (idx, row) in enumerate(result_df.iterrows()):
-            parts = [f"{col} = {row[col]}" for col in result_df.columns]
-            explanation += f"  {i+1}. {', '.join(parts)}\n"
-        return explanation.strip()
     else:
-        # Show first 5 and indicate there are more
-        explanation = f"Found {row_count} results (showing first 5):\n"
-        for i, (idx, row) in enumerate(result_df.head(5).iterrows()):
-            parts = [f"{col} = {row[col]}" for col in result_df.columns]
-            explanation += f"  {i+1}. {', '.join(parts)}\n"
-        explanation += f"  ... and {row_count - 5} more"
-        return explanation.strip()
-
+        # Multiple rows
+        return f"Found {row_count} results with columns: {', '.join(result_df.columns)}"
