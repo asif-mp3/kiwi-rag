@@ -189,20 +189,14 @@ def validate_plan(plan: dict, schema_path="planning_layer/plan_schema.json"):
     """
     
     # Normalize plan before validation (handle None values)
-    # Convert None to appropriate defaults for all fields
+    # Convert None to appropriate defaults for ALL fields
+    
+    # Handle array fields
     if plan.get("select_columns") is None:
         plan["select_columns"] = []
     
     if plan.get("metrics") is None:
         plan["metrics"] = []
-    
-    if plan.get("limit") is None:
-        # Set default limit based on query type
-        query_type = plan.get("query_type", "metric")
-        if query_type in ["lookup", "extrema_lookup"]:
-            plan["limit"] = 1
-        else:
-            plan["limit"] = 100
     
     if plan.get("filters") is None:
         plan["filters"] = []
@@ -219,10 +213,39 @@ def validate_plan(plan: dict, schema_path="planning_layer/plan_schema.json"):
     if plan.get("subset_order_by") is None:
         plan["subset_order_by"] = []
     
+    # Handle numeric fields
+    if plan.get("limit") is None:
+        # Set default limit based on query type
+        query_type = plan.get("query_type", "metric")
+        if query_type in ["lookup", "extrema_lookup"]:
+            plan["limit"] = 1
+        else:
+            plan["limit"] = 100
+    
+    if plan.get("subset_limit") is None:
+        plan["subset_limit"] = 100
+    
+    # Handle string fields - convert None to empty string
     if plan.get("aggregation_column") is None:
-        # Only set to empty string if aggregation_function exists
-        if plan.get("aggregation_function"):
-            plan["aggregation_column"] = ""
+        plan["aggregation_column"] = ""
+    
+    if plan.get("aggregation_function") is None:
+        plan["aggregation_function"] = ""
+    
+    if plan.get("subset_aggregation_column") is None:
+        plan["subset_aggregation_column"] = ""
+    
+    if plan.get("subset_aggregation_function") is None:
+        plan["subset_aggregation_function"] = ""
+    
+    # Recursively handle None in filter values
+    for filter_item in plan.get("filters", []):
+        if filter_item.get("value") is None:
+            filter_item["value"] = ""
+    
+    for filter_item in plan.get("subset_filters", []):
+        if filter_item.get("value") is None:
+            filter_item["value"] = ""
 
     # Load JSON schema
     with open(schema_path) as f:
