@@ -155,13 +155,23 @@ def combine_date_time_columns(df):
                 dayfirst=dayfirst
             )
         
-        # Combine parsed date + time into a proper timestamp
+        # Parse time column to extract time components
+        # The Time column may contain just time strings like "01:00", "14:30", etc.
         with warnings.catch_warnings():
             warnings.filterwarnings('ignore', category=FutureWarning)
-            combined = pd.to_datetime(
-                parsed_dates.dt.strftime('%Y-%m-%d') + ' ' + df['Time'].astype(str),
-                errors='coerce'
+            parsed_times = pd.to_datetime(
+                df['Time'].astype(str),
+                errors='coerce',
+                format='mixed'
             )
+        
+        # Combine the date from parsed_dates with the time from parsed_times
+        # This ensures we use the correct date from the Date column, not today's date
+        combined = pd.to_datetime(
+            parsed_dates.dt.strftime('%Y-%m-%d') + ' ' + 
+            parsed_times.dt.strftime('%H:%M:%S'),
+            errors='coerce'
+        )
         
         # Remove timezone info if present
         if combined.dt.tz is not None:
