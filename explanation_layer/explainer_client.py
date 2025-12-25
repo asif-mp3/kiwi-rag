@@ -117,21 +117,24 @@ Context:
     
     prompt += f"""
 Instructions:
-1. **IMPORTANT: Respond in {question_language} language only**
-2. **For Tamil responses: ALWAYS write numbers in Tamil words, NEVER use digits**
-   - Examples:
-     - 15000 → "பதினைந்தாயிரம்" (padhinaindhaayiram)
-     - 24.2 → "இருபத்தி நான்கு புள்ளி இரண்டு" (irupathu naangu pulli irandu)
-     - 2 → "இரண்டு" (irandu)
-     - 2017 → "இரண்டாயிரத்து பதினேழு" (irandaayirathu padhineezhu)
+1. **IMPORTANT: Respond in {question_language} language**
+2. **For Tamil responses:**
+   - **ALWAYS write numbers in Tamil words, NEVER use digits**
+     - Examples: 15000 → "பதினைந்தாயிரம்", 24.2 → "இருபத்தி நான்கு புள்ளி இரண்டு"
+   - **MANDATORY**: After the Tamil response, add the separator `|||ENGLISH_TRANSLATION|||`
+   - Follow with the **English translation** of the response.
+   - **In the English translation, MUST use numeric digits** (e.g., "24.2", "15,000").
 3. If this is an aggregation query (AVG, SUM, MIN, MAX, COUNT), state the result clearly using the correct aggregation type
 4. For MIN/MAX queries, also mention which row(s) had that value
 5. For multiple rows, provide a brief summary and list key data points
 6. Be concise and direct - no unnecessary elaboration
-7. Use the exact aggregation function name from the context (e.g., "minimum" for MIN, "maximum" for MAX, "average" for AVG)
-8. For English responses: Format numbers with commas (e.g., "15,000")
-9. **Your entire response must be in {question_language}**
-10. **CRITICAL: For Tamil, convert ALL numbers (dates, times, values) to Tamil words**
+7. Use the exact aggregation function name from the context (e.g., "minimum" for MIN, "average" for AVG)
+8. For English responses (primary language queries): Format numbers with commas (e.g., "15,000")
+9. **CRITICAL: For Tamil, convert ALL numbers (dates, times, values) to Tamil words**
+10. **Output Format for Tamil Queries:**
+    [Tamil Response with Words for Numbers]
+    |||ENGLISH_TRANSLATION|||
+    [English Translation with Digits for Numbers]
 
 Generate the explanation:"""
     

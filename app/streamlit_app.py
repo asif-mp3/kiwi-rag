@@ -29,6 +29,7 @@ from utils.voice_utils import transcribe_audio, text_to_speech, save_audio_temp
 from utils.conversation_manager import ConversationManager
 from utils.question_cache import QuestionCache
 from utils.context_resolver import ContextResolver
+from utils.auth_integration import setup_authentication, add_auth_sidebar
 
 # Page configuration
 st.set_page_config(
@@ -89,6 +90,17 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
+# ============================================
+# AUTHENTICATION CHECK
+# ============================================
+# Setup authentication - if auth is enabled and user is not logged in,
+# this will show the login page and stop execution
+if not setup_authentication():
+    st.stop()
+
+# If we reach here, either auth is disabled or user is authenticated
+# ============================================
 
 # Initialize session state
 if 'conversation_manager' not in st.session_state:
@@ -346,6 +358,9 @@ st.markdown("""
 
 # Sidebar with Conversation History
 with st.sidebar:
+    # Show user info if authenticated
+    add_auth_sidebar()
+    
     st.header("💬 Conversations")
     
     # New Chat button
@@ -445,20 +460,37 @@ for idx, message in enumerate(st.session_state.messages):
         
         # For assistant messages, prioritize audio
         elif message["role"] == "assistant":
-            # Auto-play audio if voice is enabled
+            # Check for English translation separator
+            content = message["content"]
+            tamil_part = content
+            english_part = None
+            
+            if "|||ENGLISH_TRANSLATION|||" in content:
+                parts = content.split("|||ENGLISH_TRANSLATION|||")
+                tamil_part = parts[0].strip()
+                if len(parts) > 1:
+                    english_part = parts[1].strip()
+            
+            # Auto-play audio if voice is enabled (play ONLY the Tamil part)
             if st.session_state.voice_enabled:
                 try:
-                    # Generate and auto-play audio
-                    audio_bytes = text_to_speech(message["content"])
+                    # Generate and auto-play audio using only the Tamil part
+                    audio_bytes = text_to_speech(tamil_part)
                     st.audio(audio_bytes, format="audio/mp3", autoplay=True)
                 except Exception as e:
                     st.error(f"🔊 Audio generation failed: {str(e)}")
                     # Fallback to showing text if audio fails
-                    st.markdown(message["content"])
+                    st.markdown(tamil_part)
             
             # Show text answer in collapsible expander
             with st.expander("📝 View Text Answer", expanded=False):
-                st.markdown(message["content"])
+                st.markdown(tamil_part)
+                
+                # If we have an English translation, show it too
+                if english_part:
+                    st.markdown("---")
+                    st.markdown("**English Translation:**")
+                    st.markdown(english_part)
             
             # Show additional metadata
             if "metadata" in message:

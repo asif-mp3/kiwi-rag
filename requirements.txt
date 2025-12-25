@@ -31,3 +31,6 @@ scipy>=1.10.0
 
 # Utilities
 requests>=2.31.0
+
+# Authentication
+supabase>=2.0.0

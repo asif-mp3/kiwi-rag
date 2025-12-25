@@ -1,0 +1,125 @@
+{
+  "id": "20251225_175835",
+  "title": "ஜனவரி மாதம் இரண்டாம் தேதி இரண்டாயிரத்தி பதினேழாம் ...",
+  "created_at": "2025-12-25T17:58:35.962505",
+  "updated_at": "2025-12-25T18:01:21.431834",
+  "messages": [
+    {
+      "role": "user",
+      "content": "ஜனவரி மாதம் இரண்டாம் தேதி இரண்டாயிரத்தி பதினேழாம் ஆண்டு அன்று அதிக டெம்பரேச்சர் உள்ள நேரம் எந்த நேரம்?",
+      "timestamp": "2025-12-25T17:59:36.113440"
+    },
+    {
+      "role": "assistant",
+      "content": "இரண்டாயிரத்தி பதினேழாம் ஆண்டு ஜனவரி இரண்டாம் தேதி, அதிகபட்ச வெப்பநிலை மதியம் இரண்டு மணிக்கு பதிவாகியுள்ளது, அது இருபத்தி நான்கு புள்ளி இரண்டு டிகிரி செல்சியஸ் ஆகும்.\n|||ENGLISH_TRANSLATION|||\nOn January 2nd, 2017, the highest temperature was recorded at 2 PM, and it was 24.2 degrees Celsius.",
+      "timestamp": "2025-12-25T18:00:05.017131",
+      "metadata": {
+        "plan": {
+          "query_type": "extrema_lookup",
+          "table": "worksheet1",
+          "select_columns": [
+            "Time",
+            "EARLWOOD TEMP 1h average [°C]"
+          ],
+          "filters": [
+            {
+              "column": "Time",
+              "operator": ">=",
+              "value": "2017-01-02 00:00:00"
+            },
+            {
+              "column": "Time",
+              "operator": "<=",
+              "value": "2017-01-02 23:59:59"
+            }
+          ],
+          "group_by": [],
+          "order_by": [
+            [
+              "EARLWOOD TEMP 1h average [°C]",
+              "DESC"
+            ]
+          ],
+          "limit": 1,
+          "metrics": [],
+          "aggregation_function": "",
+          "aggregation_column": "",
+          "subset_filters": [],
+          "subset_order_by": [],
+          "subset_limit": 100
+        },
+        "data": {
+          "Time": {
+            "0": "2017-01-02T14:00:00"
+          },
+          "EARLWOOD TEMP 1h average [°C]": {
+            "0": 24.2
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'worksheet1'. Columns: Date (VARCHAR, temporal_attribute), Time (TIMESTAMP_NS, temporal_attribute), EARLWOOD WDR 1h average [°] (DOUBLE, numeric_attribute), EARLWOOD TEMP 1h average [°C] (DOUBLE, numeric_attribute), EARLWOOD WSP 1h average [m/s] (DOUBLE, numeric_attribute), EARLWOOD NO 1h average [pphm] (DOUBLE, numeric_attribute), EARLWOOD NO2 1h average [pphm] (DOUBLE, numeric_attribute), EARLWOOD CO 1h average [ppm] (INTEGER, numeric_attribute), EARLWOOD OZONE 1h average [pphm] (DOUBLE, numeric_attribute), EARLWOOD OZONE 4h rolling average [pphm] (DOUBLE, numeric_attribute), EARLWOOD PM10 1h average [µg/m³] (DOUBLE, numeric_attribute), EARLWOOD PM2.5 1h average [µg/m³] (DOUBLE, numeric_attribute), EARLWOOD HUMID 1h average [%] (DOUBLE, entity_identifier), EARLWOOD SD1 1h average [°] (DOUBLE, numeric_attribute), EARLWOOD CO 8h rolling average [ppm] (INTEGER, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "worksheet1",
+              "type": "table"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "அதே நாளில் அடுத்து அடுத்தபட்ட அதிகபட்ச டெம்பரேச்சர் உள்ள நேரம் இந்த நேரம்.",
+      "timestamp": "2025-12-25T18:00:52.826474"
+    },
+    {
+      "role": "assistant",
+      "content": "இரண்டாயிரத்து பதினேழாம் ஆண்டு, பிப்ரவரி மாதம் பத்தாம் தேதி, மதியம் மூன்று மணிக்கு, ஏர்ல்வுட் பகுதியின் ஒரு மணி நேர சராசரி வெப்பநிலை நாற்பத்து மூன்று புள்ளி ஒன்பது டிகிரி செல்சியஸ் ஆகும்.\n|||ENGLISH_TRANSLATION|||\nOn February 10, 2017, at 3:00 PM, the 1-hour average temperature for Earlwood was 43.9 degrees Celsius.",
+      "timestamp": "2025-12-25T18:01:21.431834",
+      "metadata": {
+        "plan": {
+          "query_type": "extrema_lookup",
+          "table": "worksheet1",
+          "select_columns": [
+            "Time",
+            "EARLWOOD TEMP 1h average [°C]"
+          ],
+          "filters": [],
+          "group_by": [],
+          "order_by": [
+            [
+              "EARLWOOD TEMP 1h average [°C]",
+              "DESC"
+            ]
+          ],
+          "limit": 1,
+          "aggregation_function": "",
+          "aggregation_column": "",
+          "subset_filters": [],
+          "subset_order_by": [],
+          "subset_limit": 100,
+          "metrics": []
+        },
+        "data": {
+          "Time": {
+            "0": "2017-02-10T15:00:00"
+          },
+          "EARLWOOD TEMP 1h average [°C]": {
+            "0": 43.9
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'worksheet1'. Columns: Date (VARCHAR, temporal_attribute), Time (TIMESTAMP_NS, temporal_attribute), EARLWOOD WDR 1h average [°] (DOUBLE, numeric_attribute), EARLWOOD TEMP 1h average [°C] (DOUBLE, numeric_attribute), EARLWOOD WSP 1h average [m/s] (DOUBLE, numeric_attribute), EARLWOOD NO 1h average [pphm] (DOUBLE, numeric_attribute), EARLWOOD NO2 1h average [pphm] (DOUBLE, numeric_attribute), EARLWOOD CO 1h average [ppm] (INTEGER, numeric_attribute), EARLWOOD OZONE 1h average [pphm] (DOUBLE, numeric_attribute), EARLWOOD OZONE 4h rolling average [pphm] (DOUBLE, numeric_attribute), EARLWOOD PM10 1h average [µg/m³] (DOUBLE, numeric_attribute), EARLWOOD PM2.5 1h average [µg/m³] (DOUBLE, numeric_attribute), EARLWOOD HUMID 1h average [%] (DOUBLE, entity_identifier), EARLWOOD SD1 1h average [°] (DOUBLE, numeric_attribute), EARLWOOD CO 8h rolling average [ppm] (INTEGER, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "worksheet1"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    }
+  ]
+}

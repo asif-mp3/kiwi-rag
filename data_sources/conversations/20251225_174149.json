@@ -1,0 +1,128 @@
+{
+  "id": "20251225_174149",
+  "title": "ஜனவரி மாதம் இரண்டு ஆம் தேதி அன்று அதிக டெம்பரேச்சர...",
+  "created_at": "2025-12-25T17:41:49.582303",
+  "updated_at": "2025-12-25T17:48:10.821499",
+  "messages": [
+    {
+      "role": "user",
+      "content": "ஜனவரி மாதம் இரண்டு ஆம் தேதி அன்று அதிக டெம்பரேச்சர் உள்ள நேரம் எந்த நேரம்?",
+      "timestamp": "2025-12-25T17:46:08.290916"
+    },
+    {
+      "role": "assistant",
+      "content": "கோரப்பட்ட தகவல் கிடைக்கவில்லை. பெயர் சரியாக உள்ளதா என்று சரிபார்க்கவும்.",
+      "timestamp": "2025-12-25T17:46:33.312214",
+      "metadata": {
+        "plan": {
+          "query_type": "extrema_lookup",
+          "table": "worksheet1",
+          "select_columns": [
+            "Time",
+            "EARLWOOD TEMP 1h average [°C]"
+          ],
+          "filters": [
+            {
+              "column": "Time",
+              "operator": ">=",
+              "value": "2017-01-02 00:00:00"
+            },
+            {
+              "column": "Time",
+              "operator": "<=",
+              "value": "2017-01-02 23:59:59"
+            }
+          ],
+          "group_by": [],
+          "order_by": [
+            [
+              "EARLWOOD TEMP 1h average [°C]",
+              "DESC"
+            ]
+          ],
+          "limit": 1,
+          "metrics": [],
+          "aggregation_function": "",
+          "aggregation_column": "",
+          "subset_filters": [],
+          "subset_order_by": [],
+          "subset_limit": 100
+        },
+        "data": {
+          "Time": {},
+          "EARLWOOD TEMP 1h average [°C]": {}
+        },
+        "schema_context": [
+          {
+            "text": "Table 'worksheet1'. Columns: Date (TIMESTAMP_NS, temporal_attribute), Time (TIMESTAMP_NS, temporal_attribute), EARLWOOD WDR 1h average [°] (DOUBLE, numeric_attribute), EARLWOOD TEMP 1h average [°C] (DOUBLE, numeric_attribute), EARLWOOD WSP 1h average [m/s] (DOUBLE, numeric_attribute), EARLWOOD NO 1h average [pphm] (DOUBLE, numeric_attribute), EARLWOOD NO2 1h average [pphm] (DOUBLE, numeric_attribute), EARLWOOD CO 1h average [ppm] (INTEGER, numeric_attribute), EARLWOOD OZONE 1h average [pphm] (DOUBLE, numeric_attribute), EARLWOOD OZONE 4h rolling average [pphm] (DOUBLE, numeric_attribute), EARLWOOD PM10 1h average [µg/m³] (DOUBLE, numeric_attribute), EARLWOOD PM2.5 1h average [µg/m³] (DOUBLE, numeric_attribute), EARLWOOD HUMID 1h average [%] (DOUBLE, entity_identifier), EARLWOOD SD1 1h average [°] (DOUBLE, numeric_attribute), EARLWOOD CO 8h rolling average [ppm] (INTEGER, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "worksheet1"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "January madham irandam thedi irandathipathinelu andru adhiga temperature ulla neram endha neram.",
+      "timestamp": "2025-12-25T17:47:50.363169"
+    },
+    {
+      "role": "assistant",
+      "content": "கோரப்பட்ட தகவல் கிடைக்கவில்லை. பெயர் சரியாக உள்ளதா என்று சரிபார்க்கவும்.",
+      "timestamp": "2025-12-25T17:48:10.821499",
+      "metadata": {
+        "plan": {
+          "query_type": "extrema_lookup",
+          "table": "worksheet1",
+          "select_columns": [
+            "Time",
+            "EARLWOOD TEMP 1h average [°C]"
+          ],
+          "filters": [
+            {
+              "column": "Time",
+              "operator": ">=",
+              "value": "2017-01-02 00:00:00"
+            },
+            {
+              "column": "Time",
+              "operator": "<=",
+              "value": "2017-01-02 23:59:59"
+            }
+          ],
+          "order_by": [
+            [
+              "EARLWOOD TEMP 1h average [°C]",
+              "DESC"
+            ]
+          ],
+          "limit": 1,
+          "metrics": [],
+          "group_by": [],
+          "subset_filters": [],
+          "subset_order_by": [],
+          "subset_limit": 100,
+          "aggregation_column": "",
+          "aggregation_function": ""
+        },
+        "data": {
+          "Time": {},
+          "EARLWOOD TEMP 1h average [°C]": {}
+        },
+        "schema_context": [
+          {
+            "text": "Table 'worksheet1'. Columns: Date (TIMESTAMP_NS, temporal_attribute), Time (TIMESTAMP_NS, temporal_attribute), EARLWOOD WDR 1h average [°] (DOUBLE, numeric_attribute), EARLWOOD TEMP 1h average [°C] (DOUBLE, numeric_attribute), EARLWOOD WSP 1h average [m/s] (DOUBLE, numeric_attribute), EARLWOOD NO 1h average [pphm] (DOUBLE, numeric_attribute), EARLWOOD NO2 1h average [pphm] (DOUBLE, numeric_attribute), EARLWOOD CO 1h average [ppm] (INTEGER, numeric_attribute), EARLWOOD OZONE 1h average [pphm] (DOUBLE, numeric_attribute), EARLWOOD OZONE 4h rolling average [pphm] (DOUBLE, numeric_attribute), EARLWOOD PM10 1h average [µg/m³] (DOUBLE, numeric_attribute), EARLWOOD PM2.5 1h average [µg/m³] (DOUBLE, numeric_attribute), EARLWOOD HUMID 1h average [%] (DOUBLE, entity_identifier), EARLWOOD SD1 1h average [°] (DOUBLE, numeric_attribute), EARLWOOD CO 8h rolling average [ppm] (INTEGER, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "worksheet1",
+              "type": "table"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    }
+  ]
+}
