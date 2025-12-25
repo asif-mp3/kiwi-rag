@@ -70,6 +70,7 @@ def _build_where_clause(filters):
     """
     Build WHERE clause from filters.
     Handles both numeric and text values with proper escaping.
+    Uses flexible matching for names to handle spelling variations.
     """
     if not filters:
         return ""
@@ -85,8 +86,35 @@ def _build_where_clause(filters):
             if operator == "LIKE":
                 # Case-insensitive LIKE - cast to VARCHAR for timestamp columns
                 safe_value = value.replace("'", "''")
-                # Cast to VARCHAR to handle TIMESTAMP_NS columns
-                conditions.append(f"LOWER(CAST({column} AS VARCHAR)) LIKE LOWER('{safe_value}')")
+                
+                # For name matching, try to be more flexible
+                # Extract the core part of the search term (remove % wildcards)
+                search_term = safe_value.strip('%')
+                
+                # If it's a name search (common patterns), use flexible matching
+                # This helps with variations like "Meenakshi" vs "Meenakchi"
+                if len(search_term) >= 4:  # Only for meaningful search terms
+                    # Try multiple patterns:
+                    # 1. Original pattern
+                    # 2. Pattern with common variations (ksh -> kch, sh -> ch, etc.)
+                    patterns = [safe_value]
+                    
+                    # Add variation patterns for common Tamil name spellings
+                    if 'ksh' in search_term.lower():
+                        patterns.append(safe_value.replace('ksh', 'kch').replace('Ksh', 'Kch'))
+                        patterns.append(safe_value.replace('ksh', 'kchi').replace('Ksh', 'Kchi'))
+                    if 'sh' in search_term.lower():
+                        patterns.append(safe_value.replace('sh', 'ch').replace('Sh', 'Ch'))
+                    
+                    # Create OR condition for all patterns
+                    pattern_conditions = [
+                        f"LOWER(CAST({column} AS VARCHAR)) LIKE LOWER('{pattern}')"
+                        for pattern in patterns
+                    ]
+                    conditions.append(f"({' OR '.join(pattern_conditions)})")
+                else:
+                    # For short terms, use original pattern
+                    conditions.append(f"LOWER(CAST({column} AS VARCHAR)) LIKE LOWER('{safe_value}')")
             else:
                 # Use actual operator (=, >=, <=, !=, etc.) for string comparisons
                 # Cast column to VARCHAR to handle TIMESTAMP_NS columns

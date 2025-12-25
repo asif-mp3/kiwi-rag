@@ -242,6 +242,9 @@ def fetch_sheets():
                 # Handle empty headers
                 if not header or header.strip() == '':
                     header = 'Unnamed'
+                else:
+                    # Strip leading/trailing whitespace from column names
+                    header = header.strip()
                 
                 # Make duplicates unique
                 if header in header_counts:

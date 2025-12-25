@@ -49,40 +49,93 @@ def transcribe_audio(audio_file_path: str) -> str:
     except Exception as e:
         raise Exception(f"Transcription failed: {str(e)}")
 
-def text_to_speech(text: str, voice_id: str = "JBFqnCBsd6RMkjVDRZzb") -> bytes:
+def text_to_speech(text: str, voice_id: str = "pNInz6obpgDQGcFmaJgB") -> bytes:
     """
-    Convert text to speech using Google TTS (gTTS) with automatic language detection.
-    Supports Tamil and English based on the text content.
+    Convert text to speech using ElevenLabs multilingual TTS.
+    Supports Tamil and English with high quality voice.
     
     Args:
         text: Text to convert to speech
-        voice_id: Not used with gTTS (kept for compatibility)
+        voice_id: ElevenLabs voice ID (default: Adam - multilingual)
         
     Returns:
-        Audio bytes
+        Audio bytes (MP3 format)
     """
     try:
-        # Use gTTS as a free alternative since ElevenLabs free tier is restricted
-        from gtts import gTTS
-        from langdetect import detect
+        from elevenlabs.client import ElevenLabs
+        from langdetect import detect, LangDetectException
         import io
+        import re
+        
+        # Initialize ElevenLabs client
+        client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
         
         # Detect language from text
+        language_code = "en"  # Default
         try:
-            detected_lang = detect(text)
-            # Map detected language to gTTS language codes
-            if detected_lang == 'ta':  # Tamil
-                lang = 'ta'
-            elif detected_lang in ['en', 'en-us', 'en-gb']:  # English
-                lang = 'en'
+            # Check if text contains Tamil characters
+            tamil_pattern = re.compile(r'[\u0B80-\u0BFF]')
+            has_tamil = bool(tamil_pattern.search(text))
+            
+            if has_tamil:
+                language_code = "ta"  # Tamil
             else:
-                # Default to English for other languages
-                lang = 'en'
-        except:
-            # If detection fails, default to English
-            lang = 'en'
+                # Otherwise, try to detect language
+                detected_lang = detect(text)
+                if detected_lang == 'ta':
+                    language_code = "ta"
+                elif detected_lang in ['en', 'en-us', 'en-gb']:
+                    language_code = "en"
+        except (LangDetectException, Exception):
+            pass
         
-        # Create TTS object with detected language
+        # Use ElevenLabs multilingual v2 model for better Tamil support
+        # Using streaming for lower latency
+        audio_stream = client.text_to_speech.convert(
+            voice_id=voice_id,  # Adam voice supports multilingual
+            text=text,
+            model_id="eleven_multilingual_v2",  # Best for Tamil
+            output_format="mp3_44100_128",  # High quality, reasonable size
+        )
+        
+        # Collect audio chunks
+        audio_bytes = b""
+        for chunk in audio_stream:
+            if chunk:
+                audio_bytes += chunk
+        
+        return audio_bytes
+        
+    except Exception as e:
+        # Fallback to gTTS if ElevenLabs fails
+        print(f"ElevenLabs TTS failed, falling back to gTTS: {e}")
+        return _fallback_gtts(text)
+
+
+def _fallback_gtts(text: str) -> bytes:
+    """
+    Fallback to Google TTS if ElevenLabs fails.
+    """
+    try:
+        from gtts import gTTS
+        from langdetect import detect, LangDetectException
+        import io
+        import re
+        
+        # Detect language
+        lang = 'en'
+        try:
+            tamil_pattern = re.compile(r'[\u0B80-\u0BFF]')
+            if tamil_pattern.search(text):
+                lang = 'ta'
+            else:
+                detected = detect(text)
+                if detected == 'ta':
+                    lang = 'ta'
+        except:
+            pass
+        
+        # Create TTS
         tts = gTTS(text=text, lang=lang, slow=False)
         
         # Save to bytes
@@ -92,13 +145,8 @@ def text_to_speech(text: str, voice_id: str = "JBFqnCBsd6RMkjVDRZzb") -> bytes:
         
         return audio_fp.read()
         
-    except ImportError as e:
-        if 'langdetect' in str(e):
-            raise Exception("langdetect not installed. Install with: pip install langdetect")
-        else:
-            raise Exception("gTTS not installed. Install with: pip install gtts")
     except Exception as e:
-        raise Exception(f"Text-to-speech failed: {str(e)}")
+        raise Exception(f"Both ElevenLabs and gTTS failed: {str(e)}")
 
 def save_audio_temp(audio_bytes: bytes) -> str:
     """

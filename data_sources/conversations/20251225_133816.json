@@ -1,0 +1,249 @@
+{
+  "id": "20251225_133816",
+  "title": "How many employees are there in total?",
+  "created_at": "2025-12-25T13:38:16.945626",
+  "updated_at": "2025-12-25T13:50:09.180775",
+  "messages": [
+    {
+      "role": "user",
+      "content": "How many employees are there in total?",
+      "timestamp": "2025-12-25T13:41:26.118419"
+    },
+    {
+      "role": "assistant",
+      "content": "There are 11 employees in total.",
+      "timestamp": "2025-12-25T13:42:03.451612",
+      "metadata": {
+        "plan": {
+          "query_type": "aggregation_on_subset",
+          "table": "Employee List",
+          "metrics": [],
+          "select_columns": [],
+          "filters": [],
+          "group_by": [],
+          "order_by": [],
+          "limit": 100,
+          "aggregation_function": "COUNT",
+          "aggregation_column": "Employee ID",
+          "subset_filters": [],
+          "subset_order_by": [],
+          "subset_limit": 100
+        },
+        "data": {
+          "result": {
+            "0": 11
+          },
+          "row_count": {
+            "0": 11
+          },
+          "min_value": {
+            "0": "EMP001"
+          },
+          "max_value": {
+            "0": "EMP011"
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Manhrs Dec 25'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), 1-Dec-2025 (DOUBLE, numeric_attribute), 2-Dec-2025 (DOUBLE, numeric_attribute), 3-Dec-2025 (DOUBLE, numeric_attribute), 4-Dec-2025 (VARCHAR, unknown), 5-Dec-2025 (DOUBLE, numeric_attribute), 6-Dec-2025 (VARCHAR, unknown), 7-Dec-2025 (VARCHAR, unknown), 8-Dec-2025 (DOUBLE, numeric_attribute), 9-Dec-2025 (DOUBLE, numeric_attribute), 10-Dec-2025 (DOUBLE, numeric_attribute), 11-Dec-2025 (DOUBLE, numeric_attribute), 12-Dec-2025 (DOUBLE, numeric_attribute), 13-Dec-2025 (DOUBLE, numeric_attribute), 14-Dec-2025 (DOUBLE, numeric_attribute), 15-Dec-2025 (DOUBLE, numeric_attribute), 16-Dec-2025 (DOUBLE, numeric_attribute), 17-Dec-2025 (DOUBLE, numeric_attribute), 18-Dec-2025 (DOUBLE, numeric_attribute), 19-Dec-2025 (VARCHAR, unknown), 20-Dec-2025 (INTEGER, numeric_attribute), 21-Dec-2025 (INTEGER, numeric_attribute), 22-Dec-2025 (INTEGER, numeric_attribute), 23-Dec-2025 (INTEGER, numeric_attribute), 24-Dec-2025 (INTEGER, numeric_attribute), 25-Dec-2025 (INTEGER, numeric_attribute), 26-Dec-2025 (INTEGER, numeric_attribute), 27-Dec-2025 (INTEGER, numeric_attribute), 28-Dec-2025 (INTEGER, numeric_attribute), 29-Dec-2025 (INTEGER, numeric_attribute), 30-Dec-2025 (INTEGER, numeric_attribute), 31-Dec-2025 (INTEGER, numeric_attribute), Present Hrs (BIGINT, numeric_attribute), Basic Pay (BOOLEAN, categorical_attribute), Present Days (BOOLEAN, temporal_attribute), Payable Salary (BOOLEAN, categorical_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Manhrs Dec 25",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Final Dec 25'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), 1-Dec-2025 (DOUBLE, numeric_attribute), 2-Dec-2025 (DOUBLE, numeric_attribute), 3-Dec-2025 (DOUBLE, numeric_attribute), 4-Dec-2025 (VARCHAR, unknown), 5-Dec-2025 (DOUBLE, numeric_attribute), 6-Dec-2025 (DOUBLE, numeric_attribute), 7-Dec-2025 (DOUBLE, numeric_attribute), 8-Dec-2025 (DOUBLE, numeric_attribute), 9-Dec-2025 (DOUBLE, numeric_attribute), 10-Dec-2025 (DOUBLE, numeric_attribute), 11-Dec-2025 (DOUBLE, numeric_attribute), 12-Dec-2025 (DOUBLE, numeric_attribute), 13-Dec-2025 (DOUBLE, numeric_attribute), 14-Dec-2025 (DOUBLE, numeric_attribute), 15-Dec-2025 (DOUBLE, numeric_attribute), 16-Dec-2025 (DOUBLE, numeric_attribute), 17-Dec-2025 (DOUBLE, numeric_attribute), 18-Dec-2025 (DOUBLE, numeric_attribute), 19-Dec-2025 (BIGINT, numeric_attribute), 20-Dec-2025 (BIGINT, numeric_attribute), 21-Dec-2025 (BIGINT, numeric_attribute), 22-Dec-2025 (BIGINT, numeric_attribute), 23-Dec-2025 (BIGINT, numeric_attribute), 24-Dec-2025 (BIGINT, numeric_attribute), 25-Dec-2025 (BIGINT, numeric_attribute), 26-Dec-2025 (BIGINT, numeric_attribute), 27-Dec-2025 (BIGINT, numeric_attribute), 28-Dec-2025 (BIGINT, numeric_attribute), 29-Dec-2025 (BIGINT, numeric_attribute), 30-Dec-2025 (BIGINT, numeric_attribute), 31-Dec-2025 (BIGINT, numeric_attribute), Present Hrs (DOUBLE, numeric_attribute), Basic Pay (BIGINT, numeric_attribute), Present Days (BIGINT, numeric_attribute), WO (BIGINT, numeric_attribute), Total Working days (BIGINT, numeric_measure), Payable Salary (BIGINT, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Final Dec 25",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'In/ Out Dec-25'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), 1-Dec-2025 (TIMESTAMP_NS, unknown), Unnamed (TIMESTAMP_NS, entity_identifier), 2-Dec-2025 (VARCHAR, unknown), Unnamed_1 (VARCHAR, entity_identifier), 3-Dec-2025 (TIMESTAMP_NS, unknown), Unnamed_2 (TIMESTAMP_NS, entity_identifier), 4-Dec-2025 (VARCHAR, unknown), Unnamed_3 (VARCHAR, entity_identifier), 5-Dec-2025 (TIMESTAMP_NS, unknown), Unnamed_4 (TIMESTAMP_NS, entity_identifier), 6-Dec-2025 (VARCHAR, unknown), Unnamed_5 (VARCHAR, entity_identifier), 7-Dec-2025 (VARCHAR, unknown), Unnamed_6 (VARCHAR, entity_identifier), 8-Dec-2025 (TIMESTAMP_NS, unknown), Unnamed_7 (TIMESTAMP_NS, entity_identifier), 9-Dec-2025 (TIMESTAMP_NS, unknown), Unnamed_8 (TIMESTAMP_NS, entity_identifier), 10-Dec-2025 (TIMESTAMP_NS, unknown), Unnamed_9 (TIMESTAMP_NS, entity_identifier), 11-Dec-2025 (TIMESTAMP_NS, unknown), Unnamed_10 (TIMESTAMP_NS, entity_identifier), 12-Dec-2025 (TIMESTAMP_NS, unknown), Unnamed_11 (TIMESTAMP_NS, entity_identifier), 13-Dec-2025 (TIMESTAMP_NS, unknown), Unnamed_12 (TIMESTAMP_NS, entity_identifier), 14-Dec-2025 (TIMESTAMP_NS, unknown), Unnamed_13 (TIMESTAMP_NS, entity_identifier), 15-Dec-2025 (TIMESTAMP_NS, unknown), Unnamed_14 (TIMESTAMP_NS, entity_identifier), 16-Dec-2025 (TIMESTAMP_NS, unknown), Unnamed_15 (TIMESTAMP_NS, entity_identifier), 17-Dec-2025 (TIMESTAMP_NS, unknown), Unnamed_16 (TIMESTAMP_NS, entity_identifier), 18-Dec-2025 (TIMESTAMP_NS, unknown), Unnamed_17 (TIMESTAMP_NS, entity_identifier), 19-Dec-2025 (VARCHAR, unknown), Unnamed_18 (VARCHAR, entity_identifier), 20-Dec-2025 (VARCHAR, unknown), Unnamed_19 (VARCHAR, entity_identifier), 21-Dec-2025 (VARCHAR, unknown), Unnamed_20 (VARCHAR, entity_identifier), 22-Dec-2025 (VARCHAR, unknown), Unnamed_21 (VARCHAR, entity_identifier), 23-Dec-2025 (VARCHAR, unknown), Unnamed_22 (VARCHAR, entity_identifier), 24-Dec-2025 (VARCHAR, unknown), Unnamed_23 (VARCHAR, entity_identifier), 25-Dec-2025 (VARCHAR, unknown), Unnamed_24 (VARCHAR, entity_identifier), 26-Dec-2025 (VARCHAR, unknown), Unnamed_25 (VARCHAR, entity_identifier), 27-Dec-2025 (VARCHAR, unknown), Unnamed_26 (VARCHAR, entity_identifier), 28-Dec-2025 (VARCHAR, unknown), Unnamed_27 (VARCHAR, entity_identifier), 29-Dec-2025 (VARCHAR, unknown), Unnamed_28 (VARCHAR, entity_identifier), 30-Dec-2025 (VARCHAR, unknown), Unnamed_29 (VARCHAR, entity_identifier), 31-Dec-2025 (VARCHAR, unknown), Unnamed_30 (VARCHAR, entity_identifier), Present Hrs (TIMESTAMP_NS, unknown), Basic Pay (BOOLEAN, categorical_attribute), Present Days (BOOLEAN, temporal_attribute), Payable Salary (BIGINT, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "In/ Out Dec-25"
+            }
+          },
+          {
+            "text": "Table 'Employee List'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), salary  (BIGINT, numeric_attribute), Date of Joining (VARCHAR, temporal_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Employee List",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Final Dec 25_long'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), Present Hrs (DOUBLE, numeric_attribute), Basic Pay (INTEGER, numeric_attribute), Present Days (BIGINT, numeric_attribute), WO (BIGINT, numeric_attribute), Total Working days (BIGINT, numeric_measure), Payable Salary (BIGINT, numeric_attribute), Date (DATE, temporal_attribute), Hours (DOUBLE, numeric_attribute), Status (VARCHAR, categorical_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Final Dec 25_long",
+              "type": "table"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "Who is getting the most salary ",
+      "timestamp": "2025-12-25T13:46:30.842877"
+    },
+    {
+      "role": "assistant",
+      "content": "The employee with the highest salary is Meenakchi, with a salary of 15,000.",
+      "timestamp": "2025-12-25T13:47:01.697110",
+      "metadata": {
+        "plan": {
+          "query_type": "extrema_lookup",
+          "table": "Employee List",
+          "select_columns": [
+            "Employee Name",
+            "salary "
+          ],
+          "filters": [],
+          "group_by": [],
+          "order_by": [
+            [
+              "salary ",
+              "DESC"
+            ]
+          ],
+          "limit": 1,
+          "metrics": [],
+          "aggregation_function": "",
+          "aggregation_column": "",
+          "subset_filters": [],
+          "subset_order_by": [],
+          "subset_limit": 100
+        },
+        "data": {
+          "Employee Name": {
+            "0": "Meenakchi"
+          },
+          "salary ": {
+            "0": 15000
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Manhrs Dec 25'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), 1-Dec-2025 (DOUBLE, numeric_attribute), 2-Dec-2025 (DOUBLE, numeric_attribute), 3-Dec-2025 (DOUBLE, numeric_attribute), 4-Dec-2025 (VARCHAR, unknown), 5-Dec-2025 (DOUBLE, numeric_attribute), 6-Dec-2025 (VARCHAR, unknown), 7-Dec-2025 (VARCHAR, unknown), 8-Dec-2025 (DOUBLE, numeric_attribute), 9-Dec-2025 (DOUBLE, numeric_attribute), 10-Dec-2025 (DOUBLE, numeric_attribute), 11-Dec-2025 (DOUBLE, numeric_attribute), 12-Dec-2025 (DOUBLE, numeric_attribute), 13-Dec-2025 (DOUBLE, numeric_attribute), 14-Dec-2025 (DOUBLE, numeric_attribute), 15-Dec-2025 (DOUBLE, numeric_attribute), 16-Dec-2025 (DOUBLE, numeric_attribute), 17-Dec-2025 (DOUBLE, numeric_attribute), 18-Dec-2025 (DOUBLE, numeric_attribute), 19-Dec-2025 (VARCHAR, unknown), 20-Dec-2025 (INTEGER, numeric_attribute), 21-Dec-2025 (INTEGER, numeric_attribute), 22-Dec-2025 (INTEGER, numeric_attribute), 23-Dec-2025 (INTEGER, numeric_attribute), 24-Dec-2025 (INTEGER, numeric_attribute), 25-Dec-2025 (INTEGER, numeric_attribute), 26-Dec-2025 (INTEGER, numeric_attribute), 27-Dec-2025 (INTEGER, numeric_attribute), 28-Dec-2025 (INTEGER, numeric_attribute), 29-Dec-2025 (INTEGER, numeric_attribute), 30-Dec-2025 (INTEGER, numeric_attribute), 31-Dec-2025 (INTEGER, numeric_attribute), Present Hrs (BIGINT, numeric_attribute), Basic Pay (BOOLEAN, categorical_attribute), Present Days (BOOLEAN, temporal_attribute), Payable Salary (BOOLEAN, categorical_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Manhrs Dec 25"
+            }
+          },
+          {
+            "text": "Table 'Final Dec 25_long'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), Present Hrs (DOUBLE, numeric_attribute), Basic Pay (INTEGER, numeric_attribute), Present Days (BIGINT, numeric_attribute), WO (BIGINT, numeric_attribute), Total Working days (BIGINT, numeric_measure), Payable Salary (BIGINT, numeric_attribute), Date (DATE, temporal_attribute), Hours (DOUBLE, numeric_attribute), Status (VARCHAR, categorical_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Final Dec 25_long"
+            }
+          },
+          {
+            "text": "Table 'Final Dec 25'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), 1-Dec-2025 (DOUBLE, numeric_attribute), 2-Dec-2025 (DOUBLE, numeric_attribute), 3-Dec-2025 (DOUBLE, numeric_attribute), 4-Dec-2025 (VARCHAR, unknown), 5-Dec-2025 (DOUBLE, numeric_attribute), 6-Dec-2025 (DOUBLE, numeric_attribute), 7-Dec-2025 (DOUBLE, numeric_attribute), 8-Dec-2025 (DOUBLE, numeric_attribute), 9-Dec-2025 (DOUBLE, numeric_attribute), 10-Dec-2025 (DOUBLE, numeric_attribute), 11-Dec-2025 (DOUBLE, numeric_attribute), 12-Dec-2025 (DOUBLE, numeric_attribute), 13-Dec-2025 (DOUBLE, numeric_attribute), 14-Dec-2025 (DOUBLE, numeric_attribute), 15-Dec-2025 (DOUBLE, numeric_attribute), 16-Dec-2025 (DOUBLE, numeric_attribute), 17-Dec-2025 (DOUBLE, numeric_attribute), 18-Dec-2025 (DOUBLE, numeric_attribute), 19-Dec-2025 (BIGINT, numeric_attribute), 20-Dec-2025 (BIGINT, numeric_attribute), 21-Dec-2025 (BIGINT, numeric_attribute), 22-Dec-2025 (BIGINT, numeric_attribute), 23-Dec-2025 (BIGINT, numeric_attribute), 24-Dec-2025 (BIGINT, numeric_attribute), 25-Dec-2025 (BIGINT, numeric_attribute), 26-Dec-2025 (BIGINT, numeric_attribute), 27-Dec-2025 (BIGINT, numeric_attribute), 28-Dec-2025 (BIGINT, numeric_attribute), 29-Dec-2025 (BIGINT, numeric_attribute), 30-Dec-2025 (BIGINT, numeric_attribute), 31-Dec-2025 (BIGINT, numeric_attribute), Present Hrs (DOUBLE, numeric_attribute), Basic Pay (BIGINT, numeric_attribute), Present Days (BIGINT, numeric_attribute), WO (BIGINT, numeric_attribute), Total Working days (BIGINT, numeric_measure), Payable Salary (BIGINT, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Final Dec 25"
+            }
+          },
+          {
+            "text": "Table 'Employee List'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), salary  (BIGINT, numeric_attribute), Date of Joining (VARCHAR, temporal_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Employee List"
+            }
+          },
+          {
+            "text": "Table 'Nov-25'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (INTEGER, entity_identifier), Department (INTEGER, numeric_attribute), Designation (INTEGER, numeric_attribute), 1-Nov-2025 (VARCHAR, unknown), 2-Nov-2025 (VARCHAR, unknown), 3-Nov-2025 (VARCHAR, unknown), 4-Nov-2025 (VARCHAR, unknown), 5-Nov-2025 (VARCHAR, unknown), 6-Nov-2025 (VARCHAR, unknown), 7-Nov-2025 (VARCHAR, unknown), 8-Nov-2025 (VARCHAR, unknown), 9-Nov-2025 (VARCHAR, unknown), 10-Nov-2025 (VARCHAR, unknown), 11-Nov-2025 (VARCHAR, unknown), 12-Nov-2025 (INTEGER, numeric_attribute), 13-Nov-2025 (INTEGER, numeric_attribute), 14-Nov-2025 (INTEGER, numeric_attribute), 15-Nov-2025 (INTEGER, numeric_attribute), 16-Nov-2025 (INTEGER, numeric_attribute), 17-Nov-2025 (INTEGER, numeric_attribute), 18-Nov-2025 (INTEGER, numeric_attribute), 19-Nov-2025 (INTEGER, numeric_attribute), 20-Nov-2025 (INTEGER, numeric_attribute), 21-Nov-2025 (INTEGER, numeric_attribute), 22-Nov-2025 (INTEGER, numeric_attribute), 23-Nov-2025 (INTEGER, numeric_attribute), 24-Nov-2025 (INTEGER, numeric_attribute), 25-Nov-2025 (INTEGER, numeric_attribute), 26-Nov-2025 (INTEGER, numeric_attribute), 27-Nov-2025 (INTEGER, numeric_attribute), 28-Nov-2025 (INTEGER, numeric_attribute), 29-Nov-2025 (INTEGER, numeric_attribute), 30-Nov-2025 (INTEGER, numeric_attribute), Unnamed (INTEGER, entity_identifier), Present Days (BIGINT, numeric_attribute), Absent Days (BIGINT, numeric_attribute), Total (BIGINT, numeric_measure), Basic Pay (BIGINT, numeric_attribute), Payable Salary (BIGINT, numeric_attribute), Unnamed_1 (INTEGER, entity_identifier), Unnamed_2 (BIGINT, entity_identifier), Unnamed_3 (DOUBLE, entity_identifier), Unnamed_4 (DOUBLE, entity_identifier). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Nov-25",
+              "type": "table"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "யாரு அதிக சம்பளம் பெற்றுக் கொண்டிருக்கிறார்?",
+      "timestamp": "2025-12-25T13:49:43.832383"
+    },
+    {
+      "role": "assistant",
+      "content": "The employee with the highest salary is Meenakchi, with a salary of 15,000.",
+      "timestamp": "2025-12-25T13:50:09.180775",
+      "metadata": {
+        "plan": {
+          "query_type": "extrema_lookup",
+          "table": "Employee List",
+          "select_columns": [
+            "Employee Name",
+            "salary "
+          ],
+          "filters": [],
+          "group_by": [],
+          "order_by": [
+            [
+              "salary ",
+              "DESC"
+            ]
+          ],
+          "limit": 1,
+          "metrics": [],
+          "aggregation_function": "",
+          "aggregation_column": "",
+          "subset_filters": [],
+          "subset_order_by": [],
+          "subset_limit": 100
+        },
+        "data": {
+          "Employee Name": {
+            "0": "Meenakchi"
+          },
+          "salary ": {
+            "0": 15000
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Final Dec 25_long'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), Present Hrs (DOUBLE, numeric_attribute), Basic Pay (INTEGER, numeric_attribute), Present Days (BIGINT, numeric_attribute), WO (BIGINT, numeric_attribute), Total Working days (BIGINT, numeric_measure), Payable Salary (BIGINT, numeric_attribute), Date (DATE, temporal_attribute), Hours (DOUBLE, numeric_attribute), Status (VARCHAR, categorical_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Final Dec 25_long",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Employee List'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), salary  (BIGINT, numeric_attribute), Date of Joining (VARCHAR, temporal_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Employee List"
+            }
+          },
+          {
+            "text": "Table 'Manhrs Dec 25'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), 1-Dec-2025 (DOUBLE, numeric_attribute), 2-Dec-2025 (DOUBLE, numeric_attribute), 3-Dec-2025 (DOUBLE, numeric_attribute), 4-Dec-2025 (VARCHAR, unknown), 5-Dec-2025 (DOUBLE, numeric_attribute), 6-Dec-2025 (VARCHAR, unknown), 7-Dec-2025 (VARCHAR, unknown), 8-Dec-2025 (DOUBLE, numeric_attribute), 9-Dec-2025 (DOUBLE, numeric_attribute), 10-Dec-2025 (DOUBLE, numeric_attribute), 11-Dec-2025 (DOUBLE, numeric_attribute), 12-Dec-2025 (DOUBLE, numeric_attribute), 13-Dec-2025 (DOUBLE, numeric_attribute), 14-Dec-2025 (DOUBLE, numeric_attribute), 15-Dec-2025 (DOUBLE, numeric_attribute), 16-Dec-2025 (DOUBLE, numeric_attribute), 17-Dec-2025 (DOUBLE, numeric_attribute), 18-Dec-2025 (DOUBLE, numeric_attribute), 19-Dec-2025 (VARCHAR, unknown), 20-Dec-2025 (INTEGER, numeric_attribute), 21-Dec-2025 (INTEGER, numeric_attribute), 22-Dec-2025 (INTEGER, numeric_attribute), 23-Dec-2025 (INTEGER, numeric_attribute), 24-Dec-2025 (INTEGER, numeric_attribute), 25-Dec-2025 (INTEGER, numeric_attribute), 26-Dec-2025 (INTEGER, numeric_attribute), 27-Dec-2025 (INTEGER, numeric_attribute), 28-Dec-2025 (INTEGER, numeric_attribute), 29-Dec-2025 (INTEGER, numeric_attribute), 30-Dec-2025 (INTEGER, numeric_attribute), 31-Dec-2025 (INTEGER, numeric_attribute), Present Hrs (BIGINT, numeric_attribute), Basic Pay (BOOLEAN, categorical_attribute), Present Days (BOOLEAN, temporal_attribute), Payable Salary (BOOLEAN, categorical_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Manhrs Dec 25",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Manhrs Dec 25_long'. Columns: S.No (INTEGER, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), Present Hrs (INTEGER, numeric_attribute), Basic Pay (BOOLEAN, categorical_attribute), Present Days (BOOLEAN, temporal_attribute), Payable Salary (BOOLEAN, categorical_attribute), Date (DATE, temporal_attribute), Hours (DOUBLE, numeric_attribute), Status (VARCHAR, categorical_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Manhrs Dec 25_long",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Final Dec 25'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), 1-Dec-2025 (DOUBLE, numeric_attribute), 2-Dec-2025 (DOUBLE, numeric_attribute), 3-Dec-2025 (DOUBLE, numeric_attribute), 4-Dec-2025 (VARCHAR, unknown), 5-Dec-2025 (DOUBLE, numeric_attribute), 6-Dec-2025 (DOUBLE, numeric_attribute), 7-Dec-2025 (DOUBLE, numeric_attribute), 8-Dec-2025 (DOUBLE, numeric_attribute), 9-Dec-2025 (DOUBLE, numeric_attribute), 10-Dec-2025 (DOUBLE, numeric_attribute), 11-Dec-2025 (DOUBLE, numeric_attribute), 12-Dec-2025 (DOUBLE, numeric_attribute), 13-Dec-2025 (DOUBLE, numeric_attribute), 14-Dec-2025 (DOUBLE, numeric_attribute), 15-Dec-2025 (DOUBLE, numeric_attribute), 16-Dec-2025 (DOUBLE, numeric_attribute), 17-Dec-2025 (DOUBLE, numeric_attribute), 18-Dec-2025 (DOUBLE, numeric_attribute), 19-Dec-2025 (BIGINT, numeric_attribute), 20-Dec-2025 (BIGINT, numeric_attribute), 21-Dec-2025 (BIGINT, numeric_attribute), 22-Dec-2025 (BIGINT, numeric_attribute), 23-Dec-2025 (BIGINT, numeric_attribute), 24-Dec-2025 (BIGINT, numeric_attribute), 25-Dec-2025 (BIGINT, numeric_attribute), 26-Dec-2025 (BIGINT, numeric_attribute), 27-Dec-2025 (BIGINT, numeric_attribute), 28-Dec-2025 (BIGINT, numeric_attribute), 29-Dec-2025 (BIGINT, numeric_attribute), 30-Dec-2025 (BIGINT, numeric_attribute), 31-Dec-2025 (BIGINT, numeric_attribute), Present Hrs (DOUBLE, numeric_attribute), Basic Pay (BIGINT, numeric_attribute), Present Days (BIGINT, numeric_attribute), WO (BIGINT, numeric_attribute), Total Working days (BIGINT, numeric_measure), Payable Salary (BIGINT, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Final Dec 25"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    }
+  ]
+}

@@ -104,7 +104,7 @@ if 'messages' not in st.session_state:
     st.session_state.messages = conv['messages'] if conv else []
 
 if 'vector_store' not in st.session_state:
-    with st.spinner("🔧 Initializing vector store with Hugging Face embeddings..."):
+    with st.spinner("🔧 Initializing..."):
         st.session_state.vector_store = SchemaVectorStore()
 
 if 'voice_enabled' not in st.session_state:
@@ -439,47 +439,54 @@ with st.sidebar:
 # Display chat messages
 for idx, message in enumerate(st.session_state.messages):
     with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+        # For user messages, show text normally
+        if message["role"] == "user":
+            st.markdown(message["content"])
         
-        # Show additional info for assistant messages
-        if message["role"] == "assistant" and "metadata" in message:
-            metadata = message["metadata"]
-            
-            if metadata.get("data_refreshed"):
-                st.info("🔄 Data was automatically refreshed before processing this query")
-            
-            # Voice output button for assistant messages
+        # For assistant messages, prioritize audio
+        elif message["role"] == "assistant":
+            # Auto-play audio if voice is enabled
             if st.session_state.voice_enabled:
-                col1, col2 = st.columns([1, 5])
-                with col1:
-                    if st.button("🔊 Listen", key=f"voice_out_{idx}"):
-                        with st.spinner("Generating audio..."):
-                            try:
-                                audio_bytes = text_to_speech(message["content"])
-                                st.audio(audio_bytes, format="audio/mp3")
-                            except Exception as e:
-                                st.error(f"Voice output failed: {str(e)}")
+                try:
+                    # Generate and auto-play audio
+                    audio_bytes = text_to_speech(message["content"])
+                    st.audio(audio_bytes, format="audio/mp3", autoplay=True)
+                except Exception as e:
+                    st.error(f"🔊 Audio generation failed: {str(e)}")
+                    # Fallback to showing text if audio fails
+                    st.markdown(message["content"])
             
-            # Expandable sections for details
-            if metadata.get("plan"):
-                with st.expander("📋 Query Plan"):
-                    st.json(metadata["plan"])
+            # Show text answer in collapsible expander
+            with st.expander("📝 View Text Answer", expanded=False):
+                st.markdown(message["content"])
             
-            # Handle data - could be dict (from JSON) or DataFrame
-            if metadata.get("data") is not None:
-                data = metadata["data"]
-                # Check if it's a dict (loaded from JSON) or DataFrame
-                if isinstance(data, dict) and data:
-                    with st.expander("📊 Data"):
-                        st.json(data)
-                elif hasattr(data, 'empty') and not data.empty:
-                    with st.expander("📊 Data"):
-                        st.dataframe(data, use_container_width=True)
-            
-            if metadata.get("schema_context"):
-                with st.expander("🗂️ Schema Context"):
-                    for i, item in enumerate(metadata["schema_context"], 1):
-                        st.markdown(f"**{i}.** {item['text']}")
+            # Show additional metadata
+            if "metadata" in message:
+                metadata = message["metadata"]
+                
+                if metadata.get("data_refreshed"):
+                    st.info("🔄 Data was automatically refreshed before processing this query")
+                
+                # Expandable sections for details
+                if metadata.get("plan"):
+                    with st.expander("📋 Query Plan"):
+                        st.json(metadata["plan"])
+                
+                # Handle data - could be dict (from JSON) or DataFrame
+                if metadata.get("data") is not None:
+                    data = metadata["data"]
+                    # Check if it's a dict (loaded from JSON) or DataFrame
+                    if isinstance(data, dict) and data:
+                        with st.expander("📊 Data"):
+                            st.json(data)
+                    elif hasattr(data, 'empty') and not data.empty:
+                        with st.expander("📊 Data"):
+                            st.dataframe(data, use_container_width=True)
+                
+                if metadata.get("schema_context"):
+                    with st.expander("🗂️ Schema Context"):
+                        for i, item in enumerate(metadata["schema_context"], 1):
+                            st.markdown(f"**{i}.** {item['text']}")
 
 # Voice input section
 if st.session_state.data_loaded:

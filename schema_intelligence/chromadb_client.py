@@ -13,8 +13,37 @@ Embedding Model: sentence-transformers/all-MiniLM-L6-v2
 
 import chromadb
 from chromadb.config import Settings
-from chromadb.utils.embedding_functions.sentence_transformer_embedding_function import SentenceTransformerEmbeddingFunction
+from chromadb.api.types import EmbeddingFunction
 from schema_intelligence.embedding_builder import build_schema_documents
+from typing import List
+import os
+
+
+class CustomSentenceTransformerEmbedding(EmbeddingFunction):
+    """
+    Custom embedding function using sentence-transformers directly.
+    This avoids ChromaDB's built-in wrapper which has PyTorch compatibility issues.
+    """
+    def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2"):
+        try:
+            from sentence_transformers import SentenceTransformer
+            import torch
+            
+            # Set environment variable to avoid tokenizers parallelism warning
+            os.environ["TOKENIZERS_PARALLELISM"] = "false"
+            
+            # Load model with explicit device configuration
+            self.model = SentenceTransformer(model_name, device='cpu')
+        except Exception as e:
+            raise RuntimeError(
+                f"Failed to initialize SentenceTransformer model. "
+                f"Error: {e}"
+            )
+    
+    def __call__(self, input: List[str]) -> List[List[float]]:
+        """Generate embeddings for input texts."""
+        embeddings = self.model.encode(input, convert_to_numpy=True)
+        return embeddings.tolist()
 
 
 class SchemaVectorStore:
@@ -32,16 +61,19 @@ class SchemaVectorStore:
         GUARDRAIL: This constructor NEVER allows ChromaDB to use default embeddings.
         If embedding initialization fails, the system will fail fast with a clear error.
         """
-        # Use PersistentClient for proper disk persistence
-        self.client = chromadb.PersistentClient(path=persist_dir)
+        # Use PersistentClient for proper disk persistence with settings
+        settings = Settings(
+            allow_reset=True,
+            is_persistent=True
+        )
+        self.client = chromadb.PersistentClient(path=persist_dir, settings=settings)
         self.collection_name = "schema"
         
         # CRITICAL: Create Hugging Face embedding function explicitly
         # This prevents ChromaDB from defaulting to ONNX embeddings
         try:
-            self.embedding_function = SentenceTransformerEmbeddingFunction(
-                model_name="sentence-transformers/all-MiniLM-L6-v2"
-            )
+            # Use our custom embedding function to avoid PyTorch meta tensor issues
+            self.embedding_function = CustomSentenceTransformerEmbedding()
         except Exception as e:
             raise RuntimeError(
                 f"Failed to initialize Hugging Face embeddings. "

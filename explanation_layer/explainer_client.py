@@ -58,8 +58,29 @@ def explain_results(result_df, query_plan=None, original_question=None):
     Returns:    
         str: Natural language explanation of the results
     """
+    # Detect the language of the original question first
+    question_language = "English"  # Default
+    if original_question:
+        try:
+            from langdetect import detect
+            import re
+            # Check for Tamil characters
+            tamil_pattern = re.compile(r'[\u0B80-\u0BFF]')
+            if tamil_pattern.search(original_question):
+                question_language = "Tamil"
+            else:
+                detected = detect(original_question)
+                if detected == 'ta':
+                    question_language = "Tamil"
+        except:
+            pass
+    
     if result_df.empty:
-        return "No data is available for the requested criteria."
+        # Provide helpful message in the detected language
+        if question_language == "Tamil":
+            return "கோரப்பட்ட தகவல் கிடைக்கவில்லை. பெயர் சரியாக உள்ளதா என்று சரிபார்க்கவும்."
+        else:
+            return "No data found for the requested criteria. Please check if the name or value is spelled correctly."
     
     # Build context for the LLM
     context = {
@@ -92,15 +113,25 @@ Context:
     
     if original_question:
         prompt += f"\nOriginal Question: {original_question}\n"
+        prompt += f"Question Language: {question_language}\n"
     
-    prompt += """
+    prompt += f"""
 Instructions:
-1. If this is an aggregation query (AVG, SUM, MIN, MAX, COUNT), state the result clearly using the correct aggregation type
-2. For MIN/MAX queries, also mention which row(s) had that value
-3. For multiple rows, provide a brief summary and list key data points
-4. Be concise and direct - no unnecessary elaboration
-5. Use the exact aggregation function name from the context (e.g., "minimum" for MIN, "maximum" for MAX, "average" for AVG)
-6. Format numbers to 2 decimal places when appropriate
+1. **IMPORTANT: Respond in {question_language} language only**
+2. **For Tamil responses: ALWAYS write numbers in Tamil words, NEVER use digits**
+   - Examples:
+     - 15000 → "பதினைந்தாயிரம்" (padhinaindhaayiram)
+     - 24.2 → "இருபத்தி நான்கு புள்ளி இரண்டு" (irupathu naangu pulli irandu)
+     - 2 → "இரண்டு" (irandu)
+     - 2017 → "இரண்டாயிரத்து பதினேழு" (irandaayirathu padhineezhu)
+3. If this is an aggregation query (AVG, SUM, MIN, MAX, COUNT), state the result clearly using the correct aggregation type
+4. For MIN/MAX queries, also mention which row(s) had that value
+5. For multiple rows, provide a brief summary and list key data points
+6. Be concise and direct - no unnecessary elaboration
+7. Use the exact aggregation function name from the context (e.g., "minimum" for MIN, "maximum" for MAX, "average" for AVG)
+8. For English responses: Format numbers with commas (e.g., "15,000")
+9. **Your entire response must be in {question_language}**
+10. **CRITICAL: For Tamil, convert ALL numbers (dates, times, values) to Tamil words**
 
 Generate the explanation:"""
     

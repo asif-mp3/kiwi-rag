@@ -1,0 +1,175 @@
+{
+  "id": "20251225_143807",
+  "title": "Yela iruthuku maala sambalam vaangiravan'ga laa ya...",
+  "created_at": "2025-12-25T14:38:07.742265",
+  "updated_at": "2025-12-25T14:41:26.296354",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Yela iruthuku maala sambalam vaangiravan'ga laa yaar'lam.",
+      "timestamp": "2025-12-25T14:39:25.117086"
+    },
+    {
+      "role": "assistant",
+      "content": "No data is available for the requested criteria.",
+      "timestamp": "2025-12-25T14:39:52.841879",
+      "metadata": {
+        "plan": {
+          "query_type": "filter",
+          "table": "Employee List",
+          "select_columns": [
+            "Employee Name",
+            "salary"
+          ],
+          "filters": [
+            {
+              "column": "salary",
+              "operator": ">",
+              "value": 70000
+            }
+          ],
+          "order_by": [
+            [
+              "salary",
+              "DESC"
+            ]
+          ],
+          "limit": 100,
+          "metrics": [],
+          "group_by": [],
+          "subset_filters": [],
+          "subset_order_by": [],
+          "subset_limit": 100,
+          "aggregation_column": "",
+          "aggregation_function": ""
+        },
+        "data": {
+          "Employee Name": {},
+          "salary": {}
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Manhrs Dec 25_long'. Columns: S.No (INTEGER, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), Present Hrs (INTEGER, numeric_attribute), Basic Pay (BOOLEAN, categorical_attribute), Present Days (BOOLEAN, temporal_attribute), Payable Salary (BOOLEAN, categorical_attribute), Date (DATE, temporal_attribute), Hours (DOUBLE, numeric_attribute), Status (VARCHAR, categorical_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Manhrs Dec 25_long",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Final Dec 25_long'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), Present Hrs (DOUBLE, numeric_attribute), Basic Pay (INTEGER, numeric_attribute), Present Days (BIGINT, numeric_attribute), WO (BIGINT, numeric_attribute), Total Working days (BIGINT, numeric_measure), Payable Salary (BIGINT, numeric_attribute), Date (DATE, temporal_attribute), Hours (DOUBLE, numeric_attribute), Status (VARCHAR, categorical_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Final Dec 25_long"
+            }
+          },
+          {
+            "text": "Table 'Attendance'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (INTEGER, entity_identifier), Department (INTEGER, numeric_attribute), Designation (INTEGER, numeric_attribute), Date (TIMESTAMP_NS, temporal_attribute), Day (VARCHAR, temporal_attribute), In Time (TIMESTAMP_NS, temporal_attribute), Out Time (TIMESTAMP_NS, temporal_attribute), Total Hours (TIMESTAMP_NS, unknown), Status (P/A/L/WFH) (VARCHAR, categorical_attribute), Remarks (INTEGER, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Attendance",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Employee List'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), salary (BIGINT, numeric_attribute), Date of Joining (VARCHAR, temporal_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Employee List"
+            }
+          },
+          {
+            "text": "Table 'Man hrs Attendance'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), Date (TIMESTAMP_NS, temporal_attribute), Day (VARCHAR, temporal_attribute), In time (TIMESTAMP_NS, temporal_attribute), OutTime (TIMESTAMP_NS, temporal_attribute), Total Hours (DOUBLE, numeric_measure), Status (P/A/H/WFH) (VARCHAR, categorical_attribute), Total orginal Hours (DOUBLE, numeric_measure), Remarks (INTEGER, numeric_attribute), Unnamed (INTEGER, entity_identifier), In time_1 (TIMESTAMP_NS, temporal_attribute), OutTime_1 (TIMESTAMP_NS, temporal_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Man hrs Attendance",
+              "type": "table"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "ஏழாயிரத்துக்கு கீழ் சம்பளம் வாங்குறதுல யாரெல்லாம்?",
+      "timestamp": "2025-12-25T14:40:50.326430"
+    },
+    {
+      "role": "assistant",
+      "content": "Certainly. Bharathi has a salary of 0, and Ponni Cleaning Work has a salary of 5000.",
+      "timestamp": "2025-12-25T14:41:26.296354",
+      "metadata": {
+        "plan": {
+          "query_type": "filter",
+          "table": "Employee List",
+          "select_columns": [
+            "Employee Name",
+            "salary"
+          ],
+          "filters": [
+            {
+              "column": "salary",
+              "operator": "<",
+              "value": 7000
+            }
+          ],
+          "group_by": [],
+          "order_by": [],
+          "limit": 100,
+          "metrics": [],
+          "subset_filters": [],
+          "subset_order_by": [],
+          "subset_limit": 100,
+          "aggregation_column": "",
+          "aggregation_function": ""
+        },
+        "data": {
+          "Employee Name": {
+            "0": "Bharathi ",
+            "1": "Ponni Cleaning Work "
+          },
+          "salary": {
+            "0": 0,
+            "1": 5000
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Final Dec 25_long'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), Present Hrs (DOUBLE, numeric_attribute), Basic Pay (INTEGER, numeric_attribute), Present Days (BIGINT, numeric_attribute), WO (BIGINT, numeric_attribute), Total Working days (BIGINT, numeric_measure), Payable Salary (BIGINT, numeric_attribute), Date (DATE, temporal_attribute), Hours (DOUBLE, numeric_attribute), Status (VARCHAR, categorical_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Final Dec 25_long",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Manhrs Dec 25_long'. Columns: S.No (INTEGER, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), Present Hrs (INTEGER, numeric_attribute), Basic Pay (BOOLEAN, categorical_attribute), Present Days (BOOLEAN, temporal_attribute), Payable Salary (BOOLEAN, categorical_attribute), Date (DATE, temporal_attribute), Hours (DOUBLE, numeric_attribute), Status (VARCHAR, categorical_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Manhrs Dec 25_long",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Employee List'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), salary (BIGINT, numeric_attribute), Date of Joining (VARCHAR, temporal_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Employee List",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Attendance'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (INTEGER, entity_identifier), Department (INTEGER, numeric_attribute), Designation (INTEGER, numeric_attribute), Date (TIMESTAMP_NS, temporal_attribute), Day (VARCHAR, temporal_attribute), In Time (TIMESTAMP_NS, temporal_attribute), Out Time (TIMESTAMP_NS, temporal_attribute), Total Hours (TIMESTAMP_NS, unknown), Status (P/A/L/WFH) (VARCHAR, categorical_attribute), Remarks (INTEGER, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Attendance"
+            }
+          },
+          {
+            "text": "Table 'Man hrs Attendance'. Columns: S.No (BIGINT, numeric_attribute), Employee Name (VARCHAR, entity_identifier), Employee ID (VARCHAR, entity_identifier), Department (VARCHAR, unknown), Designation (INTEGER, numeric_attribute), Date (TIMESTAMP_NS, temporal_attribute), Day (VARCHAR, temporal_attribute), In time (TIMESTAMP_NS, temporal_attribute), OutTime (TIMESTAMP_NS, temporal_attribute), Total Hours (DOUBLE, numeric_measure), Status (P/A/H/WFH) (VARCHAR, categorical_attribute), Total orginal Hours (DOUBLE, numeric_measure), Remarks (INTEGER, numeric_attribute), Unnamed (INTEGER, entity_identifier), In time_1 (TIMESTAMP_NS, temporal_attribute), OutTime_1 (TIMESTAMP_NS, temporal_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Man hrs Attendance"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    }
+  ]
+}
