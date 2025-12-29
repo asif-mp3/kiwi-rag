@@ -134,6 +134,9 @@ if 'question_cache' not in st.session_state:
 if 'context_resolver' not in st.session_state:
     st.session_state.context_resolver = ContextResolver()
 
+if 'last_known_fingerprints' not in st.session_state:
+    st.session_state.last_known_fingerprints = None
+
 def extract_spreadsheet_id(url):
     """Extract spreadsheet ID from Google Sheets URL"""
     # Pattern for Google Sheets URLs
@@ -177,6 +180,19 @@ def load_sheets_data(spreadsheet_id):
 
 def check_and_refresh_data():
     """Automatically check for data changes and refresh if needed."""
+    from data_sources.gsheet.change_detector import load_sheet_state, compute_current_fingerprints
+    
+    # Quick check: Compare cached fingerprints with stored state
+    stored_state = load_sheet_state()
+    stored_fingerprints = stored_state.get('fingerprints', {})
+    
+    # If we have cached fingerprints and they match stored state, skip refresh
+    if st.session_state.last_known_fingerprints is not None:
+        if st.session_state.last_known_fingerprints == stored_fingerprints:
+            # No changes detected - skip expensive sheet fetch
+            return False
+    
+    # Either no cache or fingerprints differ - do full check
     needs_refresh_flag, full_reset, current_sheets = needs_refresh()
     
     if needs_refresh_flag:
@@ -195,7 +211,15 @@ def check_and_refresh_data():
             st.success("✅ Incremental refresh complete")
         
         mark_synced(current_sheets)
+        
+        # Update cached fingerprints
+        new_fingerprints = compute_current_fingerprints(current_sheets)
+        st.session_state.last_known_fingerprints = new_fingerprints
+        
         return True
+    
+    # No refresh needed - update cache to match stored state
+    st.session_state.last_known_fingerprints = stored_fingerprints
     return False
 
 def save_message(role: str, content: str, metadata: dict = None):
@@ -471,18 +495,7 @@ for idx, message in enumerate(st.session_state.messages):
                 if len(parts) > 1:
                     english_part = parts[1].strip()
             
-            # Auto-play audio if voice is enabled (play ONLY the Tamil part)
-            if st.session_state.voice_enabled:
-                try:
-                    # Generate and auto-play audio using only the Tamil part
-                    audio_bytes = text_to_speech(tamil_part)
-                    st.audio(audio_bytes, format="audio/mp3", autoplay=True)
-                except Exception as e:
-                    st.error(f"🔊 Audio generation failed: {str(e)}")
-                    # Fallback to showing text if audio fails
-                    st.markdown(tamil_part)
-            
-            # Show text answer in collapsible expander
+            # Show text answer in collapsible expander (no auto-play)
             with st.expander("📝 View Text Answer", expanded=False):
                 st.markdown(tamil_part)
                 
