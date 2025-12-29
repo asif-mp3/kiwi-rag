@@ -28,7 +28,7 @@ from schema_intelligence.chromadb_client import SchemaVectorStore
 from utils.voice_utils import transcribe_audio, text_to_speech, save_audio_temp
 from utils.conversation_manager import ConversationManager
 from utils.question_cache import QuestionCache
-from utils.context_resolver import ContextResolver
+# from utils.context_resolver import ContextResolver  # DISABLED: Context memory feature removed
 from utils.auth_integration import setup_authentication, add_auth_sidebar
 
 # Page configuration
@@ -128,14 +128,19 @@ if 'sheets_url' not in st.session_state:
 if 'data_loaded' not in st.session_state:
     st.session_state.data_loaded = False
 
-if 'question_cache' not in st.session_state:
-    st.session_state.question_cache = QuestionCache(similarity_threshold=0.95)
+# DISABLED: Question cache causes similar questions to return wrong cached answers
+# if 'question_cache' not in st.session_state:
+#     st.session_state.question_cache = QuestionCache(similarity_threshold=0.95)
 
-if 'context_resolver' not in st.session_state:
-    st.session_state.context_resolver = ContextResolver()
+# DISABLED: Context memory feature removed
+# if 'context_resolver' not in st.session_state:
+#     st.session_state.context_resolver = ContextResolver()
 
 if 'last_known_fingerprints' not in st.session_state:
-    st.session_state.last_known_fingerprints = None
+    # Try to load from stored state to avoid unnecessary fetches
+    from data_sources.gsheet.change_detector import load_sheet_state
+    stored_state = load_sheet_state()
+    st.session_state.last_known_fingerprints = stored_state.get('fingerprints', None)
 
 def extract_spreadsheet_id(url):
     """Extract spreadsheet ID from Google Sheets URL"""
@@ -174,6 +179,11 @@ def load_sheets_data(spreadsheet_id):
         load_snapshot(sheets, full_reset=True)
         store.rebuild()
         
+        # Initialize fingerprint cache to avoid unnecessary fetch on first query
+        from data_sources.gsheet.change_detector import compute_current_fingerprints
+        fingerprints = compute_current_fingerprints(sheets)
+        st.session_state.last_known_fingerprints = fingerprints
+        
         return True, sheets
     except Exception as e:
         return False, str(e)
@@ -182,29 +192,24 @@ def check_and_refresh_data():
     """Automatically check for data changes and refresh if needed."""
     from data_sources.gsheet.change_detector import load_sheet_state, compute_current_fingerprints
     
-    # Quick check: Compare cached fingerprints with stored state
-    stored_state = load_sheet_state()
-    stored_fingerprints = stored_state.get('fingerprints', {})
+    print("🔍 Checking for sheet changes (fetching current data to compute hash)...")
     
-    # If we have cached fingerprints and they match stored state, skip refresh
-    if st.session_state.last_known_fingerprints is not None:
-        if st.session_state.last_known_fingerprints == stored_fingerprints:
-            # No changes detected - skip expensive sheet fetch
-            return False
-    
-    # Either no cache or fingerprints differ - do full check
+    # ALWAYS do full check by fetching actual sheet data
+    # This is necessary to detect changes made in Google Sheets
     needs_refresh_flag, full_reset, current_sheets = needs_refresh()
     
     if needs_refresh_flag:
         store = st.session_state.vector_store
         
         if full_reset:
+            print("📊 Sheet structure changed - performing full reset")
             st.info("📊 Sheet structure changed - performing automatic full reset...")
             store.clear_collection()
             load_snapshot(current_sheets, full_reset=True)
             store.rebuild()
             st.success("✅ Full reset complete")
         else:
+            print("📊 Content changed - performing incremental refresh")
             st.info("📊 Content changed - performing automatic incremental refresh...")
             load_snapshot(current_sheets, full_reset=False)
             store.rebuild()
@@ -218,8 +223,10 @@ def check_and_refresh_data():
         
         return True
     
-    # No refresh needed - update cache to match stored state
-    st.session_state.last_known_fingerprints = stored_fingerprints
+    print("✓ No changes detected (hashes match)")
+    # No refresh needed - update cache to match current state
+    stored_state = load_sheet_state()
+    st.session_state.last_known_fingerprints = stored_state.get('fingerprints', {})
     return False
 
 def save_message(role: str, content: str, metadata: dict = None):
@@ -241,35 +248,39 @@ def save_message(role: str, content: str, metadata: dict = None):
 def process_query(question: str):
     """Process a user query through the full RAG pipeline with context memory."""
     try:
+        # DISABLED: Question cache causes similar questions to return wrong cached answers
         # Step 0: Check question cache for similar questions
-        cache_result = st.session_state.question_cache.find_similar(question)
+        # cache_result = st.session_state.question_cache.find_similar(question)
+        # 
+        # if cache_result:
+        #     answer, metadata, similarity = cache_result
+        #     return {
+        #         'success': True,
+        #         'explanation': answer,
+        #         'data': metadata.get('data'),
+        #         'plan': metadata.get('plan'),
+        #         'schema_context': metadata.get('schema_context'),
+        #         'data_refreshed': False,
+        #         'from_cache': True,
+        #         'similarity': similarity
+        #     }
         
-        if cache_result:
-            answer, metadata, similarity = cache_result
-            return {
-                'success': True,
-                'explanation': answer,
-                'data': metadata.get('data'),
-                'plan': metadata.get('plan'),
-                'schema_context': metadata.get('schema_context'),
-                'data_refreshed': False,
-                'from_cache': True,
-                'similarity': similarity
-            }
-        
+        # DISABLED: Context memory feature removed
         # Step 0.5: Check if follow-up question and resolve context
-        original_question = question
-        is_followup = st.session_state.context_resolver.is_followup(
-            question, 
-            st.session_state.messages
-        )
+        # original_question = question
+        # is_followup = st.session_state.context_resolver.is_followup(
+        #     question, 
+        #     st.session_state.messages
+        # )
+        # 
+        # if is_followup:
+        #     resolved_question = st.session_state.context_resolver.resolve_context(
+        #         question,
+        #         st.session_state.messages
+        #     )
+        #     question = resolved_question  # Use resolved question for processing
         
-        if is_followup:
-            resolved_question = st.session_state.context_resolver.resolve_context(
-                question,
-                st.session_state.messages
-            )
-            question = resolved_question  # Use resolved question for processing
+        original_question = question  # Keep for cache compatibility
         
         # Automatic change detection before processing
         data_refreshed = check_and_refresh_data()
@@ -287,17 +298,18 @@ def process_query(question: str):
         # Step 4: Explanation
         explanation = explain_results(result, query_plan=plan, original_question=question)
         
+        # DISABLED: Question cache
         # Cache the result for future similar questions
-        st.session_state.question_cache.add_to_cache(
-            original_question,  # Cache with original question
-            explanation,
-            {
-                'plan': plan,
-                'data': result.to_dict() if hasattr(result, 'to_dict') else None,
-                'schema_context': schema_context,
-                'data_refreshed': data_refreshed
-            }
-        )
+        # st.session_state.question_cache.add_to_cache(
+        #     original_question,  # Cache with original question
+        #     explanation,
+        #     {
+        #         'plan': plan,
+        #         'data': result.to_dict() if hasattr(result, 'to_dict') else None,
+        #         'schema_context': schema_context,
+        #         'data_refreshed': data_refreshed
+        #     }
+        # )
         
         return {
             'success': True,
@@ -306,9 +318,9 @@ def process_query(question: str):
             'plan': plan,
             'schema_context': schema_context,
             'data_refreshed': data_refreshed,
-            'from_cache': False,
-            'was_followup': is_followup,
-            'resolved_question': question if is_followup else None
+            'from_cache': False
+            # 'was_followup': is_followup,  # DISABLED: Context memory removed
+            # 'resolved_question': question if is_followup else None
         }
     except Exception as e:
         return {
