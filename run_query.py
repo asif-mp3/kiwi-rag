@@ -7,26 +7,26 @@ from data_sources.gsheet.change_detector import needs_refresh, mark_synced
 from data_sources.gsheet.snapshot_loader import load_snapshot
 from schema_intelligence.chromadb_client import SchemaVectorStore # Moved import to top
 
-def reset_snapshot(sheets):
+def reset_snapshot(sheets_with_tables):
     """Performs a full reset of the DuckDB snapshot and clears schema embeddings."""
     store = SchemaVectorStore()
     store.clear_collection()
     print("  ✓ Schema embeddings cleared")
     
-    load_snapshot(sheets, full_reset=True)
+    load_snapshot(sheets_with_tables, full_reset=True)
     print("  ✓ DuckDB snapshot reset complete")
 
-def update_snapshot(sheets):
+def update_snapshot(sheets_with_tables):
     """Performs an incremental update of the DuckDB snapshot."""
     # For now, incremental update is just loading the snapshot without full_reset
     # In the future, this could be optimized to only update changed tables
-    load_snapshot(sheets, full_reset=False)
+    load_snapshot(sheets_with_tables, full_reset=False)
     print("  ✓ DuckDB snapshot updated")
 
 def run(question: str):
     # Smart refresh: only reload if Google Sheets has changed
-    # IMPORTANT: needs_refresh() returns (bool, bool, sheets) to avoid double-fetching
-    needs_refresh_flag, full_reset, current_sheets = needs_refresh()
+    # IMPORTANT: needs_refresh() returns (bool, bool, sheets_with_tables) to avoid double-fetching
+    needs_refresh_flag, full_reset, sheets_with_tables = needs_refresh()
     
     # Initialize schema store
     store = SchemaVectorStore()
@@ -35,18 +35,18 @@ def run(question: str):
         if full_reset:
             # Full reset: Clear everything and rebuild from scratch
             print("📊 Sheet structure changed - performing FULL RESET...")
-            reset_snapshot(current_sheets)
+            reset_snapshot(sheets_with_tables)
             store.rebuild()
             print("✓ Schema embeddings rebuilt\n")
         else:
             # Incremental refresh (content changed but structure same)
             print("📊 Content changed - performing incremental refresh...")
-            update_snapshot(current_sheets)
+            update_snapshot(sheets_with_tables)
             store.rebuild()
             print("✓ Schema embeddings rebuilt\n")
         
         # CRITICAL: Save new fingerprints after refresh
-        mark_synced(current_sheets)
+        mark_synced(sheets_with_tables)
     
     print("\n" + "="*80)
     print("QUESTION:")

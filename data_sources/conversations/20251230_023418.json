@@ -1,0 +1,322 @@
+{
+  "id": "20251230_023418",
+  "title": "what was the subtotal on 01/12/2025 in december?",
+  "created_at": "2025-12-30T02:34:18.744422",
+  "updated_at": "2025-12-30T02:37:33.798682",
+  "messages": [
+    {
+      "role": "user",
+      "content": "what was the subtotal on 01/12/2025 in december?",
+      "timestamp": "2025-12-30T02:34:40.270165"
+    },
+    {
+      "role": "assistant",
+      "content": "No data found for the requested criteria. Please check if the name or value is spelled correctly.",
+      "timestamp": "2025-12-30T02:34:58.127010",
+      "metadata": {
+        "plan": {
+          "query_type": "lookup",
+          "table": "Calculation_of_Sales_December",
+          "select_columns": [
+            "December 25"
+          ],
+          "filters": [
+            {
+              "column": "Entity date",
+              "operator": "=",
+              "value": "01/12/2025"
+            }
+          ],
+          "limit": 1,
+          "metrics": [],
+          "group_by": [],
+          "order_by": [],
+          "subset_filters": [],
+          "subset_order_by": [],
+          "aggregation_column": "",
+          "aggregation_function": ""
+        },
+        "data": {
+          "December 25": {}
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Calculation_of_Sales_December'. Description: Table containing Calculation of Sales December. Columns: Entity date (VARCHAR, temporal_attribute), December 25 (DOUBLE, numeric_attribute), Nov 25 (DOUBLE, numeric_attribute), Oct 25 (DOUBLE, numeric_attribute), Sep 25 (DOUBLE, numeric_attribute), Aug 25 (VARCHAR, unknown), Aug 25_1 (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Calculation_of_Sales_December"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Run_Rate_Sales_December'. Description: Table containing Calculation of Run Rate Sales December. Columns: Entity date (VARCHAR, temporal_attribute), December 25 (VARCHAR, unknown), November 25 (VARCHAR, unknown), Oct 25 (VARCHAR, unknown), Sep 25 (VARCHAR, unknown), Aug 25 (VARCHAR, unknown), Aug 25_1 (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Calculation_of_Run_Rate_Sales_December",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Sales_November_25'. Description: Table containing Calculation of Sales November 25. Columns: Entity date (VARCHAR, temporal_attribute), November 25 (DOUBLE, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Calculation_of_Sales_November_25",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Sales_September_25'. Description: Table containing Calculation of Sales September 25. Columns: Entity date (VARCHAR, temporal_attribute), September 25 (DOUBLE, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Calculation_of_Sales_September_25"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Sales_August_25'. Description: Table containing Calculation of Sales August 25. Columns: Entity date (VARCHAR, temporal_attribute), August 25 (DOUBLE, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Calculation_of_Sales_August_25",
+              "type": "table"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "what was the freshggies subtotal on 01/12/2025 in december?\n\n",
+      "timestamp": "2025-12-30T02:35:12.317242"
+    },
+    {
+      "role": "assistant",
+      "content": "The subtotal was 8,259.",
+      "timestamp": "2025-12-30T02:35:37.073440",
+      "metadata": {
+        "plan": {
+          "query_type": "filter",
+          "table": "Freshggies_Shopify_Sales_December_Till_Today_Morning_10_00am",
+          "select_columns": [
+            "Subtotal"
+          ],
+          "filters": [
+            {
+              "column": "Date",
+              "operator": "=",
+              "value": "01/12/2025"
+            },
+            {
+              "column": "Month",
+              "operator": "=",
+              "value": "December"
+            }
+          ],
+          "group_by": [],
+          "order_by": [],
+          "limit": 100,
+          "aggregation_function": "",
+          "aggregation_column": "",
+          "subset_filters": [],
+          "subset_order_by": [],
+          "subset_limit": null,
+          "metrics": []
+        },
+        "data": {
+          "Subtotal": {
+            "0": 8259
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Freshggies_Sales_September'. Description: Table containing Freshggies Sales September. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Sales_September",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_December_Till_Today_Morning_10_00am'. Description: Table containing Freshggies Shopify Sales December Till Today Morning 10 00am. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Shopify_Sales_December_Till_Today_Morning_10_00am",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Sales_August'. Description: Table containing Freshggies Sales August. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Sales_August"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_December'. Description: Table containing Freshggies Shopify Sales on Fulfiilments December. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure), AOV (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_December"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_November'. Description: Table containing Freshggies Shopify Sales on Fulfiilments November. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (DOUBLE, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_November"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "what was the freshggies subtotal on 02/11/2025 in November?\n\n",
+      "timestamp": "2025-12-30T02:36:00.529880"
+    },
+    {
+      "role": "assistant",
+      "content": "The subtotal was 13,156.",
+      "timestamp": "2025-12-30T02:36:27.831543",
+      "metadata": {
+        "plan": {
+          "query_type": "lookup",
+          "table": "Freshggies_Shopify_Sales_on_Fulfiilments_November",
+          "select_columns": [
+            "Subtotal"
+          ],
+          "filters": [
+            {
+              "column": "Date",
+              "operator": "=",
+              "value": "02/11/2025"
+            }
+          ],
+          "limit": 1,
+          "metrics": [],
+          "group_by": [],
+          "order_by": [],
+          "subset_filters": [],
+          "subset_order_by": [],
+          "aggregation_column": "",
+          "aggregation_function": ""
+        },
+        "data": {
+          "Subtotal": {
+            "0": 13156.0
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Freshggies_Sales_September'. Description: Table containing Freshggies Sales September. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Sales_September",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Sales_August'. Description: Table containing Freshggies Sales August. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Sales_August",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_December_Till_Today_Morning_10_00am'. Description: Table containing Freshggies Shopify Sales December Till Today Morning 10 00am. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Shopify_Sales_December_Till_Today_Morning_10_00am",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_November'. Description: Table containing Freshggies Shopify Sales on Fulfiilments November. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (DOUBLE, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_November",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_October'. Description: Table containing Freshggies Shopify Sales on Fulfiilments October. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_October"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "what was the total freshggies sales on december",
+      "timestamp": "2025-12-30T02:37:08.371192"
+    },
+    {
+      "role": "assistant",
+      "content": "The sum of gross sales was 621,200.28. This total is based on 33 records, with values ranging from a minimum of 0.0 to a maximum of 310,600.14.",
+      "timestamp": "2025-12-30T02:37:33.798682",
+      "metadata": {
+        "plan": {
+          "query_type": "aggregation_on_subset",
+          "table": "Freshggies_Shopify_Sales_on_Fulfiilments_December",
+          "aggregation_function": "SUM",
+          "aggregation_column": "Gross sales",
+          "subset_filters": [],
+          "subset_order_by": [],
+          "subset_limit": null,
+          "select_columns": [],
+          "metrics": [],
+          "filters": [],
+          "group_by": [],
+          "order_by": [],
+          "limit": 100
+        },
+        "data": {
+          "result": {
+            "0": 621200.28
+          },
+          "row_count": {
+            "0": 33
+          },
+          "min_value": {
+            "0": 0.0
+          },
+          "max_value": {
+            "0": 310600.14
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_December'. Description: Table containing Freshggies Shopify Sales on Fulfiilments December. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure), AOV (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_December"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_November'. Description: Table containing Freshggies Shopify Sales on Fulfiilments November. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (DOUBLE, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_November",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_December_Till_Today_Morning_10_00am'. Description: Table containing Freshggies Shopify Sales December Till Today Morning 10 00am. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Shopify_Sales_December_Till_Today_Morning_10_00am",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_October'. Description: Table containing Freshggies Shopify Sales on Fulfiilments October. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_October",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Sales_September'. Description: Table containing Freshggies Sales September. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Sales_September"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    }
+  ]
+}

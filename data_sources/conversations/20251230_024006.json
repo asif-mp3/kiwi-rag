@@ -1,0 +1,879 @@
+{
+  "id": "20251230_024006",
+  "title": "what is the AOV on Oct 25",
+  "created_at": "2025-12-30T02:40:06.374083",
+  "updated_at": "2025-12-30T03:08:37.850216",
+  "messages": [
+    {
+      "role": "user",
+      "content": "what is the AOV on Oct 25",
+      "timestamp": "2025-12-30T02:45:38.584598"
+    },
+    {
+      "role": "assistant",
+      "content": "The average for October 25 is 98,263.6225. This is based on 4 records, with a minimum value of 17.0 and a maximum value of 391,764.1.",
+      "timestamp": "2025-12-30T02:46:03.226802",
+      "metadata": {
+        "plan": {
+          "query_type": "aggregation_on_subset",
+          "table": "Calculation_of_Sales_October_25",
+          "aggregation_function": "AVG",
+          "aggregation_column": "October 25",
+          "subset_filters": [],
+          "subset_order_by": [],
+          "subset_limit": null,
+          "select_columns": [],
+          "metrics": [],
+          "filters": [],
+          "group_by": [],
+          "order_by": [],
+          "limit": 100
+        },
+        "data": {
+          "result": {
+            "0": 98263.6225
+          },
+          "row_count": {
+            "0": 4
+          },
+          "min_value": {
+            "0": 17.0
+          },
+          "max_value": {
+            "0": 391764.1
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Calculation_of_Sales_October_25'. Description: Table containing Calculation of Sales October 25. Columns: Entity date (VARCHAR, temporal_attribute), October 25 (DOUBLE, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Calculation_of_Sales_October_25"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Run_Rate_Sales_October_25'. Description: Table containing Calculation of Run Rate Sales October 25. Columns: Entity date (VARCHAR, temporal_attribute), October 25 (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Calculation_of_Run_Rate_Sales_October_25"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Sales_August_25'. Description: Table containing Calculation of Sales August 25. Columns: Entity date (VARCHAR, temporal_attribute), August 25 (DOUBLE, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Calculation_of_Sales_August_25",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Sales_November_25'. Description: Table containing Calculation of Sales November 25. Columns: Entity date (VARCHAR, temporal_attribute), November 25 (DOUBLE, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Calculation_of_Sales_November_25",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Sales_September_25'. Description: Table containing Calculation of Sales September 25. Columns: Entity date (VARCHAR, temporal_attribute), September 25 (DOUBLE, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Calculation_of_Sales_September_25"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "what is the AOV on Oct 25 in calculation of sales ",
+      "timestamp": "2025-12-30T02:48:05.227620"
+    },
+    {
+      "role": "assistant",
+      "content": "The average for October 25 is 98,263.6225. This was calculated from 4 rows, with a minimum value of 17 and a maximum value of 391,764.1.",
+      "timestamp": "2025-12-30T02:48:35.031219",
+      "metadata": {
+        "plan": {
+          "query_type": "aggregation_on_subset",
+          "table": "Calculation_of_Sales_October_25",
+          "aggregation_function": "AVG",
+          "aggregation_column": "October 25",
+          "subset_filters": [],
+          "subset_order_by": [],
+          "subset_limit": null,
+          "select_columns": [],
+          "metrics": [],
+          "filters": [],
+          "group_by": [],
+          "order_by": [],
+          "limit": 100
+        },
+        "data": {
+          "result": {
+            "0": 98263.6225
+          },
+          "row_count": {
+            "0": 4
+          },
+          "min_value": {
+            "0": 17.0
+          },
+          "max_value": {
+            "0": 391764.1
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Calculation_of_Sales_October_25'. Description: Table containing Calculation of Sales October 25. Columns: Entity date (VARCHAR, temporal_attribute), October 25 (DOUBLE, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Calculation_of_Sales_October_25",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Sales_August_25'. Description: Table containing Calculation of Sales August 25. Columns: Entity date (VARCHAR, temporal_attribute), August 25 (DOUBLE, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Calculation_of_Sales_August_25",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Run_Rate_Sales_October_25'. Description: Table containing Calculation of Run Rate Sales October 25. Columns: Entity date (VARCHAR, temporal_attribute), October 25 (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Calculation_of_Run_Rate_Sales_October_25"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Run_Rate_Sales_August_25'. Description: Table containing Calculation of Run Rate Sales August 25. Columns: Entity date (VARCHAR, temporal_attribute), August 25 (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Calculation_of_Run_Rate_Sales_August_25"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Run_Rate_Sales_December'. Description: Table containing Calculation of Run Rate Sales December. Columns: Entity date (VARCHAR, temporal_attribute), December 25 (VARCHAR, unknown), November 25 (VARCHAR, unknown), Oct 25 (VARCHAR, unknown), Sep 25 (VARCHAR, unknown), Aug 25 (VARCHAR, unknown), Aug 25_1 (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Calculation_of_Run_Rate_Sales_December"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "what was the value of sold items on august in koyambedu pincode 600107",
+      "timestamp": "2025-12-30T02:52:19.717710"
+    },
+    {
+      "role": "assistant",
+      "content": "The sum of gross sales is 276,646.85. This total is based on 31 records, with values ranging from a minimum of 4,067.81 to a maximum of 16,228.05.",
+      "timestamp": "2025-12-30T02:52:50.309176",
+      "metadata": {
+        "plan": {
+          "query_type": "aggregation_on_subset",
+          "table": "Freshggies_Sales_August",
+          "aggregation_function": "SUM",
+          "aggregation_column": "Gross sales",
+          "subset_filters": [],
+          "subset_order_by": [],
+          "subset_limit": null,
+          "select_columns": [],
+          "metrics": [],
+          "filters": [],
+          "group_by": [],
+          "order_by": [],
+          "limit": 100
+        },
+        "data": {
+          "result": {
+            "0": 276646.85000000003
+          },
+          "row_count": {
+            "0": 31
+          },
+          "min_value": {
+            "0": 4067.81
+          },
+          "max_value": {
+            "0": 16228.05
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_October'. Description: Table containing Freshggies Shopify Sales on Fulfiilments October. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_October",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Sales_August_25'. Description: Table containing Calculation of Sales August 25. Columns: Entity date (VARCHAR, temporal_attribute), August 25 (DOUBLE, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Calculation_of_Sales_August_25"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_November'. Description: Table containing Freshggies Shopify Sales on Fulfiilments November. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (DOUBLE, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_November"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_December'. Description: Table containing Freshggies Shopify Sales on Fulfiilments December. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure), AOV (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_December",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Sales_August'. Description: Table containing Freshggies Sales August. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Sales_August",
+              "type": "table"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "what was the value of sold items on august in koyambedu area pincode 600107\n\n",
+      "timestamp": "2025-12-30T02:53:13.930124"
+    },
+    {
+      "role": "assistant",
+      "content": "The total value of sold items is 261,535.74. This sum is based on 4 records, with values ranging from a minimum of 11 to a maximum of 260,418.8.",
+      "timestamp": "2025-12-30T02:53:51.277474",
+      "metadata": {
+        "plan": {
+          "query_type": "aggregation_on_subset",
+          "table": "Calculation_of_Sales_August_25",
+          "aggregation_function": "SUM",
+          "aggregation_column": "August 25",
+          "subset_filters": [],
+          "subset_order_by": [],
+          "subset_limit": null,
+          "select_columns": [],
+          "metrics": [],
+          "filters": [],
+          "group_by": [],
+          "order_by": [],
+          "limit": 100
+        },
+        "data": {
+          "result": {
+            "0": 261535.74
+          },
+          "row_count": {
+            "0": 4
+          },
+          "min_value": {
+            "0": 11.0
+          },
+          "max_value": {
+            "0": 260418.8
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_October'. Description: Table containing Freshggies Shopify Sales on Fulfiilments October. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_October"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_November'. Description: Table containing Freshggies Shopify Sales on Fulfiilments November. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (DOUBLE, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_November"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_December'. Description: Table containing Freshggies Shopify Sales on Fulfiilments December. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure), AOV (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_December"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Sales_August_25'. Description: Table containing Calculation of Sales August 25. Columns: Entity date (VARCHAR, temporal_attribute), August 25 (DOUBLE, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Calculation_of_Sales_August_25",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_December_Till_Today_Morning_10_00am'. Description: Table containing Freshggies Shopify Sales December Till Today Morning 10 00am. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Shopify_Sales_December_Till_Today_Morning_10_00am"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "which lineitem sold the most in august",
+      "timestamp": "2025-12-30T02:54:32.034244"
+    },
+    {
+      "role": "assistant",
+      "content": "The date is August 31st, 2025.",
+      "timestamp": "2025-12-30T02:55:02.490176",
+      "metadata": {
+        "plan": {
+          "query_type": "extrema_lookup",
+          "table": "Freshggies_Sales_August",
+          "select_columns": [
+            "Date"
+          ],
+          "filters": [],
+          "order_by": [
+            [
+              "Gross sales",
+              "DESC"
+            ]
+          ],
+          "limit": 1,
+          "metrics": [],
+          "group_by": [],
+          "subset_filters": [],
+          "subset_order_by": [],
+          "aggregation_column": "",
+          "aggregation_function": ""
+        },
+        "data": {
+          "Date": {
+            "0": "31/08/2025"
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_October'. Description: Table containing Freshggies Shopify Sales on Fulfiilments October. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_October"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Sales_August'. Description: Table containing Freshggies Sales August. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Sales_August",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_December'. Description: Table containing Freshggies Shopify Sales on Fulfiilments December. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure), AOV (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_December"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_November'. Description: Table containing Freshggies Shopify Sales on Fulfiilments November. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (DOUBLE, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_November",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Sales_August_25'. Description: Table containing Calculation of Sales August 25. Columns: Entity date (VARCHAR, temporal_attribute), August 25 (DOUBLE, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Calculation_of_Sales_August_25",
+              "type": "table"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "which lineitem sold the most in august\n\n",
+      "timestamp": "2025-12-30T03:00:02.539154"
+    },
+    {
+      "role": "assistant",
+      "content": "The line item that sold the most in August was Grated Coconut - 100g, with a total of 123.",
+      "timestamp": "2025-12-30T03:00:22.053902",
+      "metadata": {
+        "plan": {
+          "query_type": "extrema_lookup",
+          "table": "Month_Table1",
+          "select_columns": [
+            "Lineitem name",
+            "August"
+          ],
+          "filters": [],
+          "group_by": [],
+          "order_by": [
+            [
+              "August",
+              "DESC"
+            ]
+          ],
+          "limit": 1,
+          "aggregation_function": "",
+          "aggregation_column": "",
+          "subset_filters": [],
+          "subset_order_by": [],
+          "subset_limit": null,
+          "metrics": []
+        },
+        "data": {
+          "Lineitem name": {
+            "0": "Grated Coconut - 100g"
+          },
+          "August": {
+            "0": 123
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Month_Table1'. Description: Detailed sales breakdown by line item/product. Contains monthly quantity/value columns (e.g. August, September).. Columns: S.no (BIGINT, numeric_attribute), Lineitem name (VARCHAR, entity_identifier), M Catergory (VARCHAR, temporal_attribute), August (BIGINT, numeric_attribute), September (BIGINT, numeric_attribute), October (BIGINT, numeric_attribute), November (BIGINT, numeric_attribute), December (BIGINT, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Month_Table1"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Sales_August_25'. Description: Table containing Calculation of Sales August 25. Columns: Entity date (VARCHAR, temporal_attribute), August 25 (DOUBLE, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Calculation_of_Sales_August_25",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_October'. Description: Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc.. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_October"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_December'. Description: Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc.. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure), AOV (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_December"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Sales_August'. Description: Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc.. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Sales_August",
+              "type": "table"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "which lineitem sold the most in september\n\n",
+      "timestamp": "2025-12-30T03:01:39.582781"
+    },
+    {
+      "role": "assistant",
+      "content": "The line item that sold the most in September was Grated Coconut - 100g, with 106 sold.",
+      "timestamp": "2025-12-30T03:02:02.575417",
+      "metadata": {
+        "plan": {
+          "query_type": "extrema_lookup",
+          "table": "Month_Table1",
+          "select_columns": [
+            "Lineitem name",
+            "September"
+          ],
+          "filters": [],
+          "group_by": [],
+          "order_by": [
+            [
+              "September",
+              "DESC"
+            ]
+          ],
+          "limit": 1,
+          "metrics": [],
+          "subset_filters": [],
+          "subset_order_by": [],
+          "aggregation_column": "",
+          "aggregation_function": ""
+        },
+        "data": {
+          "Lineitem name": {
+            "0": "Grated Coconut - 100g"
+          },
+          "September": {
+            "0": 106
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Month_Table1'. Description: Detailed sales breakdown by line item/product. Contains monthly quantity/value columns (e.g. August, September).. Columns: S.no (BIGINT, numeric_attribute), Lineitem name (VARCHAR, entity_identifier), M Catergory (VARCHAR, temporal_attribute), August (BIGINT, numeric_attribute), September (BIGINT, numeric_attribute), October (BIGINT, numeric_attribute), November (BIGINT, numeric_attribute), December (BIGINT, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Month_Table1"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Sales_September_25'. Description: Table containing Calculation of Sales September 25. Columns: Entity date (VARCHAR, temporal_attribute), September 25 (DOUBLE, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Calculation_of_Sales_September_25",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Run_Rate_Sales_September_25'. Description: Table containing Calculation of Run Rate Sales September 25. Columns: Entity date (VARCHAR, temporal_attribute), September 25 (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Calculation_of_Run_Rate_Sales_September_25",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Sales_September'. Description: Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc.. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Sales_September",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_December'. Description: Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc.. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure), AOV (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_December",
+              "type": "table"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "which lineitems sold over 100 in september",
+      "timestamp": "2025-12-30T03:02:23.862896"
+    },
+    {
+      "role": "assistant",
+      "content": "Two line items sold over 100 in September: Regular Batter - 800ml sold 104, and Grated Coconut - 100g sold 106.",
+      "timestamp": "2025-12-30T03:02:46.751526",
+      "metadata": {
+        "plan": {
+          "query_type": "filter",
+          "table": "Month_Table1",
+          "select_columns": [
+            "Lineitem name",
+            "September"
+          ],
+          "filters": [
+            {
+              "column": "September",
+              "operator": ">",
+              "value": 100
+            }
+          ],
+          "order_by": [],
+          "limit": 100,
+          "metrics": [],
+          "group_by": [],
+          "subset_filters": [],
+          "subset_order_by": [],
+          "aggregation_column": "",
+          "aggregation_function": ""
+        },
+        "data": {
+          "Lineitem name": {
+            "0": "Regular Batter - 800ml",
+            "1": "Grated Coconut - 100g"
+          },
+          "September": {
+            "0": 104,
+            "1": 106
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Month_Table1'. Description: Detailed sales breakdown by line item/product. Contains monthly quantity/value columns (e.g. August, September).. Columns: S.no (BIGINT, numeric_attribute), Lineitem name (VARCHAR, entity_identifier), M Catergory (VARCHAR, temporal_attribute), August (BIGINT, numeric_attribute), September (BIGINT, numeric_attribute), October (BIGINT, numeric_attribute), November (BIGINT, numeric_attribute), December (BIGINT, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Month_Table1",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Sales_September_25'. Description: Table containing Calculation of Sales September 25. Columns: Entity date (VARCHAR, temporal_attribute), September 25 (DOUBLE, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Calculation_of_Sales_September_25",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Run_Rate_Sales_September_25'. Description: Table containing Calculation of Run Rate Sales September 25. Columns: Entity date (VARCHAR, temporal_attribute), September 25 (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Calculation_of_Run_Rate_Sales_September_25"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_December'. Description: Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc.. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure), AOV (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_December"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Sales_September'. Description: Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc.. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Sales_September"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "how many orders were placed on 01/09/2025 september",
+      "timestamp": "2025-12-30T03:03:44.710913"
+    },
+    {
+      "role": "assistant",
+      "content": "On September 1st, 2025, there were 10 orders.",
+      "timestamp": "2025-12-30T03:04:11.852812",
+      "metadata": {
+        "plan": {
+          "query_type": "lookup",
+          "table": "Freshggies_Sales_September",
+          "select_columns": [
+            "Orders"
+          ],
+          "filters": [
+            {
+              "column": "Date",
+              "operator": "=",
+              "value": "01/09/2025"
+            }
+          ],
+          "limit": 1,
+          "metrics": [],
+          "group_by": [],
+          "order_by": [],
+          "subset_filters": [],
+          "subset_order_by": [],
+          "aggregation_column": "",
+          "aggregation_function": ""
+        },
+        "data": {
+          "Orders": {
+            "0": 10
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_November_By_Category'. Description: Table containing Freshggies Shopify Sales on Fulfiilments November By Category. Columns: Sales by Cat (VARCHAR, temporal_attribute), Orders-01/11/2025 (VARCHAR, unknown), Gross sales-01/11/2025 (DOUBLE, numeric_measure), Orders-02/11/2025 (VARCHAR, unknown), Gross sales-02/11/2025 (DOUBLE, numeric_measure), Orders-03/11/2025 (VARCHAR, unknown), Gross sales-03/11/2025 (DOUBLE, numeric_measure), Orders-04/11/2025 (VARCHAR, unknown), Gross sales-04/11/2025 (DOUBLE, numeric_measure), Orders-05/11/2025 (VARCHAR, unknown), Gross sales-05/11/2025 (DOUBLE, numeric_measure), Orders-06/11/2025 (VARCHAR, unknown), Gross sales-06/11/2025 (DOUBLE, numeric_measure), Orders-07/11/2025 (VARCHAR, unknown), Gross sales-07/11/2025 (DOUBLE, numeric_measure), Orders-08/11/2025 (VARCHAR, unknown), Gross sales-08/11/2025 (DOUBLE, numeric_measure), Orders-09/11/2025 (VARCHAR, unknown), Gross sales-09/11/2025 (DOUBLE, numeric_measure), Orders-10/11/2025 (VARCHAR, unknown), Gross sales-10/11/2025 (DOUBLE, numeric_measure), Orders-11/11/2025 (VARCHAR, unknown), Gross sales-11/11/2025 (DOUBLE, numeric_measure), Orders-12/11/2025 (VARCHAR, unknown), Gross sales-12/11/2025 (DOUBLE, numeric_measure), Orders-13/11/2025 (VARCHAR, unknown), Gross sales-13/11/2025 (DOUBLE, numeric_measure), Orders-14/11/2025 (VARCHAR, unknown), Gross sales-14/11/2025 (DOUBLE, numeric_measure), Orders-15/11/2025 (VARCHAR, unknown), Gross sales-15/11/2025 (DOUBLE, numeric_measure), Orders-16/11/2025 (VARCHAR, unknown), Gross sales-16/11/2025 (DOUBLE, numeric_measure), Orders-17/11/2025 (VARCHAR, unknown), Gross sales-17/11/2025 (DOUBLE, numeric_measure), Orders-18/11/2025 (VARCHAR, unknown), Gross sales-18/11/2025 (DOUBLE, numeric_measure), Orders-19/11/2025 (VARCHAR, unknown), Gross sales-19/11/2025 (DOUBLE, numeric_measure), Orders-20/11/2025 (VARCHAR, unknown), Gross sales-20/11/2025 (DOUBLE, numeric_measure), Orders-21/11/2025 (VARCHAR, unknown), Gross sales-21/11/2025 (DOUBLE, numeric_measure), Orders-22/11/2025 (VARCHAR, unknown), Gross sales-22/11/2025 (DOUBLE, numeric_measure), Orders-23/11/2025 (VARCHAR, unknown), Gross sales-23/11/2025 (DOUBLE, numeric_measure), Orders-24/11/2025 (VARCHAR, unknown), Gross sales-24/11/2025 (DOUBLE, numeric_measure), Orders-25/11/2025 (VARCHAR, unknown), Gross sales-25/11/2025 (DOUBLE, numeric_measure), Orders-26/11/2025 (VARCHAR, unknown), Gross sales-26/11/2025 (DOUBLE, numeric_measure), Orders-27/11/2025 (VARCHAR, unknown), Gross sales-27/11/2025 (DOUBLE, numeric_measure), Orders-28/11/2025 (VARCHAR, unknown), Gross sales-28/11/2025 (DOUBLE, numeric_measure), Orders-29/11/2025 (VARCHAR, unknown), Gross sales-29/11/2025 (DOUBLE, numeric_measure), Orders-30/11/2025 (VARCHAR, unknown), Gross sales-30/11/2025 (DOUBLE, numeric_measure), Orders- (VARCHAR, unknown), Gross sales-01/12/2025 (DOUBLE, numeric_measure), Orders-GRAND TOTAL (VARCHAR, unknown), Gross sales-GRAND TOTAL (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_November_By_Category"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Sales_September_25'. Description: Table containing Calculation of Sales September 25. Columns: Entity date (VARCHAR, temporal_attribute), September 25 (DOUBLE, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Calculation_of_Sales_September_25",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_October_by_Category'. Description: Table containing Freshggies Shopify Sales on Fulfiilments October by Category. Columns: Sales by Cat (VARCHAR, temporal_attribute), Orders - 01/10/2025 (VARCHAR, unknown), Gross sales - 01/10/2025 (VARCHAR, unknown), Orders - 02/10/2025 (VARCHAR, unknown), Gross sales - 02/10/2025 (DOUBLE, numeric_measure), Orders - 03/10/2025 (VARCHAR, unknown), Gross sales - 03/10/2025 (DOUBLE, numeric_measure), Orders - 04/10/2025 (VARCHAR, unknown), Gross sales - 04/10/2025 (DOUBLE, numeric_measure), Orders - 05/10/2025 (VARCHAR, unknown), Gross sales - 05/10/2025 (BIGINT, numeric_measure), Orders - 06/10/2025 (VARCHAR, unknown), Gross sales - 06/10/2025 (DOUBLE, numeric_measure), Orders - 07/10/2025 (VARCHAR, unknown), Gross sales - 07/10/2025 (DOUBLE, numeric_measure), Orders - 08/10/2025 (VARCHAR, unknown), Gross sales - 08/10/2025 (BIGINT, numeric_measure), Orders - 09/10/2025 (VARCHAR, unknown), Gross sales - 09/10/2025 (BIGINT, numeric_measure), Orders - 10/10/2025 (VARCHAR, unknown), Gross sales - 10/10/2025 (DOUBLE, numeric_measure), Orders - 11/10/2025 (VARCHAR, unknown), Gross sales - 11/10/2025 (DOUBLE, numeric_measure), Orders - 12/10/2025 (VARCHAR, unknown), Gross sales - 12/10/2025 (DOUBLE, numeric_measure), Orders - 13/10/2025 (VARCHAR, unknown), Gross sales - 13/10/2025 (DOUBLE, numeric_measure), Orders - 14/10/2025 (VARCHAR, unknown), Gross sales -14/10/2025 (DOUBLE, numeric_measure), Orders - 15/10/2025 (VARCHAR, unknown), Gross sales - 15/10/2025 (DOUBLE, numeric_measure), Orders - 16/10/2025 (VARCHAR, unknown), Gross sales - 16/10/2025 (DOUBLE, numeric_measure), Orders -17/10/2025 (VARCHAR, unknown), Gross sales - 01/10/2025_1 (VARCHAR, unknown), Orders - 18/10/2025 (VARCHAR, unknown), Gross sales -18/10/2025 (DOUBLE, numeric_measure), Orders - 19/10/2025 (VARCHAR, unknown), Gross sales - 19/10/2025 (DOUBLE, numeric_measure), Orders - 20/10/2025 (VARCHAR, unknown), Gross sales - 20/10/2025 (DOUBLE, numeric_measure), Orders - 21/10/2025 (VARCHAR, unknown), Gross sales -21/10/2025 (DOUBLE, numeric_measure), Orders -22/10/2025 (VARCHAR, unknown), Gross sales -22/10/2025 (DOUBLE, numeric_measure), Orders -23/10/2025 (VARCHAR, unknown), Gross sales - 23/10/2025 (DOUBLE, numeric_measure), Orders - 24/10/2025 (VARCHAR, unknown), Gross sales-24/10/2025 (DOUBLE, numeric_measure), Orders - 25/10/2025 (VARCHAR, unknown), Gross sales-25/10/2025 (DOUBLE, numeric_measure), Orders - 26/10/2025 (VARCHAR, unknown), Gross sales-26/10/2025 (DOUBLE, numeric_measure), Orders - 27/10/2025 (VARCHAR, unknown), Gross sales-27/10/2025 (DOUBLE, numeric_measure), Orders - 28/10/2025 (VARCHAR, unknown), Gross sales-28/10/2025 (DOUBLE, numeric_measure), Orders - 29/10/2025 (VARCHAR, unknown), Gross sales-29/10/2025 (DOUBLE, numeric_measure), Orders - 30/10/2025 (VARCHAR, unknown), Gross sales-30/10/2025 (DOUBLE, numeric_measure), Orders -01/12/2025 (VARCHAR, unknown), Gross sales-01/12/2025 (DOUBLE, numeric_measure), Orders-GRAND TOTAL (VARCHAR, unknown), Gross sales-GRAND TOTAL (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_October_by_Category",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Sales_September'. Description: Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc.. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Sales_September"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Run_Rate_Sales_September_25'. Description: Table containing Calculation of Run Rate Sales September 25. Columns: Entity date (VARCHAR, temporal_attribute), September 25 (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Calculation_of_Run_Rate_Sales_September_25"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "what is the value of sold products in august in koyambedu",
+      "timestamp": "2025-12-30T03:05:01.304843"
+    },
+    {
+      "role": "assistant",
+      "content": "The sum for August 25 is 261,535.74. This is based on 4 records, with a minimum value of 11.0 and a maximum of 260,418.8.",
+      "timestamp": "2025-12-30T03:05:30.361730",
+      "metadata": {
+        "plan": {
+          "query_type": "aggregation_on_subset",
+          "table": "Calculation_of_Sales_August_25",
+          "aggregation_function": "SUM",
+          "aggregation_column": "August 25",
+          "subset_filters": [],
+          "subset_order_by": [],
+          "subset_limit": null,
+          "select_columns": [],
+          "metrics": [],
+          "filters": [],
+          "group_by": [],
+          "order_by": [],
+          "limit": 100
+        },
+        "data": {
+          "result": {
+            "0": 261535.74
+          },
+          "row_count": {
+            "0": 4
+          },
+          "min_value": {
+            "0": 11.0
+          },
+          "max_value": {
+            "0": 260418.8
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Calculation_of_Sales_August_25'. Description: Table containing Calculation of Sales August 25. Columns: Entity date (VARCHAR, temporal_attribute), August 25 (DOUBLE, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Calculation_of_Sales_August_25",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Run_Rate_Sales_August_25'. Description: Table containing Calculation of Run Rate Sales August 25. Columns: Entity date (VARCHAR, temporal_attribute), August 25 (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Calculation_of_Run_Rate_Sales_August_25",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_October'. Description: Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc.. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_October",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_December'. Description: Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc.. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure), AOV (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_December",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_November'. Description: Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc.. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (DOUBLE, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_November",
+              "type": "table"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "what is the value of sold products in august in koyambedu\n\n",
+      "timestamp": "2025-12-30T03:08:07.711824"
+    },
+    {
+      "role": "assistant",
+      "content": "The total value is 261,535.74. This is the sum of 4 records, with values ranging from a minimum of 11.0 to a maximum of 260,418.8.",
+      "timestamp": "2025-12-30T03:08:37.850216",
+      "metadata": {
+        "plan": {
+          "query_type": "aggregation_on_subset",
+          "table": "Calculation_of_Sales_August_25",
+          "aggregation_function": "SUM",
+          "aggregation_column": "August 25",
+          "subset_filters": [],
+          "subset_order_by": [],
+          "subset_limit": null,
+          "select_columns": [],
+          "metrics": [],
+          "filters": [],
+          "group_by": [],
+          "order_by": [],
+          "limit": 100
+        },
+        "data": {
+          "result": {
+            "0": 261535.74
+          },
+          "row_count": {
+            "0": 4
+          },
+          "min_value": {
+            "0": 11.0
+          },
+          "max_value": {
+            "0": 260418.8
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Calculation_of_Sales_August_25'. Description: Table containing Calculation of Sales August 25. Columns: Entity date (VARCHAR, temporal_attribute), August 25 (DOUBLE, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Calculation_of_Sales_August_25",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Calculation_of_Run_Rate_Sales_August_25'. Description: Table containing Calculation of Run Rate Sales August 25. Columns: Entity date (VARCHAR, temporal_attribute), August 25 (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Calculation_of_Run_Rate_Sales_August_25"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_October'. Description: Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc.. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_October",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_December'. Description: Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc.. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure), AOV (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_December"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_November'. Description: Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc.. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (DOUBLE, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_November",
+              "type": "table"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    }
+  ]
+}

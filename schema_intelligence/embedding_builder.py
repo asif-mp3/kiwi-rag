@@ -23,6 +23,7 @@ def build_schema_documents():
 
         text = (
             f"Table '{table}'. "
+            f"Description: {meta.get('description', '')}. "
             f"Columns: {column_str}. "
             f"Grain: {meta.get('grain', 'UNKNOWN')}."
         )

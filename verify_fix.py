@@ -1,17 +1,17 @@
 """
 Reload data with the fixed combine_date_time_columns function
 """
-from data_sources.gsheet.connector import fetch_sheets
+from data_sources.gsheet.connector import fetch_sheets_with_tables
 from data_sources.gsheet.snapshot_loader import load_snapshot
 import duckdb
 
 # Load fresh data with the fixed code
 print("Loading data from Google Sheets with FIXED code...")
-sheets = fetch_sheets()
+sheets_with_tables = fetch_sheets_with_tables()
 
 # Load into DuckDB
 print("\nLoading into DuckDB...")
-load_snapshot(sheets, full_reset=True)
+load_snapshot(sheets_with_tables, full_reset=True)
 
 # Verify the fix
 print("\n" + "=" * 80)

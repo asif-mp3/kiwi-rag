@@ -40,6 +40,8 @@ wheels/
 
 # Credentials - exclude JSON files but keep the folder
 credentials/*.json
+**/service_account.json
+
 
 # ChromaDB
 chroma_db/
@@ -48,5 +50,14 @@ chroma_db/
 # Logs
 *.log
 
-#testing files
+# Testing files
 test/
+test_*.py
+debug_*.py
+compare_*.py
+verify_*.py
+analyze_*.py
+rebuild_embeddings.py
+
+# Schema Store (ChromaDB persistence)
+schema_store/

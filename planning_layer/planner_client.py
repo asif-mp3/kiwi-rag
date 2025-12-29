@@ -30,7 +30,7 @@ def initialize_gemini_client(config):
     
     genai.configure(api_key=api_key)
     
-    model_name = config.get("model", "gemini-2.0-flash-exp")
+    model_name = config.get("model", "gemini-2.5-pro")
     temperature = config.get("temperature", 0.0)
     
     generation_config = {

@@ -169,22 +169,24 @@ def load_sheets_data(spreadsheet_id):
         with open(config_path, 'w') as f:
             yaml.dump(config, f)
         
-        # Reload data using fetch_sheets
-        from data_sources.gsheet.connector import fetch_sheets
-        sheets = fetch_sheets()
+        # Reload data using fetch_sheets_with_tables
+        from data_sources.gsheet.connector import fetch_sheets_with_tables
+        sheets_with_tables = fetch_sheets_with_tables()
         
         # Clear and rebuild vector store
         store = st.session_state.vector_store
         store.clear_collection()
-        load_snapshot(sheets, full_reset=True)
+        load_snapshot(sheets_with_tables, full_reset=True)
         store.rebuild()
         
         # Initialize fingerprint cache to avoid unnecessary fetch on first query
         from data_sources.gsheet.change_detector import compute_current_fingerprints
-        fingerprints = compute_current_fingerprints(sheets)
+        fingerprints = compute_current_fingerprints(sheets_with_tables)
         st.session_state.last_known_fingerprints = fingerprints
         
-        return True, sheets
+        # Count total tables for display
+        total_tables = sum(len(tables) for tables in sheets_with_tables.values())
+        return True, (len(sheets_with_tables), total_tables)
     except Exception as e:
         return False, str(e)
 
@@ -196,29 +198,29 @@ def check_and_refresh_data():
     
     # ALWAYS do full check by fetching actual sheet data
     # This is necessary to detect changes made in Google Sheets
-    needs_refresh_flag, full_reset, current_sheets = needs_refresh()
+    needs_refresh_flag, full_reset, sheets_with_tables = needs_refresh()
     
     if needs_refresh_flag:
         store = st.session_state.vector_store
         
         if full_reset:
-            print("📊 Sheet structure changed - performing full reset")
-            st.info("📊 Sheet structure changed - performing automatic full reset...")
+            print("📊 Table structure changed - performing full reset")
+            st.info("📊 Table structure changed - performing automatic full reset...")
             store.clear_collection()
-            load_snapshot(current_sheets, full_reset=True)
+            load_snapshot(sheets_with_tables, full_reset=True)
             store.rebuild()
             st.success("✅ Full reset complete")
         else:
             print("📊 Content changed - performing incremental refresh")
             st.info("📊 Content changed - performing automatic incremental refresh...")
-            load_snapshot(current_sheets, full_reset=False)
+            load_snapshot(sheets_with_tables, full_reset=False)
             store.rebuild()
             st.success("✅ Incremental refresh complete")
         
-        mark_synced(current_sheets)
+        mark_synced(sheets_with_tables)
         
         # Update cached fingerprints
-        new_fingerprints = compute_current_fingerprints(current_sheets)
+        new_fingerprints = compute_current_fingerprints(sheets_with_tables)
         st.session_state.last_known_fingerprints = new_fingerprints
         
         return True
@@ -367,7 +369,8 @@ with st.container():
                 if success:
                     st.session_state.sheets_url = sheets_url_input
                     st.session_state.data_loaded = True
-                    st.success(f"✅ Successfully loaded {len(result)} sheet(s)!")
+                    num_sheets, num_tables = result
+                    st.success(f"✅ Successfully loaded {num_sheets} sheet(s) with {num_tables} table(s)!")
                     st.rerun()
                 else:
                     st.error(f"❌ Failed to load data: {result}")

@@ -1,0 +1,686 @@
+{
+  "pincode sales_Table1": {
+    "source_sheet": "pincode sales",
+    "table_index": 1,
+    "title": "Table1",
+    "row_range": [
+      1,
+      631
+    ],
+    "col_range": [
+      0,
+      29
+    ],
+    "shape": {
+      "rows": 630,
+      "columns": 29
+    },
+    "columns": [
+      "Column_0",
+      "Column_1",
+      "Fullfilled orders and",
+      "Column_3",
+      "Column_4",
+      "Column_5",
+      "Column_6",
+      "Column_7",
+      "Column_8",
+      "Column_9",
+      "Column_10",
+      "Column_11",
+      "Column_12",
+      "Column_13",
+      "Column_14",
+      "Column_15",
+      "Column_16",
+      "Column_17",
+      "Column_18",
+      "Column_19",
+      "Column_20",
+      "Column_21",
+      "Column_22",
+      "Column_23",
+      "Column_24",
+      "Column_25",
+      "Column_26",
+      "Column_27",
+      "Column_28"
+    ]
+  },
+  "pincode sales_Table2": {
+    "source_sheet": "pincode sales",
+    "table_index": 2,
+    "title": "Table2",
+    "row_range": [
+      1,
+      136
+    ],
+    "col_range": [
+      0,
+      3
+    ],
+    "shape": {
+      "rows": 135,
+      "columns": 3
+    },
+    "columns": [
+      "Column_0",
+      "Column_1",
+      "Fullfilled orders and"
+    ]
+  },
+  "sales_Table1": {
+    "source_sheet": "sales",
+    "table_index": 1,
+    "title": "Table1",
+    "row_range": [
+      1,
+      33
+    ],
+    "col_range": [
+      0,
+      8
+    ],
+    "shape": {
+      "rows": 32,
+      "columns": 8
+    },
+    "columns": [
+      "Column_0",
+      "Month",
+      "Column_2",
+      "Column_3",
+      "Column_4",
+      "Column_5",
+      "Column_6",
+      "Column_7"
+    ]
+  },
+  "sales_Table2": {
+    "source_sheet": "sales",
+    "table_index": 2,
+    "title": "Table2",
+    "row_range": [
+      1,
+      33
+    ],
+    "col_range": [
+      9,
+      16
+    ],
+    "shape": {
+      "rows": 32,
+      "columns": 7
+    },
+    "columns": [
+      "Column_0",
+      "Month",
+      "Column_2",
+      "Column_3",
+      "Column_4",
+      "Column_5",
+      "Column_6"
+    ]
+  },
+  "sales_Table3": {
+    "source_sheet": "sales",
+    "table_index": 3,
+    "title": "Table3",
+    "row_range": [
+      2,
+      9
+    ],
+    "col_range": [
+      18,
+      25
+    ],
+    "shape": {
+      "rows": 7,
+      "columns": 7
+    },
+    "columns": [
+      "Calculation of Run Rate Sales - December",
+      "Column_1",
+      "Column_2",
+      "Column_3",
+      "Column_4",
+      "Column_5",
+      "Column_6"
+    ]
+  },
+  "sales_Table4": {
+    "source_sheet": "sales",
+    "table_index": 4,
+    "title": "Table4",
+    "row_range": [
+      12,
+      17
+    ],
+    "col_range": [
+      18,
+      25
+    ],
+    "shape": {
+      "rows": 5,
+      "columns": 7
+    },
+    "columns": [
+      "Calculation of  Sales -December",
+      "Column_1",
+      "Column_2",
+      "Column_3",
+      "Column_4",
+      "Column_5",
+      "Column_6"
+    ]
+  },
+  "sales_Table5": {
+    "source_sheet": "sales",
+    "table_index": 5,
+    "title": "Table5",
+    "row_range": [
+      35,
+      67
+    ],
+    "col_range": [
+      0,
+      7
+    ],
+    "shape": {
+      "rows": 32,
+      "columns": 7
+    },
+    "columns": [
+      "Column_0",
+      "Month",
+      "Column_2",
+      "Column_3",
+      "Column_4",
+      "Column_5",
+      "Column_6"
+    ]
+  },
+  "sales_Table6": {
+    "source_sheet": "sales",
+    "table_index": 6,
+    "title": "Table6",
+    "row_range": [
+      69,
+      101
+    ],
+    "col_range": [
+      0,
+      7
+    ],
+    "shape": {
+      "rows": 32,
+      "columns": 7
+    },
+    "columns": [
+      "Column_0",
+      "Month",
+      "Column_2",
+      "Column_3",
+      "Column_4",
+      "Column_5",
+      "Column_6"
+    ]
+  },
+  "sales_Table7": {
+    "source_sheet": "sales",
+    "table_index": 7,
+    "title": "Table7",
+    "row_range": [
+      103,
+      134
+    ],
+    "col_range": [
+      0,
+      7
+    ],
+    "shape": {
+      "rows": 31,
+      "columns": 7
+    },
+    "columns": [
+      "Column_0",
+      "Month",
+      "Column_2",
+      "Column_3",
+      "Column_4",
+      "Column_5",
+      "Column_6"
+    ]
+  },
+  "sales_Table8": {
+    "source_sheet": "sales",
+    "table_index": 8,
+    "title": "Table8",
+    "row_range": [
+      136,
+      168
+    ],
+    "col_range": [
+      0,
+      7
+    ],
+    "shape": {
+      "rows": 32,
+      "columns": 7
+    },
+    "columns": [
+      "Column_0",
+      "Month",
+      "Column_2",
+      "Column_3",
+      "Column_4",
+      "Column_5",
+      "Column_6"
+    ]
+  },
+  "sales_Month": {
+    "source_sheet": "sales",
+    "table_index": 9,
+    "title": "Month",
+    "row_range": [
+      2,
+      168
+    ],
+    "col_range": [
+      0,
+      2
+    ],
+    "shape": {
+      "rows": 166,
+      "columns": 2
+    },
+    "columns": [
+      "2025-01-12 00:00:00",
+      "December"
+    ]
+  },
+  "sales_Month_2": {
+    "source_sheet": "sales",
+    "table_index": 10,
+    "title": "Month",
+    "row_range": [
+      2,
+      168
+    ],
+    "col_range": [
+      9,
+      11
+    ],
+    "shape": {
+      "rows": 166,
+      "columns": 2
+    },
+    "columns": [
+      "2025-01-12 00:00:00",
+      "December"
+    ]
+  },
+  "sales_Calculation_of_Run_Rate_Sales_November_25": {
+    "source_sheet": "sales",
+    "table_index": 11,
+    "title": "Calculation of Run Rate Sales - November 25",
+    "row_range": [
+      38,
+      44
+    ],
+    "col_range": [
+      18,
+      20
+    ],
+    "shape": {
+      "rows": 6,
+      "columns": 2
+    },
+    "columns": [
+      "Entity date",
+      "November 25"
+    ]
+  },
+  "sales_Calculation_of_Sales_November_25": {
+    "source_sheet": "sales",
+    "table_index": 12,
+    "title": "Calculation of  Sales - November  25",
+    "row_range": [
+      48,
+      52
+    ],
+    "col_range": [
+      18,
+      20
+    ],
+    "shape": {
+      "rows": 4,
+      "columns": 2
+    },
+    "columns": [
+      "Entity date",
+      "November 25"
+    ]
+  },
+  "sales_Calculation_of_Run_Rate_Sales_October_25": {
+    "source_sheet": "sales",
+    "table_index": 13,
+    "title": "Calculation of Run Rate Sales - October 25",
+    "row_range": [
+      73,
+      79
+    ],
+    "col_range": [
+      18,
+      20
+    ],
+    "shape": {
+      "rows": 6,
+      "columns": 2
+    },
+    "columns": [
+      "Entity date",
+      "October 25"
+    ]
+  },
+  "sales_Calculation_of_Sales_October_25": {
+    "source_sheet": "sales",
+    "table_index": 14,
+    "title": "Calculation of  Sales - October 25",
+    "row_range": [
+      83,
+      87
+    ],
+    "col_range": [
+      18,
+      20
+    ],
+    "shape": {
+      "rows": 4,
+      "columns": 2
+    },
+    "columns": [
+      "Entity date",
+      "October 25"
+    ]
+  },
+  "sales_Calculation_of_Run_Rate_Sales_September_25": {
+    "source_sheet": "sales",
+    "table_index": 15,
+    "title": "Calculation of Run Rate Sales - September 25",
+    "row_range": [
+      108,
+      114
+    ],
+    "col_range": [
+      18,
+      20
+    ],
+    "shape": {
+      "rows": 6,
+      "columns": 2
+    },
+    "columns": [
+      "Entity date",
+      "September 25"
+    ]
+  },
+  "sales_Calculation_of_Sales_September_25": {
+    "source_sheet": "sales",
+    "table_index": 16,
+    "title": "Calculation of  Sales - September 25",
+    "row_range": [
+      118,
+      122
+    ],
+    "col_range": [
+      18,
+      20
+    ],
+    "shape": {
+      "rows": 4,
+      "columns": 2
+    },
+    "columns": [
+      "Entity date",
+      "September 25"
+    ]
+  },
+  "sales_Calculation_of_Run_Rate_Sales_August_25": {
+    "source_sheet": "sales",
+    "table_index": 17,
+    "title": "Calculation of Run Rate Sales - August 25",
+    "row_range": [
+      142,
+      148
+    ],
+    "col_range": [
+      18,
+      20
+    ],
+    "shape": {
+      "rows": 6,
+      "columns": 2
+    },
+    "columns": [
+      "Entity date",
+      "August 25"
+    ]
+  },
+  "sales_Calculation_of_Sales_August_25": {
+    "source_sheet": "sales",
+    "table_index": 18,
+    "title": "Calculation of  Sales - August 25",
+    "row_range": [
+      152,
+      156
+    ],
+    "col_range": [
+      18,
+      20
+    ],
+    "shape": {
+      "rows": 4,
+      "columns": 2
+    },
+    "columns": [
+      "Entity date",
+      "August 25"
+    ]
+  },
+  "sales by cat_Table1": {
+    "source_sheet": "sales by cat",
+    "table_index": 1,
+    "title": "Table1",
+    "row_range": [
+      1,
+      16
+    ],
+    "col_range": [
+      2,
+      67
+    ],
+    "shape": {
+      "rows": 15,
+      "columns": 65
+    },
+    "columns": [
+      "Sales by Cat",
+      "Column_1",
+      "Column_2",
+      "Column_3",
+      "Column_4",
+      "Column_5",
+      "Column_6",
+      "Column_7",
+      "Column_8",
+      "Column_9",
+      "Column_10",
+      "Column_11",
+      "Column_12",
+      "Column_13",
+      "Column_14",
+      "Column_15",
+      "Column_16",
+      "Column_17",
+      "Column_18",
+      "Column_19",
+      "Column_20",
+      "Column_21",
+      "Column_22",
+      "Column_23",
+      "Column_24",
+      "Column_25",
+      "Column_26",
+      "Column_27",
+      "Column_28",
+      "Column_29",
+      "Column_30",
+      "Column_31",
+      "Column_32",
+      "Column_33",
+      "Column_34",
+      "Column_35",
+      "Column_36",
+      "Column_37",
+      "Column_38",
+      "Column_39",
+      "Column_40",
+      "Column_41",
+      "Column_42",
+      "Column_43",
+      "Column_44",
+      "Column_45",
+      "Column_46",
+      "Column_47",
+      "Column_48",
+      "Column_49",
+      "Column_50",
+      "Column_51",
+      "Column_52",
+      "Column_53",
+      "Column_54",
+      "Column_55",
+      "Column_56",
+      "Column_57",
+      "Column_58",
+      "Column_59",
+      "Column_60",
+      "Column_61",
+      "Column_62",
+      "Column_63",
+      "Column_64"
+    ]
+  },
+  "sales by cat_Table2": {
+    "source_sheet": "sales by cat",
+    "table_index": 2,
+    "title": "Table2",
+    "row_range": [
+      18,
+      33
+    ],
+    "col_range": [
+      2,
+      67
+    ],
+    "shape": {
+      "rows": 15,
+      "columns": 65
+    },
+    "columns": [
+      "Sales by Cat",
+      "Column_1",
+      "Column_2",
+      "Column_3",
+      "Column_4",
+      "Column_5",
+      "Column_6",
+      "Column_7",
+      "Column_8",
+      "Column_9",
+      "Column_10",
+      "Column_11",
+      "Column_12",
+      "Column_13",
+      "Column_14",
+      "Column_15",
+      "Column_16",
+      "Column_17",
+      "Column_18",
+      "Column_19",
+      "Column_20",
+      "Column_21",
+      "Column_22",
+      "Column_23",
+      "Column_24",
+      "Column_25",
+      "Column_26",
+      "Column_27",
+      "Column_28",
+      "Column_29",
+      "Column_30",
+      "Column_31",
+      "Column_32",
+      "Column_33",
+      "Column_34",
+      "Column_35",
+      "Column_36",
+      "Column_37",
+      "Column_38",
+      "Column_39",
+      "Column_40",
+      "Column_41",
+      "Column_42",
+      "Column_43",
+      "Column_44",
+      "Column_45",
+      "Column_46",
+      "Column_47",
+      "Column_48",
+      "Column_49",
+      "Column_50",
+      "Column_51",
+      "Column_52",
+      "Column_53",
+      "Column_54",
+      "Column_55",
+      "Column_56",
+      "Column_57",
+      "Column_58",
+      "Column_59",
+      "Column_60",
+      "Column_61",
+      "Column_62",
+      "Column_63",
+      "Column_64"
+    ]
+  },
+  "Month_Table1": {
+    "source_sheet": "Month",
+    "table_index": 1,
+    "title": "Table1",
+    "row_range": [
+      1,
+      363
+    ],
+    "col_range": [
+      0,
+      8
+    ],
+    "shape": {
+      "rows": 362,
+      "columns": 8
+    },
+    "columns": [
+      "1",
+      "Chipotle Dressing - 75gm",
+      "Salads & Dressings",
+      "2",
+      "7",
+      "10",
+      "5",
+      "3"
+    ]
+  }
+}

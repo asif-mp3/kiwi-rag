@@ -59,6 +59,35 @@ def _infer_semantic_type(column_name: str, column_type: str):
     return "unknown"
 
 
+def _infer_table_description(table_name: str, columns: list) -> str:
+    """
+    Infer a descriptive summary of the table based on its name and columns.
+    Used to help the LLM understand generic tables like 'Month_Table1'.
+    """
+    col_names = [c[0].lower() for c in columns]
+    
+    # Heuristic 1: Line Item / Product Sales
+    if any(x in col_names for x in ['lineitem name', 'product name', 'item name', 'sku']):
+        desc = "Detailed sales breakdown by line item/product."
+        if any(x in col_names for x in ['august', 'september', 'october']):
+            desc += " Contains monthly quantity/value columns (e.g. August, September)."
+        return desc
+        
+    # Heuristic 2: Pincode / Location Sales
+    if any(x in col_names for x in ['shipping zip', 'pincode', 'zip code']):
+        desc = "Sales breakdown by location/pincode and area."
+        return desc
+    
+    # Heuristic 3: Daily/Aggregate Sales
+    if 'gross sales' in col_names and 'orders' in col_names:
+        desc = "Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc."
+        return desc
+
+    # Default: Use readable table name
+    readable_name = table_name.replace("_", " ")
+    return f"Table containing {readable_name}"
+
+
 def extract_schema(
     db_path="data_sources/snapshots/latest.duckdb",
     metric_path="config/metric_definitions.yaml"
@@ -101,10 +130,15 @@ def extract_schema(
         if not columns:
             continue
 
-        # Add table description for _long tables
-        table_description = "INFERRED"
+        if not columns:
+            continue
+
+        # Add table description
         if table_name.endswith("_long"):
             table_description = f"Long format version of {table_name[:-5]} with Date, Hours, and Status columns. Use this table for date-based queries like 'who was absent on [date]' or 'hours worked on [date]'. Status values: 'A' = Absent, 'P' = Present."
+        else:
+            # Use heuristic inference
+            table_description = _infer_table_description(table_name, columns)
 
         schema["tables"][table_name] = {
             "columns": {},

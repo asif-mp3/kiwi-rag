@@ -5,7 +5,7 @@ import hashlib
 import pandas as pd
 from google.oauth2.service_account import Credentials
 from pathlib import Path
-from data_sources.gsheet.connector import fetch_sheets
+from data_sources.gsheet.connector import fetch_sheets_with_tables
 
 SHEET_STATE_FILE = "data_sources/snapshots/sheet_state.json"
 # Legacy fingerprint file for backward compatibility
@@ -35,7 +35,8 @@ def compute_table_fingerprint(df: pd.DataFrame) -> str:
     
     # Convert Int64 (nullable int) to regular int64 to avoid dtype errors
     for col in df_copy.columns:
-        if df_copy[col].dtype.name == 'Int64':
+        # Check if this column has Int64 dtype
+        if hasattr(df_copy[col], 'dtype') and str(df_copy[col].dtype) == 'Int64':
             df_copy[col] = df_copy[col].astype('float64')  # Use float to preserve NaN
     
     # Normalize DataFrame for stable hashing
@@ -108,42 +109,90 @@ def save_sheet_state(sheets: list, fingerprints: dict):
         print(f"⚠️  Could not save sheet state: {e}")
 
 
-def detect_sheet_structure_change(old_state: dict, current_sheets: dict) -> tuple[bool, list]:
+def compute_current_fingerprints(sheets_with_tables: dict) -> dict:
     """
-    Detect if sheet structure has changed (add/delete/rename).
+    Compute SHA-256 fingerprints for each detected table.
+    
+    Args:
+        sheets_with_tables: Dict mapping sheet_name to list of table dicts.
+                           Each table dict has 'dataframe', 'table_id', etc.
+    
+    Returns:
+        Dict mapping table_name (e.g., 'sales_Table1') to fingerprint hash
+    """
+    fingerprints = {}
+    
+    # Iterate through sheets and their tables
+    for sheet_name, tables in sheets_with_tables.items():
+        for idx, table_info in enumerate(tables, 1):
+            # Generate stable table name
+            table_name = f"{sheet_name}_Table{idx}"
+            
+            # Get the DataFrame for this table
+            df = table_info['dataframe']
+            
+            # Compute fingerprint using the existing function
+            fingerprint = compute_table_fingerprint(df)
+            fingerprints[table_name] = fingerprint
+    
+    return fingerprints
+
+
+def detect_sheet_structure_change(old_state: dict, sheets_with_tables: dict) -> tuple[bool, list]:
+    """
+    Detect if table structure has changed (add/delete/rename).
     Returns (structure_changed, changes_list).
     
     Changes detected:
-    - New sheet added
-    - Existing sheet deleted
-    - Sheet renamed (detected as delete + add)
+    - New table added (within existing or new sheet)
+    - Existing table deleted
+    - Table renamed (detected as delete + add)
+    - Sheet added/removed (affects all tables in that sheet)
     """
-    old_sheets = set(old_state.get("sheets", []))
-    current_sheet_names = set(current_sheets.keys())
+    # Get old table names from fingerprints
+    old_tables = set(old_state.get("fingerprints", {}).keys())
     
-    if old_sheets == current_sheet_names:
+    # Compute current table names
+    current_tables = set()
+    for sheet_name, tables in sheets_with_tables.items():
+        for idx in range(1, len(tables) + 1):
+            table_name = f"{sheet_name}_Table{idx}"
+            current_tables.add(table_name)
+    
+    if old_tables == current_tables:
         return False, []
     
     changes = []
     
     # Detect additions
-    added = current_sheet_names - old_sheets
-    for sheet in added:
-        changes.append(f"Added: '{sheet}'")
+    added = current_tables - old_tables
+    for table in added:
+        changes.append(f"Added: '{table}'")
     
     # Detect deletions
-    deleted = old_sheets - current_sheet_names
-    for sheet in deleted:
-        changes.append(f"Deleted: '{sheet}'")
+    deleted = old_tables - current_tables
+    for table in deleted:
+        changes.append(f"Deleted: '{table}'")
     
     return True, changes
 
 
-def compute_current_fingerprints(sheets: dict) -> dict:
-    """Compute fingerprints for given sheets"""
+def compute_current_fingerprints(sheets_with_tables: dict) -> dict:
+    """
+    Compute fingerprints for all detected tables across all sheets.
+    
+    Args:
+        sheets_with_tables: Dict[sheet_name, List[table_info]]
+    
+    Returns:
+        Dict mapping table_name to fingerprint hash
+    """
     fingerprints = {}
-    for sheet_name, df in sheets.items():
-        fingerprints[sheet_name] = compute_table_fingerprint(df)
+    for sheet_name, tables in sheets_with_tables.items():
+        for idx, table_info in enumerate(tables, 1):
+            # Generate stable table name: SheetName_TableN
+            table_name = f"{sheet_name}_Table{idx}"
+            fingerprints[table_name] = compute_table_fingerprint(table_info['dataframe'])
     return fingerprints
 
 
@@ -178,7 +227,7 @@ def get_sheet_names() -> list:
 def needs_refresh() -> tuple[bool, bool, dict]:
     """
     Check if sheets need refresh and if full reset is required.
-    Returns (needs_refresh, full_reset_required, current_sheets) tuple.
+    Returns (needs_refresh, full_reset_required, sheets_with_tables) tuple.
     
     HASH-BASED DETECTION: Always fetches data and compares fingerprints.
     This detects ANY changes (content or structure) automatically.
@@ -198,63 +247,72 @@ def needs_refresh() -> tuple[bool, bool, dict]:
             print(f"   Old: {old_spreadsheet_id}")
             print(f"   New: {current_spreadsheet_id}")
             # Fetch new sheets and trigger full reset
-            sheets = fetch_sheets()
-            return True, True, sheets
+            sheets_with_tables = fetch_sheets_with_tables()
+            return True, True, sheets_with_tables
         
         # ALWAYS fetch data and compute fingerprints to detect ANY changes
         print("🔍 Checking for changes (comparing content hashes)...")
-        sheets = fetch_sheets()
-        current_fingerprints = compute_current_fingerprints(sheets)
+        sheets_with_tables = fetch_sheets_with_tables()
+        current_fingerprints = compute_current_fingerprints(sheets_with_tables)
         
         # First run - no previous state
-        if not old_state.get("sheets"):
+        if not old_state.get("fingerprints"):
             print("🔍 No previous state found (first run)")
-            return True, True, sheets
+            return True, True, sheets_with_tables
         
-        # Check for sheet structure changes
-        structure_changed, changes = detect_sheet_structure_change(old_state, sheets)
+        # Check for table structure changes
+        structure_changed, changes = detect_sheet_structure_change(old_state, sheets_with_tables)
         
         if structure_changed:
-            print("🔄 Sheet structure changed - FULL RESET REQUIRED")
+            print("🔄 Table structure changed - FULL RESET REQUIRED")
             for change in changes:
                 print(f"   {change}")
-            return True, True, sheets
+            return True, True, sheets_with_tables
         
         # No structure change - check content fingerprints
         old_fingerprints = old_state.get("fingerprints", {})
         
-        for sheet_name, current_fp in current_fingerprints.items():
-            old_fp = old_fingerprints.get(sheet_name)
+        for table_name, current_fp in current_fingerprints.items():
+            old_fp = old_fingerprints.get(table_name)
             
             if old_fp != current_fp:
-                print(f"🔄 Content changed in sheet '{sheet_name}'")
+                print(f"🔄 Content changed in table '{table_name}'")
                 print(f"   Old: {old_fp[:16] if old_fp else 'None'}...")
                 print(f"   New: {current_fp[:16]}...")
-                return True, False, sheets  # Content change only, no full reset
+                return True, False, sheets_with_tables  # Content change only, no full reset
         
         print("✓ No content changes detected (fingerprints match)")
-        return False, False, sheets
+        return False, False, sheets_with_tables
         
     except Exception as e:
         # Safe default: full reset on error
         print(f"⚠️  Could not check for changes: {e}")
         try:
-            sheets = fetch_sheets()
-            return True, True, sheets
+            sheets_with_tables = fetch_sheets_with_tables()
+            return True, True, sheets_with_tables
         except:
             return True, True, {}
 
 
-def mark_synced(sheets: dict):
+def mark_synced(sheets_with_tables: dict):
     """
-    Store sheet state (sheet list + fingerprints) for the given sheets.
-    IMPORTANT: Uses the same sheets data that was already fetched.
+    Store table state (table list + fingerprints) for the given sheets with tables.
+    IMPORTANT: Uses the same sheets_with_tables data that was already fetched.
+    
+    Args:
+        sheets_with_tables: Dict[sheet_name, List[table_info]]
     """
     try:
-        fingerprints = compute_current_fingerprints(sheets)
-        sheet_names = list(sheets.keys())
+        fingerprints = compute_current_fingerprints(sheets_with_tables)
+        
+        # Extract unique sheet names for backward compatibility
+        sheet_names = list(sheets_with_tables.keys())
+        
         save_sheet_state(sheet_names, fingerprints)
-        print(f"✓ Sheet state saved for {len(sheet_names)} sheet(s)")
+        
+        # Count total tables
+        total_tables = sum(len(tables) for tables in sheets_with_tables.values())
+        print(f"✓ Sheet state saved for {len(sheet_names)} sheet(s), {total_tables} table(s)")
         
     except Exception as e:
         print(f"⚠️  Could not save sheet state: {e}")

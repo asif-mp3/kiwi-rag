@@ -1,0 +1,166 @@
+{
+  "id": "20251229_223631",
+  "title": "what was the quantity of items sold in kotturpuram...",
+  "created_at": "2025-12-29T22:36:31.053435",
+  "updated_at": "2025-12-29T22:37:49.980840",
+  "messages": [
+    {
+      "role": "user",
+      "content": "what was the quantity of items sold in kotturpuram on august",
+      "timestamp": "2025-12-29T22:36:59.829902"
+    },
+    {
+      "role": "assistant",
+      "content": "In Kotturpuram, the quantity sold in August was 51.",
+      "timestamp": "2025-12-29T22:37:23.545953",
+      "metadata": {
+        "plan": {
+          "query_type": "lookup",
+          "table": "pincode sales",
+          "select_columns": [
+            "Area Name",
+            "August Qty"
+          ],
+          "filters": [
+            {
+              "column": "Area Name",
+              "operator": "LIKE",
+              "value": "%kotturpuram%"
+            }
+          ],
+          "limit": 1,
+          "metrics": [],
+          "group_by": [],
+          "order_by": [],
+          "subset_filters": [],
+          "subset_order_by": [],
+          "aggregation_column": "",
+          "aggregation_function": ""
+        },
+        "data": {
+          "Area Name": {
+            "0": "Kotturpuram"
+          },
+          "August Qty": {
+            "0": 51
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'sales'. Columns: Freshggies - Shopify Sales on Fulfiilments (TIMESTAMP_NS, temporal_attribute), Unnamed (VARCHAR, entity_identifier), Unnamed_1 (BIGINT, entity_identifier), Unnamed_2 (DOUBLE, entity_identifier), Unnamed_3 (BIGINT, entity_identifier), Unnamed_4 (DOUBLE, entity_identifier), Unnamed_5 (DOUBLE, entity_identifier), Unnamed_6 (DOUBLE, entity_identifier), Unnamed_7 (INTEGER, entity_identifier), Unnamed_8 (INTEGER, entity_identifier), Freshggies - Shopify Sales - December Till Today Morning @10.00am (TIMESTAMP_NS, temporal_attribute), Unnamed_9 (VARCHAR, entity_identifier), Unnamed_10 (BIGINT, entity_identifier), Unnamed_11 (BIGINT, entity_identifier), Unnamed_12 (BIGINT, entity_identifier), Unnamed_13 (DOUBLE, entity_identifier), Unnamed_14 (DOUBLE, entity_identifier), Unnamed_15 (INTEGER, entity_identifier), Unnamed_16 (INTEGER, entity_identifier), Unnamed_17 (VARCHAR, entity_identifier), Unnamed_18 (VARCHAR, entity_identifier), Unnamed_19 (VARCHAR, entity_identifier), Unnamed_20 (VARCHAR, entity_identifier), Unnamed_21 (VARCHAR, entity_identifier), Unnamed_22 (VARCHAR, entity_identifier). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "sales"
+            }
+          },
+          {
+            "text": "Table 'sales by cat'. Columns: Unnamed (INTEGER, entity_identifier), Unnamed_1 (INTEGER, entity_identifier), Freshggies - Shopify Sales on Fulfiilments (VARCHAR, temporal_attribute), Wednesday (BIGINT, numeric_attribute), Unnamed_2 (DOUBLE, entity_identifier), Thursday (BIGINT, numeric_attribute), Unnamed_3 (DOUBLE, entity_identifier), Friday (BIGINT, entity_identifier), Unnamed_4 (DOUBLE, entity_identifier), Saturday (BIGINT, numeric_attribute), Unnamed_5 (DOUBLE, entity_identifier), Sunday (BIGINT, numeric_attribute), Unnamed_6 (DOUBLE, entity_identifier), Monday (BIGINT, numeric_attribute), Unnamed_7 (DOUBLE, entity_identifier), Tuesday (BIGINT, numeric_attribute), Unnamed_8 (DOUBLE, entity_identifier), Wednesday_1 (BIGINT, numeric_attribute), Unnamed_9 (DOUBLE, entity_identifier), Thursday_1 (BIGINT, numeric_attribute), Unnamed_10 (DOUBLE, entity_identifier), Friday_1 (BIGINT, entity_identifier), Unnamed_11 (DOUBLE, entity_identifier), Saturday_1 (BIGINT, numeric_attribute), Unnamed_12 (DOUBLE, entity_identifier), Sunday_1 (BIGINT, numeric_attribute), Unnamed_13 (DOUBLE, entity_identifier), Monday_1 (BIGINT, numeric_attribute), Unnamed_14 (DOUBLE, entity_identifier), Tuesday_1 (BIGINT, numeric_attribute), Unnamed_15 (DOUBLE, entity_identifier), Wednesday_2 (BIGINT, numeric_attribute), Unnamed_16 (DOUBLE, entity_identifier), Thursday_2 (BIGINT, numeric_attribute), Unnamed_17 (DOUBLE, entity_identifier), Friday_2 (BIGINT, entity_identifier), Unnamed_18 (DOUBLE, entity_identifier), Saturday_2 (BIGINT, numeric_attribute), Unnamed_19 (DOUBLE, entity_identifier), Sunday_2 (BIGINT, numeric_attribute), Unnamed_20 (DOUBLE, entity_identifier), Monday_2 (BIGINT, numeric_attribute), Unnamed_21 (DOUBLE, entity_identifier), Tuesday_2 (BIGINT, numeric_attribute), Unnamed_22 (DOUBLE, entity_identifier), Wednesday_3 (BIGINT, numeric_attribute), Unnamed_23 (DOUBLE, entity_identifier), Thursday_3 (BIGINT, numeric_attribute), Unnamed_24 (DOUBLE, entity_identifier), Friday_3 (BIGINT, entity_identifier), Unnamed_25 (DOUBLE, entity_identifier), Saturday_3 (BIGINT, numeric_attribute), Unnamed_26 (DOUBLE, entity_identifier), Sunday_3 (BIGINT, numeric_attribute), Unnamed_27 (DOUBLE, entity_identifier), Monday_3 (BIGINT, numeric_attribute), Unnamed_28 (DOUBLE, entity_identifier), Tuesday_3 (BIGINT, numeric_attribute), Unnamed_29 (DOUBLE, entity_identifier), Wednesday_4 (BIGINT, numeric_attribute), Unnamed_30 (DOUBLE, entity_identifier), Thursday_4 (BIGINT, numeric_attribute), Unnamed_31 (DOUBLE, entity_identifier), Friday_4 (BIGINT, entity_identifier), Unnamed_32 (DOUBLE, entity_identifier), Unnamed_33 (BIGINT, entity_identifier), Unnamed_34 (DOUBLE, entity_identifier). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "sales by cat"
+            }
+          },
+          {
+            "text": "Table 'Month'. Columns: S.no (BIGINT, numeric_attribute), Lineitem name (VARCHAR, entity_identifier), M Catergory (VARCHAR, temporal_attribute), August (BIGINT, numeric_attribute), September (BIGINT, numeric_attribute), October (BIGINT, numeric_attribute), November (BIGINT, numeric_attribute), December (BIGINT, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Month"
+            }
+          },
+          {
+            "text": "Table 'pincode sales'. Columns: S. No (BIGINT, numeric_attribute), Shipping Zip (BIGINT, numeric_measure), Area Name (VARCHAR, entity_identifier), August Qty (BIGINT, numeric_measure), August Value (BIGINT, numeric_measure), September (BIGINT, numeric_attribute), Unnamed (BIGINT, entity_identifier), October (BIGINT, numeric_attribute), Unnamed_1 (BIGINT, entity_identifier), November (BIGINT, numeric_attribute), Unnamed_2 (DOUBLE, entity_identifier), December (BIGINT, numeric_attribute), Unnamed_3 (BIGINT, entity_identifier), Grand Total (BIGINT, numeric_measure), Unnamed_4 (DOUBLE, entity_identifier), fulfilled (INTEGER, numeric_attribute), S. No_1 (BIGINT, numeric_attribute), Shipping Zip_1 (BIGINT, numeric_measure), Area Name_1 (VARCHAR, entity_identifier), Batter & Dough (BIGINT, numeric_attribute), Combo / Value Pack (BIGINT, numeric_measure), Dairy & Homemade Essentials (BIGINT, numeric_attribute), Fresh Cut Vegetables / Prepped Veggies (BIGINT, numeric_attribute), Fresh Fruits (BIGINT, numeric_attribute), Homemade Powders, Pastes & Pickles (BIGINT, numeric_attribute), Juices & Beverages (BIGINT, numeric_attribute), Pickles & Preserves (BOOLEAN, categorical_attribute), Salads & Dressings (BIGINT, numeric_attribute), Snacks & Sweets (BIGINT, numeric_attribute), Grand Total_1 (BIGINT, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "pincode sales",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'profit'. Columns: Unnamed (BIGINT, entity_identifier), Unnamed_1 (VARCHAR, entity_identifier), Unnamed_2 (VARCHAR, entity_identifier), Unnamed_3 (DOUBLE, entity_identifier), Unnamed_4 (DOUBLE, entity_identifier), Unnamed_5 (DOUBLE, entity_identifier), Unnamed_6 (DOUBLE, entity_identifier), Unnamed_7 (DOUBLE, entity_identifier), Unnamed_8 (DOUBLE, entity_identifier), Unnamed_9 (VARCHAR, entity_identifier), Unnamed_10 (VARCHAR, entity_identifier), Unnamed_11 (BIGINT, entity_identifier), Unnamed_12 (DOUBLE, entity_identifier), Unnamed_13 (DOUBLE, entity_identifier), Unnamed_14 (VARCHAR, entity_identifier), Unnamed_15 (DOUBLE, entity_identifier), Unnamed_16 (INTEGER, entity_identifier), Unnamed_17 (VARCHAR, entity_identifier), Unnamed_18 (VARCHAR, entity_identifier), Unnamed_19 (VARCHAR, entity_identifier), Unnamed_20 (DOUBLE, entity_identifier), Unnamed_21 (DOUBLE, entity_identifier), Unnamed_22 (VARCHAR, entity_identifier), Unnamed_23 (DOUBLE, entity_identifier), Unnamed_24 (INTEGER, entity_identifier), Unnamed_25 (VARCHAR, entity_identifier), Unnamed_26 (VARCHAR, entity_identifier), Unnamed_27 (VARCHAR, entity_identifier), Unnamed_28 (DOUBLE, entity_identifier), Unnamed_29 (DOUBLE, entity_identifier), Unnamed_30 (VARCHAR, entity_identifier), Unnamed_31 (DOUBLE, entity_identifier). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "profit",
+              "type": "table"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    },
+    {
+      "role": "user",
+      "content": "what was the quantity of items sold in kotturpuram on august\n\n",
+      "timestamp": "2025-12-29T22:37:32.188971"
+    },
+    {
+      "role": "assistant",
+      "content": "The quantity of items sold in Kotturpuram in August was 51.",
+      "timestamp": "2025-12-29T22:37:49.980840",
+      "metadata": {
+        "plan": {
+          "query_type": "lookup",
+          "table": "pincode sales",
+          "select_columns": [
+            "August Qty"
+          ],
+          "filters": [
+            {
+              "column": "Area Name",
+              "operator": "LIKE",
+              "value": "%Kotturpuram%"
+            }
+          ],
+          "limit": 1,
+          "metrics": [],
+          "group_by": [],
+          "order_by": [],
+          "subset_filters": [],
+          "subset_order_by": [],
+          "aggregation_column": "",
+          "aggregation_function": ""
+        },
+        "data": {
+          "August Qty": {
+            "0": 51
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'sales'. Columns: Freshggies - Shopify Sales on Fulfiilments (TIMESTAMP_NS, temporal_attribute), Unnamed (VARCHAR, entity_identifier), Unnamed_1 (BIGINT, entity_identifier), Unnamed_2 (DOUBLE, entity_identifier), Unnamed_3 (BIGINT, entity_identifier), Unnamed_4 (DOUBLE, entity_identifier), Unnamed_5 (DOUBLE, entity_identifier), Unnamed_6 (DOUBLE, entity_identifier), Unnamed_7 (INTEGER, entity_identifier), Unnamed_8 (INTEGER, entity_identifier), Freshggies - Shopify Sales - December Till Today Morning @10.00am (TIMESTAMP_NS, temporal_attribute), Unnamed_9 (VARCHAR, entity_identifier), Unnamed_10 (BIGINT, entity_identifier), Unnamed_11 (BIGINT, entity_identifier), Unnamed_12 (BIGINT, entity_identifier), Unnamed_13 (DOUBLE, entity_identifier), Unnamed_14 (DOUBLE, entity_identifier), Unnamed_15 (INTEGER, entity_identifier), Unnamed_16 (INTEGER, entity_identifier), Unnamed_17 (VARCHAR, entity_identifier), Unnamed_18 (VARCHAR, entity_identifier), Unnamed_19 (VARCHAR, entity_identifier), Unnamed_20 (VARCHAR, entity_identifier), Unnamed_21 (VARCHAR, entity_identifier), Unnamed_22 (VARCHAR, entity_identifier). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "sales"
+            }
+          },
+          {
+            "text": "Table 'sales by cat'. Columns: Unnamed (INTEGER, entity_identifier), Unnamed_1 (INTEGER, entity_identifier), Freshggies - Shopify Sales on Fulfiilments (VARCHAR, temporal_attribute), Wednesday (BIGINT, numeric_attribute), Unnamed_2 (DOUBLE, entity_identifier), Thursday (BIGINT, numeric_attribute), Unnamed_3 (DOUBLE, entity_identifier), Friday (BIGINT, entity_identifier), Unnamed_4 (DOUBLE, entity_identifier), Saturday (BIGINT, numeric_attribute), Unnamed_5 (DOUBLE, entity_identifier), Sunday (BIGINT, numeric_attribute), Unnamed_6 (DOUBLE, entity_identifier), Monday (BIGINT, numeric_attribute), Unnamed_7 (DOUBLE, entity_identifier), Tuesday (BIGINT, numeric_attribute), Unnamed_8 (DOUBLE, entity_identifier), Wednesday_1 (BIGINT, numeric_attribute), Unnamed_9 (DOUBLE, entity_identifier), Thursday_1 (BIGINT, numeric_attribute), Unnamed_10 (DOUBLE, entity_identifier), Friday_1 (BIGINT, entity_identifier), Unnamed_11 (DOUBLE, entity_identifier), Saturday_1 (BIGINT, numeric_attribute), Unnamed_12 (DOUBLE, entity_identifier), Sunday_1 (BIGINT, numeric_attribute), Unnamed_13 (DOUBLE, entity_identifier), Monday_1 (BIGINT, numeric_attribute), Unnamed_14 (DOUBLE, entity_identifier), Tuesday_1 (BIGINT, numeric_attribute), Unnamed_15 (DOUBLE, entity_identifier), Wednesday_2 (BIGINT, numeric_attribute), Unnamed_16 (DOUBLE, entity_identifier), Thursday_2 (BIGINT, numeric_attribute), Unnamed_17 (DOUBLE, entity_identifier), Friday_2 (BIGINT, entity_identifier), Unnamed_18 (DOUBLE, entity_identifier), Saturday_2 (BIGINT, numeric_attribute), Unnamed_19 (DOUBLE, entity_identifier), Sunday_2 (BIGINT, numeric_attribute), Unnamed_20 (DOUBLE, entity_identifier), Monday_2 (BIGINT, numeric_attribute), Unnamed_21 (DOUBLE, entity_identifier), Tuesday_2 (BIGINT, numeric_attribute), Unnamed_22 (DOUBLE, entity_identifier), Wednesday_3 (BIGINT, numeric_attribute), Unnamed_23 (DOUBLE, entity_identifier), Thursday_3 (BIGINT, numeric_attribute), Unnamed_24 (DOUBLE, entity_identifier), Friday_3 (BIGINT, entity_identifier), Unnamed_25 (DOUBLE, entity_identifier), Saturday_3 (BIGINT, numeric_attribute), Unnamed_26 (DOUBLE, entity_identifier), Sunday_3 (BIGINT, numeric_attribute), Unnamed_27 (DOUBLE, entity_identifier), Monday_3 (BIGINT, numeric_attribute), Unnamed_28 (DOUBLE, entity_identifier), Tuesday_3 (BIGINT, numeric_attribute), Unnamed_29 (DOUBLE, entity_identifier), Wednesday_4 (BIGINT, numeric_attribute), Unnamed_30 (DOUBLE, entity_identifier), Thursday_4 (BIGINT, numeric_attribute), Unnamed_31 (DOUBLE, entity_identifier), Friday_4 (BIGINT, entity_identifier), Unnamed_32 (DOUBLE, entity_identifier), Unnamed_33 (BIGINT, entity_identifier), Unnamed_34 (DOUBLE, entity_identifier). Grain: UNKNOWN.",
+            "metadata": {
+              "table": "sales by cat",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Month'. Columns: S.no (BIGINT, numeric_attribute), Lineitem name (VARCHAR, entity_identifier), M Catergory (VARCHAR, temporal_attribute), August (BIGINT, numeric_attribute), September (BIGINT, numeric_attribute), October (BIGINT, numeric_attribute), November (BIGINT, numeric_attribute), December (BIGINT, numeric_attribute). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Month"
+            }
+          },
+          {
+            "text": "Table 'pincode sales'. Columns: S. No (BIGINT, numeric_attribute), Shipping Zip (BIGINT, numeric_measure), Area Name (VARCHAR, entity_identifier), August Qty (BIGINT, numeric_measure), August Value (BIGINT, numeric_measure), September (BIGINT, numeric_attribute), Unnamed (BIGINT, entity_identifier), October (BIGINT, numeric_attribute), Unnamed_1 (BIGINT, entity_identifier), November (BIGINT, numeric_attribute), Unnamed_2 (DOUBLE, entity_identifier), December (BIGINT, numeric_attribute), Unnamed_3 (BIGINT, entity_identifier), Grand Total (BIGINT, numeric_measure), Unnamed_4 (DOUBLE, entity_identifier), fulfilled (INTEGER, numeric_attribute), S. No_1 (BIGINT, numeric_attribute), Shipping Zip_1 (BIGINT, numeric_measure), Area Name_1 (VARCHAR, entity_identifier), Batter & Dough (BIGINT, numeric_attribute), Combo / Value Pack (BIGINT, numeric_measure), Dairy & Homemade Essentials (BIGINT, numeric_attribute), Fresh Cut Vegetables / Prepped Veggies (BIGINT, numeric_attribute), Fresh Fruits (BIGINT, numeric_attribute), Homemade Powders, Pastes & Pickles (BIGINT, numeric_attribute), Juices & Beverages (BIGINT, numeric_attribute), Pickles & Preserves (BOOLEAN, categorical_attribute), Salads & Dressings (BIGINT, numeric_attribute), Snacks & Sweets (BIGINT, numeric_attribute), Grand Total_1 (BIGINT, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "pincode sales"
+            }
+          },
+          {
+            "text": "Table 'profit'. Columns: Unnamed (BIGINT, entity_identifier), Unnamed_1 (VARCHAR, entity_identifier), Unnamed_2 (VARCHAR, entity_identifier), Unnamed_3 (DOUBLE, entity_identifier), Unnamed_4 (DOUBLE, entity_identifier), Unnamed_5 (DOUBLE, entity_identifier), Unnamed_6 (DOUBLE, entity_identifier), Unnamed_7 (DOUBLE, entity_identifier), Unnamed_8 (DOUBLE, entity_identifier), Unnamed_9 (VARCHAR, entity_identifier), Unnamed_10 (VARCHAR, entity_identifier), Unnamed_11 (BIGINT, entity_identifier), Unnamed_12 (DOUBLE, entity_identifier), Unnamed_13 (DOUBLE, entity_identifier), Unnamed_14 (VARCHAR, entity_identifier), Unnamed_15 (DOUBLE, entity_identifier), Unnamed_16 (INTEGER, entity_identifier), Unnamed_17 (VARCHAR, entity_identifier), Unnamed_18 (VARCHAR, entity_identifier), Unnamed_19 (VARCHAR, entity_identifier), Unnamed_20 (DOUBLE, entity_identifier), Unnamed_21 (DOUBLE, entity_identifier), Unnamed_22 (VARCHAR, entity_identifier), Unnamed_23 (DOUBLE, entity_identifier), Unnamed_24 (INTEGER, entity_identifier), Unnamed_25 (VARCHAR, entity_identifier), Unnamed_26 (VARCHAR, entity_identifier), Unnamed_27 (VARCHAR, entity_identifier), Unnamed_28 (DOUBLE, entity_identifier), Unnamed_29 (DOUBLE, entity_identifier), Unnamed_30 (VARCHAR, entity_identifier), Unnamed_31 (DOUBLE, entity_identifier). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "profit"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    }
+  ]
+}

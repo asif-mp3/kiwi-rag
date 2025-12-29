@@ -2,7 +2,7 @@ duckdb:
   snapshot_path: data_sources/snapshots/latest.duckdb
 google_sheets:
   credentials_path: credentials/service_account.json
-  spreadsheet_id: 1JQ5xuJWzlaQgtt8ShoyXKXDClsNof6_Ai3IXWe5qifo
+  spreadsheet_id: 1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4
 llm:
   api_key_env: GEMINI_API_KEY
   max_retries: 3
