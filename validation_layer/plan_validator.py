@@ -222,9 +222,6 @@ def validate_plan(plan: dict, schema_path="planning_layer/plan_schema.json"):
         else:
             plan["limit"] = 100
     
-    if plan.get("subset_limit") is None:
-        plan["subset_limit"] = 100
-    
     # Handle string fields - convert None to empty string
     if plan.get("aggregation_column") is None:
         plan["aggregation_column"] = ""

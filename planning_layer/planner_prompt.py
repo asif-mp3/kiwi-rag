@@ -37,7 +37,7 @@ You must output ONLY valid JSON matching this exact schema:
 - **extrema_lookup**: Find row with min/max value. Requires "order_by" and "limit": 1.
 - **rank**: Return all rows ordered. Requires "order_by".
 - **list**: Show all rows. No special requirements.
-- **aggregation_on_subset**: Calculate aggregation (AVG, SUM, etc.) on a ranked/limited subset. Requires "aggregation_function", "aggregation_column", "subset_filters", "subset_order_by", "subset_limit".
+- **aggregation_on_subset**: Calculate aggregation (AVG, SUM, etc.) on a filtered or ranked subset. Requires "aggregation_function", "aggregation_column". Use "subset_filters" for filtering, "subset_order_by" for ranking, and "subset_limit" ONLY when the question explicitly asks for "top N", "first N", "bottom N", etc. If aggregating ALL matching data, set "subset_limit" to null or omit it.
 
 ## Table Selection
 
@@ -63,6 +63,7 @@ When multiple tables with similar schemas are available in the schema context:
    - Parse user dates intelligently: "02/01/2017" or "2nd January 2017" → "2017-01-02"
    - For date ranges, use two filters: one with >= for start, one with <= for end
    - String Date columns are for display only, NOT for filtering
+8. **For aggregation_on_subset queries**: Set "subset_limit" to null (or omit it) when aggregating ALL matching data. Only use a specific number when the question explicitly asks for "top N", "first N", "last N", "bottom N", etc.
 
 ### YOU MUST NOT:
 1. Invent column names not in schema context
@@ -141,6 +142,18 @@ Output:
   "subset_filters": [],
   "subset_order_by": [["Sales", "DESC"]],
   "subset_limit": 10
+}
+
+Question: "What was the total sales in December?"
+Output:
+{
+  "query_type": "aggregation_on_subset",
+  "table": "Don't Touch",
+  "aggregation_function": "SUM",
+  "aggregation_column": "Sales",
+  "subset_filters": [{"column": "Month", "operator": "LIKE", "value": "%December%"}],
+  "subset_order_by": [],
+  "subset_limit": null
 }
 
 Question: "What was the average NO2 level between 08:00 and 16:00 on 02/01/2017?"

@@ -230,9 +230,9 @@ def _compile_aggregation_on_subset(plan):
     subset_order_by = plan.get("subset_order_by", [])
     subset_limit = plan.get("subset_limit")
     
-    # Handle None or missing subset_limit
-    if subset_limit is None:
-        subset_limit = 100  # Default to 100 if not specified
+    
+    # Note: subset_limit can be None when aggregating ALL matching data
+    # Only use LIMIT when a specific number is requested
     
     # Get all columns we want to show in the breakdown
     # Include aggregation column, order columns, and common identifier columns
