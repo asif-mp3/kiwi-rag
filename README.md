@@ -1,8 +1,8 @@
 # 🥝 Kiwi-RAG Analytics Chatbot
 
-**AI-Powered Google Sheets Analytics with Voice Support**
+**AI-Powered Google Sheets Analytics with Multilingual Voice Support**
 
-A production-ready RAG (Retrieval-Augmented Generation) chatbot that enables natural language querying of Google Sheets data with multilingual support (Tamil & English) and voice input/output capabilities.
+A production-ready RAG (Retrieval-Augmented Generation) chatbot that enables natural language querying of Google Sheets data with **universal multilingual support** (works in **any language**) and voice input/output capabilities.
 
 ---
 
@@ -24,14 +24,14 @@ A production-ready RAG (Retrieval-Augmented Generation) chatbot that enables nat
 ## ✨ Features
 
 ### Core Capabilities
-- 🔍 **Natural Language Queries**: Ask questions in plain English or Tamil
-- 📊 **Google Sheets Integration**: Direct connection to Google Sheets
-- 🎤 **Voice Input**: Transcribe questions using ElevenLabs Scribe v1
-- 🔊 **Voice Output**: Auto-play Tamil/English audio responses
-- 🌐 **Multilingual**: Full Tamil and English support
+- 🔍 **Natural Language Queries**: Ask questions in **any language** (English, Tamil, Hindi, Spanish, etc.)
+- 📊 **Google Sheets Integration**: Direct connection to Google Sheets with automatic change detection
+- 🎤 **Voice Input**: Transcribe questions using ElevenLabs Scribe v1 (supports multiple languages)
+- 🔊 **Voice Output**: Text-to-speech in the same language as your question
+- 🌐 **Universal Multilingual**: Works with **any language** - not limited to English or Tamil
 - 💬 **Conversation History**: Save and manage multiple chat sessions
-- 🔄 **Auto Data Refresh**: Detects and reloads changed data
-- 🧠 **Schema Intelligence**: Semantic search over table schemas
+- 🔄 **Smart Change Detection**: Hash-based detection reloads data only when sheets actually change
+- 🧠 **Schema Intelligence**: Semantic search over table schemas using vector embeddings
 
 ### Query Types Supported
 - **Lookup**: Find specific rows by criteria
@@ -43,11 +43,13 @@ A production-ready RAG (Retrieval-Augmented Generation) chatbot that enables nat
 
 ### Technical Features
 - ⚡ **Fast Analytics**: DuckDB for in-memory SQL execution
-- 🎯 **RAG Pipeline**: ChromaDB + Hugging Face embeddings
-- 🤖 **AI Planning**: Gemini 2.0 Flash for query understanding
-- 🔧 **Type Inference**: Automatic data type detection
+- 🎯 **RAG Pipeline**: ChromaDB + Hugging Face embeddings for semantic schema search
+- 🤖 **AI Planning**: Gemini 2.5 Pro for intelligent query understanding
+- 🔧 **Type Inference**: Automatic data type detection and normalization
 - 📅 **Date Handling**: Smart date/time column combination
 - 🔤 **Fuzzy Matching**: Handles name spelling variations
+- 🔐 **Hash-Based Change Detection**: Only reloads data when actual changes detected
+- 📝 **Multi-level Header Support**: Handles complex spreadsheet structures
 
 ---
 
@@ -362,6 +364,16 @@ The app will open at `http://localhost:8501`
 - "மொத்த ஊழியர்கள் எத்தனை பேர்?"
 - "மீனாட்சி எவ்ளோ சம்பளம் வாங்குறா?"
 - "அதிக சம்பளம் யாருக்கு?"
+
+**Hindi:**
+- "कुल कर्मचारी कितने हैं?"
+- "सबसे ज्यादा वेतन किसका है?"
+
+**Spanish:**
+- "¿Cuál es el salario total de todos los empleados?"
+- "¿Quién tiene el salario más alto?"
+
+**Works in any language!** The AI understands and responds in the same language you use.
 
 ---
 
