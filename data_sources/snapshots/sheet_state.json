@@ -1,31 +1,29 @@
 {
   "spreadsheet_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4",
-  "sheets": [
-    "Month",
-    "pincode sales",
-    "sales",
-    "sales by cat"
-  ],
-  "fingerprints": {
-    "pincode sales_Table1": "79b0dd5628c41cbd94afa03abda19e6f980853d672ec63344c47ac8ad7c56151",
-    "sales_Table1": "07535f6e3f54d4d592af29865ca56d0ce1563fd48aa9edf95ac9f366717db464",
-    "sales_Table2": "03ba8c04b7c76c1875a5c0edeb465a08e5a79cfb14483379e4a1fba3ebe829a1",
-    "sales_Table3": "931c062ce03ce2c61346038fd9b85df84075d3ded57789195008a25c885a162e",
-    "sales_Table4": "abcb7b77f717f325d5de6841948871cefde76a5528ea44acb12125df0f4d506e",
-    "sales_Table5": "803f913692c34bf9bb58a6e5f61228297c8a40dadbc84286a0e76a0c861fbff1",
-    "sales_Table6": "ee3929eb52cf2a1f45128cff748feddcf3343329fdd2be442c51110934b644f9",
-    "sales_Table7": "cfb58dff310f47a2ff6523fbb7ea34d8c2a0763e26d29d344a522f33adf65133",
-    "sales_Table8": "05bda2e186968398fba5ce4b1f5b81bb9656a9a11e939bdc5d84a83cafa088d6",
-    "sales_Table9": "3301a8631391927ac5532e0931fd34e3ad3d55242dcb8e3462b321f6d59b2eca",
-    "sales_Table10": "4d2bfba610881441907e908a44c717cf8cd9906b01cfbc3b917877ff5755004b",
-    "sales_Table11": "4f1bb16d142dbf06f825fff490c91c83115a853b6a4a0960bba2fd35c40f63ce",
-    "sales_Table12": "2e276d6fe6609b414aacbf32d3391157b346bc5fd516615375934d4246c8f026",
-    "sales_Table13": "06091f34746e6b526527ebc764a1f46f807d26db3285d7dddc08ed7078593d0b",
-    "sales_Table14": "13596e716f6b8bb7882de2200e215dce5d504e56e89d9c1f7b6a15f4c675164d",
-    "sales_Table15": "0429a2d5cb4f8cd09f7ecd713ee749a3ee2b248376ba36b26251c512c8cd410c",
-    "sales_Table16": "5dadeb5862cce7fbe09117adedeb394bc348d47cef2bdf7f258fdaa8aa8b1875",
-    "sales by cat_Table1": "6651bbff2c804f54020c5adcc3546fc8bb8dcb832ab3ea029a87da4cddf07c9b",
-    "sales by cat_Table2": "627054bca32a5f53af4ec6d1b6360094a081547ba699b6be12fbd3d1c1aeceb0",
-    "Month_Table1": "e4a0cb7afb64519b87f579882771e7e1b43ab0a8ed8a3fab8e5f9b4445b6c538"
+  "sheets": {
+    "pincode sales": {
+      "hash": "01301a194705cba03ae326bfab74836c608f2545f01a98e00c2a6d2c5b77eb7a",
+      "table_count": 1,
+      "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#pincode sales",
+      "last_synced": "2025-12-30T13:09:24.052428"
+    },
+    "sales": {
+      "hash": "1047354d57dc2a3035f8eefafce0de7f8f8d6cd736bd4af44d243eb87e364f79",
+      "table_count": 16,
+      "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
+      "last_synced": "2025-12-30T13:09:24.052428"
+    },
+    "sales by cat": {
+      "hash": "099d9f67b76bbb1029df68f3f81a771bfd9cf0a07a0cde8943a3513ccd96b05a",
+      "table_count": 2,
+      "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales by cat",
+      "last_synced": "2025-12-30T13:09:24.052428"
+    },
+    "Month": {
+      "hash": "bbed3621cf551c6967f2f489d6613b23208c887b4c050ce51bd000b1182dcee1",
+      "table_count": 1,
+      "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#Month",
+      "last_synced": "2025-12-30T13:09:24.052428"
+    }
   }
 }

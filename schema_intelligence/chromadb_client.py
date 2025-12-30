@@ -102,29 +102,110 @@ class SchemaVectorStore:
         except Exception as e:
             # Collection may not exist
             print(f"   ChromaDB collection doesn't exist (first run or already cleared)")
-
-    def rebuild(self):
+    
+    def delete_by_source_id(self, source_id: str):
         """
-        Rebuild schema vector store from scratch.
-        Safe, deterministic, idempotent.
+        Delete all documents (schema and row embeddings) for a given source_id.
+        
+        This is used for atomic sheet-level rebuilds: when a sheet changes,
+        ALL embeddings derived from that sheet are deleted before rebuilding.
+        
+        Args:
+            source_id: Source identifier (spreadsheet_id#sheet_name)
+        
+        Returns:
+            Number of documents deleted
+        """
+        try:
+            # Get or create collection
+            try:
+                collection = self.client.get_collection(
+                    name=self.collection_name,
+                    embedding_function=self.embedding_function
+                )
+            except Exception:
+                # Collection doesn't exist, nothing to delete
+                return 0
+            
+            # Query for all documents with this source_id
+            # ChromaDB doesn't support direct deletion by metadata filter,
+            # so we need to get IDs first then delete them
+            results = collection.get(
+                where={"source_id": source_id},
+                include=["metadatas"]
+            )
+            
+            if not results or not results['ids']:
+                print(f"   No ChromaDB documents found for source_id: {source_id}")
+                return 0
+            
+            # Delete documents by ID
+            ids_to_delete = results['ids']
+            collection.delete(ids=ids_to_delete)
+            
+            print(f"   Deleted {len(ids_to_delete)} ChromaDB document(s) for source_id: {source_id}")
+            return len(ids_to_delete)
+            
+        except Exception as e:
+            print(f"   ⚠️  Error deleting ChromaDB documents for source_id {source_id}: {e}")
+            return 0
+
+    def rebuild(self, source_ids=None):
+        """
+        Rebuild schema vector store from scratch or for specific source_ids.
         
         IMPORTANT: Always passes explicit embedding function to prevent ONNX fallback.
+        
+        Args:
+            source_ids: Optional list of source_ids to rebuild.
+                       If None: Full rebuild (delete all, rebuild all)
+                       If provided: Delete only documents matching these source_ids, then rebuild
         """
+        if source_ids is None:
+            # FULL REBUILD: Delete entire collection and rebuild from scratch
+            print("   Performing FULL ChromaDB rebuild...")
+            
+            # Delete existing collection if present
+            try:
+                self.client.delete_collection(self.collection_name)
+            except Exception:
+                pass  # Collection may not exist yet
 
-        # Delete existing collection if present
-        try:
-            self.client.delete_collection(self.collection_name)
-        except Exception:
-            pass  # Collection may not exist yet
+            # Create fresh collection WITH EXPLICIT EMBEDDING FUNCTION
+            # This is critical - never allow ChromaDB to use default embeddings
+            self.collection = self.client.create_collection(
+                name=self.collection_name,
+                embedding_function=self.embedding_function  # EXPLICIT: No ONNX fallback
+            )
+        else:
+            # PARTIAL REBUILD: Delete only documents for specified source_ids
+            print(f"   Performing PARTIAL ChromaDB rebuild for {len(source_ids)} source(s)...")
+            
+            # Get or create collection
+            try:
+                self.collection = self.client.get_collection(
+                    name=self.collection_name,
+                    embedding_function=self.embedding_function
+                )
+            except Exception:
+                # Collection doesn't exist, create it
+                self.collection = self.client.create_collection(
+                    name=self.collection_name,
+                    embedding_function=self.embedding_function
+                )
+            
+            # Delete documents for each source_id
+            for source_id in source_ids:
+                self.delete_by_source_id(source_id)
 
-        # Create fresh collection WITH EXPLICIT EMBEDDING FUNCTION
-        # This is critical - never allow ChromaDB to use default embeddings
-        self.collection = self.client.create_collection(
-            name=self.collection_name,
-            embedding_function=self.embedding_function  # EXPLICIT: No ONNX fallback
-        )
-
+        # Build documents from schema
         documents = build_schema_documents()
+        
+        # Filter documents if partial rebuild
+        if source_ids is not None:
+            # Only rebuild documents for specified source_ids
+            documents = [doc for doc in documents if doc.get("source_id") in source_ids]
+            print(f"   Rebuilding {len(documents)} document(s) for specified source_ids")
 
         # Build clean metadata (NO None values)
         metadatas = []
@@ -136,16 +217,22 @@ class SchemaVectorStore:
 
             if doc.get("metric") is not None:
                 meta["metric"] = doc["metric"]
+            
+            # Add source_id to metadata for filtering
+            if doc.get("source_id") is not None:
+                meta["source_id"] = doc["source_id"]
 
             metadatas.append(meta)
 
         # Add embeddings (auto-persisted by Chroma)
         # Embeddings are generated using Hugging Face model (all-MiniLM-L6-v2)
-        self.collection.add(
-            ids=[doc["id"] for doc in documents],
-            documents=[doc["text"] for doc in documents],
-            metadatas=metadatas
-        )
+        if documents:  # Only add if there are documents to add
+            self.collection.add(
+                ids=[doc["id"] for doc in documents],
+                documents=[doc["text"] for doc in documents],
+                metadatas=metadatas
+            )
+            print(f"   Added {len(documents)} document(s) to ChromaDB")
 
     def count(self):
         """Get the number of documents in the collection."""

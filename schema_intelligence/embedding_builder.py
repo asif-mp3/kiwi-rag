@@ -27,13 +27,20 @@ def build_schema_documents():
             f"Columns: {column_str}. "
             f"Grain: {meta.get('grain', 'UNKNOWN')}."
         )
-
-        documents.append({
+        
+        # Build document with source_id for filtering
+        doc = {
             "id": f"table::{table}",
             "text": text,
             "type": "table",
             "table": table
-        })
+        }
+        
+        # Add source_id if available
+        if meta.get("source_id"):
+            doc["source_id"] = meta["source_id"]
+        
+        documents.append(doc)
 
     # Metric-level documents
     for metric, meta in schema["metrics"].items():

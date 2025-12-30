@@ -297,9 +297,11 @@ def fetch_sheets_with_tables() -> Dict[str, List[Dict[str, Any]]]:
     """
     Fetches all tabs from Google Sheet and detects multiple tables within each sheet.
     
-    CRITICAL: This function fetches RAW data WITHOUT type inference first,
-    then detects tables, then applies type inference to each detected table.
-    This prevents Int64 errors during table detection.
+    CRITICAL CHANGES:
+    1. Computes RAW SHEET HASH before any processing (for change detection)
+    2. Adds source_id to each detected table for atomic tracking
+    3. Fetches RAW data WITHOUT type inference first
+    4. Detects tables, then applies type inference to each detected table
     
     Returns:
         Dict mapping sheet_name to list of detected tables.
@@ -310,11 +312,15 @@ def fetch_sheets_with_tables() -> Dict[str, List[Dict[str, Any]]]:
         - dataframe: Table data with proper headers and types
         - title: Optional table title
         - sheet_name: Source sheet name
+        - source_id: Unique identifier for the source sheet (spreadsheet_id#sheet_name)
+        - sheet_hash: SHA-256 hash of raw sheet data (for change detection)
     """
     from data_sources.gsheet.table_detection import detect_and_clean_tables
+    from data_sources.gsheet.sheet_hasher import compute_sheet_hash, get_source_id
     
     config = _load_config()
     gs_config = config["google_sheets"]
+    spreadsheet_id = gs_config["spreadsheet_id"]
 
     scopes = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
     credentials = Credentials.from_service_account_file(
@@ -343,6 +349,11 @@ def fetch_sheets_with_tables() -> Dict[str, List[Dict[str, Any]]]:
                 print("⊘ Empty, skipped")
                 continue
             
+            # STEP 1: Compute raw sheet hash BEFORE any processing
+            # This hash represents the complete state of the sheet
+            sheet_hash = compute_sheet_hash(all_values)
+            source_id = get_source_id(spreadsheet_id, sheet_name)
+            
             # Create DataFrame with RAW string data (no type inference yet)
             # IMPORTANT: Do not extract headers here! 
             # The custom detector processing pipeline (detect_and_clean_tables -> clean_detected_tables)
@@ -358,11 +369,16 @@ def fetch_sheets_with_tables() -> Dict[str, List[Dict[str, Any]]]:
                 print("⊘ No data, skipped")
                 continue
             
-            # Detect tables in this sheet using RAW data
+            # STEP 2: Detect tables in this sheet using RAW data
             print(f"✓ {len(raw_df):,} rows, detecting tables...", end=" ")
             detected_tables = detect_and_clean_tables(raw_df, sheet_name)
             
-            # NOW apply type inference and date/time combination to each detected table
+            # STEP 3: Add source_id and sheet_hash to each detected table
+            for table in detected_tables:
+                table['source_id'] = source_id
+                table['sheet_hash'] = sheet_hash
+            
+            # STEP 4: Apply type inference and date/time combination to each detected table
             for table in detected_tables:
                 table_df = table['dataframe']
                 
@@ -376,7 +392,7 @@ def fetch_sheets_with_tables() -> Dict[str, List[Dict[str, Any]]]:
                 table['dataframe'] = table_df
             
             sheets_with_tables[worksheet.title] = detected_tables
-            print(f"✓ Found {len(detected_tables)} table(s)")
+            print(f"✓ Found {len(detected_tables)} table(s) [hash: {sheet_hash[:8]}...]")
             
         except Exception as e:
             import traceback

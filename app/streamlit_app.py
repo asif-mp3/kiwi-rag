@@ -22,7 +22,8 @@ from planning_layer.planner_client import generate_plan
 from validation_layer.plan_validator import validate_plan
 from execution_layer.executor import execute_plan
 from explanation_layer.explainer_client import explain_results
-from data_sources.gsheet.change_detector import needs_refresh, mark_synced
+from data_sources.gsheet.connector import fetch_sheets_with_tables
+from data_sources.gsheet.change_detector import needs_refresh
 from data_sources.gsheet.snapshot_loader import load_snapshot
 from schema_intelligence.chromadb_client import SchemaVectorStore
 from utils.voice_utils import transcribe_audio, text_to_speech, save_audio_temp
@@ -136,12 +137,6 @@ if 'data_loaded' not in st.session_state:
 # if 'context_resolver' not in st.session_state:
 #     st.session_state.context_resolver = ContextResolver()
 
-if 'last_known_fingerprints' not in st.session_state:
-    # Try to load from stored state to avoid unnecessary fetches
-    from data_sources.gsheet.change_detector import load_sheet_state
-    stored_state = load_sheet_state()
-    st.session_state.last_known_fingerprints = stored_state.get('fingerprints', None)
-
 def extract_spreadsheet_id(url):
     """Extract spreadsheet ID from Google Sheets URL"""
     # Pattern for Google Sheets URLs
@@ -179,11 +174,6 @@ def load_sheets_data(spreadsheet_id):
         load_snapshot(sheets_with_tables, full_reset=True)
         store.rebuild()
         
-        # Initialize fingerprint cache to avoid unnecessary fetch on first query
-        from data_sources.gsheet.change_detector import compute_current_fingerprints
-        fingerprints = compute_current_fingerprints(sheets_with_tables)
-        st.session_state.last_known_fingerprints = fingerprints
-        
         # Count total tables for display
         total_tables = sum(len(tables) for tables in sheets_with_tables.values())
         return True, (len(sheets_with_tables), total_tables)
@@ -191,44 +181,72 @@ def load_sheets_data(spreadsheet_id):
         return False, str(e)
 
 def check_and_refresh_data():
-    """Automatically check for data changes and refresh if needed."""
-    from data_sources.gsheet.change_detector import load_sheet_state, compute_current_fingerprints
+    """Automatically check for data changes and refresh if needed using sheet-level hashing."""
+    from data_sources.gsheet.connector import fetch_sheets_with_tables
+    from data_sources.gsheet.change_detector import needs_refresh
     
-    print("🔍 Checking for sheet changes (fetching current data to compute hash)...")
+    print("🔍 Checking for sheet changes (computing sheet hashes)...")
     
-    # ALWAYS do full check by fetching actual sheet data
-    # This is necessary to detect changes made in Google Sheets
-    needs_refresh_flag, full_reset, sheets_with_tables = needs_refresh()
+    # STEP 1: Fetch sheets and compute hashes
+    sheets_with_tables = fetch_sheets_with_tables()
+    
+    # STEP 2: Check for changes
+    needs_refresh_flag, full_reset, changed_sheets = needs_refresh(sheets_with_tables)
     
     if needs_refresh_flag:
         store = st.session_state.vector_store
         
         if full_reset:
-            print("📊 Table structure changed - performing full reset")
-            st.info("📊 Table structure changed - performing automatic full reset...")
+            # FULL RESET: Spreadsheet ID changed or first run
+            print("📊 Performing FULL RESET (spreadsheet ID changed or first run)")
+            st.info("📊 Performing automatic FULL RESET (spreadsheet ID changed or first run)...")
+            
+            # Clear ChromaDB
             store.clear_collection()
+            print("  ✓ ChromaDB cleared")
+            
+            # Reset DuckDB
             load_snapshot(sheets_with_tables, full_reset=True)
+            print("  ✓ DuckDB reset complete")
+            
+            # Rebuild ChromaDB
             store.rebuild()
+            print("  ✓ ChromaDB rebuilt")
+            
             st.success("✅ Full reset complete")
+            
         else:
-            print("📊 Content changed - performing incremental refresh")
-            st.info("📊 Content changed - performing automatic incremental refresh...")
-            load_snapshot(sheets_with_tables, full_reset=False)
-            store.rebuild()
-            st.success("✅ Incremental refresh complete")
-        
-        mark_synced(sheets_with_tables)
-        
-        # Update cached fingerprints
-        new_fingerprints = compute_current_fingerprints(sheets_with_tables)
-        st.session_state.last_known_fingerprints = new_fingerprints
+            # INCREMENTAL REBUILD: Only changed sheets
+            print(f"📊 Performing INCREMENTAL REBUILD for {len(changed_sheets)} changed sheet(s)")
+            print(f"   Changed sheets: {', '.join(changed_sheets)}")
+            st.info(f"📊 Performing automatic INCREMENTAL REBUILD for {len(changed_sheets)} changed sheet(s)...")
+            
+            # Get source_ids for changed sheets
+            source_ids = []
+            for sheet_name in changed_sheets:
+                if sheet_name in sheets_with_tables and sheets_with_tables[sheet_name]:
+                    source_id = sheets_with_tables[sheet_name][0].get('source_id')
+                    if source_id:
+                        source_ids.append(source_id)
+            
+            # Rebuild DuckDB tables for changed sheets only
+            load_snapshot(sheets_with_tables, full_reset=False, changed_sheets=changed_sheets)
+            print("  ✓ DuckDB tables rebuilt for changed sheets")
+            
+            # Rebuild ChromaDB embeddings for changed sheets only
+            if source_ids:
+                store.rebuild(source_ids=source_ids)
+                print("  ✓ ChromaDB rebuilt for changed sheets")
+            else:
+                # Fallback to full rebuild if source_ids not available
+                store.rebuild()
+                print("  ✓ ChromaDB rebuilt (full rebuild)")
+            
+            st.success(f"✅ Incremental rebuild complete ({len(changed_sheets)} sheet(s) updated)")
         
         return True
     
     print("✓ No changes detected (hashes match)")
-    # No refresh needed - update cache to match current state
-    stored_state = load_sheet_state()
-    st.session_state.last_known_fingerprints = stored_state.get('fingerprints', {})
     return False
 
 def save_message(role: str, content: str, metadata: dict = None):

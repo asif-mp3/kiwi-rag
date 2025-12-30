@@ -93,17 +93,28 @@ def extract_schema(
     metric_path="config/metric_definitions.yaml"
 ):
     """
-    Extracts schema metadata with semantic types.
+    Extracts schema metadata with semantic types and source_id tracking.
     Filters out non-analytical tables.
     No row access. No aggregates. No samples.
     """
+    import json
+    from pathlib import Path
 
     conn = duckdb.connect(db_path)
+    
+    # Load table metadata to get source_id for each table
+    table_metadata = {}
+    metadata_file = "data_sources/snapshots/table_metadata.json"
+    if Path(metadata_file).exists():
+        try:
+            with open(metadata_file, 'r') as f:
+                table_metadata = json.load(f)
+        except Exception as e:
+            print(f"⚠️  Could not load table metadata: {e}")
 
     # Load metric definitions (optional)
     metrics = {}
     try:
-        from pathlib import Path
         if Path(metric_path).exists():
             with open(metric_path) as f:
                 config = yaml.safe_load(f)
@@ -130,20 +141,23 @@ def extract_schema(
         if not columns:
             continue
 
-        if not columns:
-            continue
-
         # Add table description
         if table_name.endswith("_long"):
             table_description = f"Long format version of {table_name[:-5]} with Date, Hours, and Status columns. Use this table for date-based queries like 'who was absent on [date]' or 'hours worked on [date]'. Status values: 'A' = Absent, 'P' = Present."
         else:
             # Use heuristic inference
             table_description = _infer_table_description(table_name, columns)
+        
+        # Get source_id from table metadata
+        source_id = None
+        if table_name in table_metadata:
+            source_id = table_metadata[table_name].get('source_id')
 
         schema["tables"][table_name] = {
             "columns": {},
             "grain": "UNKNOWN",
-            "description": table_description
+            "description": table_description,
+            "source_id": source_id  # Add source_id for tracking
         }
 
         for col_name, col_type, *_ in columns:

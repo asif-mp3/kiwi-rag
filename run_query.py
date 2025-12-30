@@ -3,50 +3,78 @@ from planning_layer.planner_client import generate_plan  # Changed from rule_bas
 from validation_layer.plan_validator import validate_plan
 from execution_layer.executor import execute_plan
 from explanation_layer.explainer_client import explain_results
-from data_sources.gsheet.change_detector import needs_refresh, mark_synced
+from data_sources.gsheet.connector import fetch_sheets_with_tables
+from data_sources.gsheet.change_detector import needs_refresh
 from data_sources.gsheet.snapshot_loader import load_snapshot
 from schema_intelligence.chromadb_client import SchemaVectorStore # Moved import to top
 
-def reset_snapshot(sheets_with_tables):
-    """Performs a full reset of the DuckDB snapshot and clears schema embeddings."""
-    store = SchemaVectorStore()
-    store.clear_collection()
-    print("  ✓ Schema embeddings cleared")
-    
-    load_snapshot(sheets_with_tables, full_reset=True)
-    print("  ✓ DuckDB snapshot reset complete")
-
-def update_snapshot(sheets_with_tables):
-    """Performs an incremental update of the DuckDB snapshot."""
-    # For now, incremental update is just loading the snapshot without full_reset
-    # In the future, this could be optimized to only update changed tables
-    load_snapshot(sheets_with_tables, full_reset=False)
-    print("  ✓ DuckDB snapshot updated")
-
 def run(question: str):
-    # Smart refresh: only reload if Google Sheets has changed
-    # IMPORTANT: needs_refresh() returns (bool, bool, sheets_with_tables) to avoid double-fetching
-    needs_refresh_flag, full_reset, sheets_with_tables = needs_refresh()
+    """
+    Main query execution pipeline with sheet-level hash-based change detection.
+    
+    Change Detection Logic:
+    - Fetches sheets and computes raw sheet hashes
+    - Compares hashes to detect changes
+    - Performs targeted rebuilds for changed sheets only
+    - Falls back to full reset if spreadsheet ID changed or first run
+    """
+    
+    # STEP 1: Fetch sheets and detect changes
+    # This computes raw sheet hashes before any processing
+    print("🔍 Checking for data changes...")
+    sheets_with_tables = fetch_sheets_with_tables()
+    
+    # STEP 2: Determine if refresh is needed
+    # Returns (needs_refresh, full_reset_required, changed_sheets)
+    needs_refresh_flag, full_reset, changed_sheets = needs_refresh(sheets_with_tables)
     
     # Initialize schema store
     store = SchemaVectorStore()
     
     if needs_refresh_flag:
         if full_reset:
-            # Full reset: Clear everything and rebuild from scratch
-            print("📊 Sheet structure changed - performing FULL RESET...")
-            reset_snapshot(sheets_with_tables)
+            # FULL RESET: Spreadsheet ID changed or first run
+            print("📊 Performing FULL RESET (spreadsheet ID changed or first run)...")
+            
+            # Clear ChromaDB
+            store.clear_collection()
+            print("  ✓ Schema embeddings cleared")
+            
+            # Reset DuckDB and rebuild all sheets
+            load_snapshot(sheets_with_tables, full_reset=True)
+            print("  ✓ DuckDB snapshot reset complete")
+            
+            # Rebuild all ChromaDB embeddings
             store.rebuild()
-            print("✓ Schema embeddings rebuilt\n")
+            print("  ✓ Schema embeddings rebuilt\n")
+            
         else:
-            # Incremental refresh (content changed but structure same)
-            print("📊 Content changed - performing incremental refresh...")
-            update_snapshot(sheets_with_tables)
-            store.rebuild()
-            print("✓ Schema embeddings rebuilt\n")
-        
-        # CRITICAL: Save new fingerprints after refresh
-        mark_synced(sheets_with_tables)
+            # INCREMENTAL REBUILD: Only changed sheets
+            print(f"📊 Performing INCREMENTAL REBUILD for {len(changed_sheets)} changed sheet(s)...")
+            print(f"   Changed sheets: {', '.join(changed_sheets)}")
+            
+            # Get source_ids for changed sheets
+            source_ids = []
+            for sheet_name in changed_sheets:
+                if sheet_name in sheets_with_tables and sheets_with_tables[sheet_name]:
+                    source_id = sheets_with_tables[sheet_name][0].get('source_id')
+                    if source_id:
+                        source_ids.append(source_id)
+            
+            # Rebuild DuckDB tables for changed sheets only
+            load_snapshot(sheets_with_tables, full_reset=False, changed_sheets=changed_sheets)
+            print("  ✓ DuckDB tables rebuilt for changed sheets")
+            
+            # Rebuild ChromaDB embeddings for changed sheets only
+            if source_ids:
+                store.rebuild(source_ids=source_ids)
+                print("  ✓ Schema embeddings rebuilt for changed sheets\n")
+            else:
+                # Fallback to full rebuild if source_ids not available
+                store.rebuild()
+                print("  ✓ Schema embeddings rebuilt (full rebuild)\n")
+    else:
+        print("✓ No changes detected - using cached data\n")
     
     print("\n" + "="*80)
     print("QUESTION:")
