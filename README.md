@@ -16,6 +16,8 @@ A production-ready RAG (Retrieval-Augmented Generation) system that enables natu
 - 🌐 **Universal Multilingual**: Works with any language - not limited to English or Tamil
 - 💬 **Conversation History**: Save and manage multiple chat sessions
 - 🔐 **Authentication**: Optional Supabase-based user authentication
+- 🧠 **Permanent Memory**: Remember user preferences and bot identity across sessions
+- 👋 **Smart Greetings**: Context-aware greeting responses in multiple languages
 
 ### Query Types Supported
 - **Lookup**: Find specific rows by criteria with LIKE operator for flexible text matching
@@ -36,6 +38,8 @@ A production-ready RAG (Retrieval-Augmented Generation) system that enables natu
 - 📝 **Multi-Table Detection**: Handles complex spreadsheets with multiple tables per sheet
 - 🎙️ **Voice-Optimized Output**: Natural language responses designed for voice assistants
 - 📊 **Sheet Source Attribution**: Always mentions which sheet data came from
+- 💾 **Persistent Memory**: JSON-based storage for user preferences and bot identity
+- 🎭 **Dynamic Greetings**: Language-agnostic greeting detection with context-aware responses
 
 ### Sheet-Level Change Detection System
 
@@ -209,6 +213,80 @@ kiwi-rag/
 ├── requirements.txt              # Python dependencies
 └── run_query.py                  # CLI entry point
 ```
+
+```
+
+---
+
+## 🧠 Permanent Memory System
+
+The system includes a permanent JSON-based memory feature that remembers user preferences and bot identity across sessions.
+
+### How It Works
+
+**Memory Storage:**
+- User: "Call me madam, remember"
+- System: Stores `{"user_preferences": {"address_as": "madam"}}`
+- Future responses automatically use "madam"
+
+**Memory Application:**
+- Memory is loaded on every query
+- Injected into AI system prompts as behavioral constraints
+- Persists across sessions (stored in `data_sources/persistent_memory.json`)
+
+### Supported Memory Types
+
+1. **User Preferences**
+   - How to address the user (e.g., "madam", "sir")
+   - Language preferences
+   - Custom preferences
+
+2. **Bot Identity**
+   - Bot name (e.g., "Your name is Kiwi")
+   - Bot personality traits
+
+### Language-Agnostic Detection
+
+Works in any language:
+- English: "Call me madam, remember"
+- Tamil: "Inime enna madam nu dhan koopduva, nyabagam vechiko"
+- Hindi: "Mujhe sir bulana, yaad rakhna"
+
+### Technical Implementation
+
+- **Detection**: Gemini AI-based semantic detection
+- **Storage**: JSON file with atomic writes
+- **Injection**: Memory constraints added to planning and explanation prompts
+- **Persistence**: Survives app restarts and session changes
+
+---
+
+## 👋 Dynamic Greeting Detection
+
+The system intelligently detects and responds to greetings without searching the database.
+
+### Supported Greetings
+
+**Casual**: hi, hello, hey, hola, yo  
+**Formal**: good day, greetings  
+**Cultural**: namaste, vanakkam, salaam, bonjour, konnichiwa, ni hao  
+**Casual Questions**: what's up, how are you, how's it going  
+**Time-Based**: good morning, good afternoon, good evening, good night
+
+### Dynamic Responses
+
+Each greeting type gets context-aware responses:
+
+- **"hi"** → "Hi there! I'm Kiwi, your analytics assistant. What would you like to know about your data?"
+- **"vanakkam"** → "Vanakkam! I'm Kiwi, your analytics assistant. How can I help you today?"
+- **"good morning"** → "Good morning! I'm Kiwi, your analytics assistant. Ready to start the day with some data insights?"
+
+### Features
+
+- **Natural Delay**: 1-2 second delay to feel less robotic
+- **Multiple Variations**: 2-3 different responses per greeting type
+- **Language Matching**: Responds in the same language/culture as the greeting
+- **No Database Search**: Instant response without querying sheets
 
 ---
 
