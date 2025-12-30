@@ -1,0 +1,94 @@
+{
+  "id": "20251230_141256",
+  "title": "what is the Orders by cat on November 9 for the it...",
+  "created_at": "2025-12-30T14:12:56.071005",
+  "updated_at": "2025-12-30T14:14:10.843423",
+  "messages": [
+    {
+      "role": "user",
+      "content": "what is the Orders by cat on November 9 for the item fresh cut vegetables\n\n\n",
+      "timestamp": "2025-12-30T14:13:44.827889"
+    },
+    {
+      "role": "assistant",
+      "content": "According to the Freshggies Shopify Sales on Fulfiilments November By Category data, for the category \"Fresh Cut Vegetables / Prepped Veggies\", there were 10 orders on November 9th, 2025.",
+      "timestamp": "2025-12-30T14:14:10.843423",
+      "metadata": {
+        "plan": {
+          "query_type": "lookup",
+          "table": "Freshggies_Shopify_Sales_on_Fulfiilments_November_By_Category",
+          "select_columns": [
+            "Sales by Cat",
+            "Orders-09/11/2025"
+          ],
+          "filters": [
+            {
+              "column": "Sales by Cat",
+              "operator": "LIKE",
+              "value": "%fresh cut vegetables%"
+            }
+          ],
+          "limit": 1,
+          "metrics": [],
+          "group_by": [],
+          "order_by": [],
+          "subset_filters": [],
+          "subset_order_by": [],
+          "aggregation_column": "",
+          "aggregation_function": ""
+        },
+        "data": {
+          "Sales by Cat": {
+            "0": "Fresh Cut Vegetables / Prepped Veggies"
+          },
+          "Orders-09/11/2025": {
+            "0": "10"
+          }
+        },
+        "schema_context": [
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_November'. Description: Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc.. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (DOUBLE, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_November"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_November_By_Category'. Description: Table containing Freshggies Shopify Sales on Fulfiilments November By Category. Columns: Sales by Cat (VARCHAR, temporal_attribute), Orders-01/11/2025 (VARCHAR, unknown), Gross sales-01/11/2025 (DOUBLE, numeric_measure), Orders-02/11/2025 (VARCHAR, unknown), Gross sales-02/11/2025 (DOUBLE, numeric_measure), Orders-03/11/2025 (VARCHAR, unknown), Gross sales-03/11/2025 (DOUBLE, numeric_measure), Orders-04/11/2025 (VARCHAR, unknown), Gross sales-04/11/2025 (DOUBLE, numeric_measure), Orders-05/11/2025 (VARCHAR, unknown), Gross sales-05/11/2025 (DOUBLE, numeric_measure), Orders-06/11/2025 (VARCHAR, unknown), Gross sales-06/11/2025 (DOUBLE, numeric_measure), Orders-07/11/2025 (VARCHAR, unknown), Gross sales-07/11/2025 (DOUBLE, numeric_measure), Orders-08/11/2025 (VARCHAR, unknown), Gross sales-08/11/2025 (DOUBLE, numeric_measure), Orders-09/11/2025 (VARCHAR, unknown), Gross sales-09/11/2025 (DOUBLE, numeric_measure), Orders-10/11/2025 (VARCHAR, unknown), Gross sales-10/11/2025 (DOUBLE, numeric_measure), Orders-11/11/2025 (VARCHAR, unknown), Gross sales-11/11/2025 (DOUBLE, numeric_measure), Orders-12/11/2025 (VARCHAR, unknown), Gross sales-12/11/2025 (DOUBLE, numeric_measure), Orders-13/11/2025 (VARCHAR, unknown), Gross sales-13/11/2025 (DOUBLE, numeric_measure), Orders-14/11/2025 (VARCHAR, unknown), Gross sales-14/11/2025 (DOUBLE, numeric_measure), Orders-15/11/2025 (VARCHAR, unknown), Gross sales-15/11/2025 (DOUBLE, numeric_measure), Orders-16/11/2025 (VARCHAR, unknown), Gross sales-16/11/2025 (DOUBLE, numeric_measure), Orders-17/11/2025 (VARCHAR, unknown), Gross sales-17/11/2025 (DOUBLE, numeric_measure), Orders-18/11/2025 (VARCHAR, unknown), Gross sales-18/11/2025 (DOUBLE, numeric_measure), Orders-19/11/2025 (VARCHAR, unknown), Gross sales-19/11/2025 (DOUBLE, numeric_measure), Orders-20/11/2025 (VARCHAR, unknown), Gross sales-20/11/2025 (DOUBLE, numeric_measure), Orders-21/11/2025 (VARCHAR, unknown), Gross sales-21/11/2025 (DOUBLE, numeric_measure), Orders-22/11/2025 (VARCHAR, unknown), Gross sales-22/11/2025 (DOUBLE, numeric_measure), Orders-23/11/2025 (VARCHAR, unknown), Gross sales-23/11/2025 (DOUBLE, numeric_measure), Orders-24/11/2025 (VARCHAR, unknown), Gross sales-24/11/2025 (DOUBLE, numeric_measure), Orders-25/11/2025 (VARCHAR, unknown), Gross sales-25/11/2025 (DOUBLE, numeric_measure), Orders-26/11/2025 (VARCHAR, unknown), Gross sales-26/11/2025 (DOUBLE, numeric_measure), Orders-27/11/2025 (VARCHAR, unknown), Gross sales-27/11/2025 (DOUBLE, numeric_measure), Orders-28/11/2025 (VARCHAR, unknown), Gross sales-28/11/2025 (DOUBLE, numeric_measure), Orders-29/11/2025 (VARCHAR, unknown), Gross sales-29/11/2025 (DOUBLE, numeric_measure), Orders-30/11/2025 (VARCHAR, unknown), Gross sales-30/11/2025 (DOUBLE, numeric_measure), Orders- (VARCHAR, unknown), Gross sales-01/12/2025 (DOUBLE, numeric_measure), Orders-GRAND TOTAL (VARCHAR, unknown), Gross sales-GRAND TOTAL (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales by cat",
+              "type": "table",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_November_By_Category"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_December'. Description: Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc.. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure), AOV (VARCHAR, unknown). Grain: UNKNOWN.",
+            "metadata": {
+              "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_December",
+              "type": "table"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Sales_September'. Description: Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc.. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "type": "table",
+              "table": "Freshggies_Sales_September",
+              "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales"
+            }
+          },
+          {
+            "text": "Table 'Freshggies_Shopify_Sales_on_Fulfiilments_October'. Description: Aggregate sales data (Daily/Monthly) with metrics like Orders, Gross Sales, etc.. Columns: Date (VARCHAR, temporal_attribute), Month (VARCHAR, temporal_attribute), Orders (BIGINT, numeric_attribute), Subtotal (BIGINT, numeric_measure), Shipping (BIGINT, numeric_measure), Gst (DOUBLE, numeric_attribute), Gross sales (DOUBLE, numeric_measure). Grain: UNKNOWN.",
+            "metadata": {
+              "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
+              "type": "table",
+              "table": "Freshggies_Shopify_Sales_on_Fulfiilments_October"
+            }
+          }
+        ],
+        "data_refreshed": false
+      }
+    }
+  ]
+}

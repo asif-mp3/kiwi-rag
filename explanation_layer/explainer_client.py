@@ -92,6 +92,7 @@ def explain_results(result_df, query_plan=None, original_question=None):
     # Add query plan context if available
     if query_plan:
         context["query_type"] = query_plan.get("query_type")
+        context["table"] = query_plan.get("table")  # Add table/sheet name
         context["aggregation_function"] = query_plan.get("aggregation_function")
         context["aggregation_column"] = query_plan.get("aggregation_column")
         context["filters"] = query_plan.get("filters", [])

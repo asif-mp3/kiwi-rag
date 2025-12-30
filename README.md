@@ -46,10 +46,36 @@ A production-ready RAG (Retrieval-Augmented Generation) chatbot that enables nat
 - 🎯 **RAG Pipeline**: ChromaDB + Hugging Face embeddings for semantic schema search
 - 🤖 **AI Planning**: Gemini 2.5 Pro for intelligent query understanding
 - 🔧 **Type Inference**: Automatic data type detection and normalization
-- 📅 **Date Handling**: Smart date/time column combination
+- 📅 **Date Handling**: Smart date/time column combination with DD/MM/YYYY format support
 - 🔤 **Fuzzy Matching**: Handles name spelling variations
-- 🔐 **Hash-Based Change Detection**: Only reloads data when actual changes detected
+- 🔐 **Sheet-Level Change Detection**: Hash-based atomic rebuilds for data consistency
 - 📝 **Multi-level Header Support**: Handles complex spreadsheet structures
+- 🎙️ **Voice-Optimized Output**: Natural language responses designed for voice assistants
+- 📊 **Sheet Source Attribution**: Always mentions which sheet data came from
+
+### Change Detection System
+The system uses **sheet-level hash-based change detection** to ensure data consistency:
+
+- **Atomic Unit**: Entire sheet is hashed (not individual tables)
+- **Deterministic Hashing**: SHA-256 hash of raw sheet data before any processing
+- **Incremental Rebuilds**: Only changed sheets are rebuilt, not the entire database
+- **Perfect Synchronization**: DuckDB and ChromaDB always stay in sync
+- **Automatic Migration**: Old table-level format automatically migrated to new sheet-level format
+- **Source ID Tracking**: Each table tagged with `spreadsheet_id#sheet_name` for atomic cleanup
+
+**How it works:**
+1. On each query, compute hash of raw sheet data
+2. Compare with stored hash in registry
+3. If changed: Delete all tables/embeddings from that sheet, rebuild completely
+4. If unchanged: Use cached data (no rebuild needed)
+5. Guarantees no partial updates or data drift
+
+### Voice & Multilingual Features
+- **Date Format**: Correctly interprets DD/MM/YYYY format (1/11/2025 = November 1, 2025)
+- **Sheet Priority**: Respects user-specified sheet names in queries
+- **Source Attribution**: Always mentions which sheet the data came from
+- **Voice-Friendly**: Responses optimized for text-to-speech readout
+- **Natural Language**: Conversational responses that sound natural when spoken
 
 ---
 

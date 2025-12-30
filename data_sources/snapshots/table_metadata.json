@@ -4,139 +4,139 @@
     "sheet_name": "Month",
     "table_index": 1,
     "row_count": 363,
-    "created_at": "2025-12-30T13:06:52.650293"
+    "created_at": "2025-12-30T14:13:06.734996"
   },
   "pincode_sales_Table1": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#pincode sales",
     "sheet_name": "pincode sales",
     "table_index": 1,
     "row_count": 630,
-    "created_at": "2025-12-30T13:07:54.134440"
+    "created_at": "2025-12-30T14:13:06.741860"
   },
   "Freshggies_Shopify_Sales_on_Fulfiilments_December": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
     "sheet_name": "sales",
     "table_index": 1,
     "row_count": 31,
-    "created_at": "2025-12-30T13:09:23.896322"
+    "created_at": "2025-12-30T14:13:06.744999"
   },
   "Freshggies_Shopify_Sales_December_Till_Today_Morning_10_00am": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
     "sheet_name": "sales",
     "table_index": 2,
     "row_count": 31,
-    "created_at": "2025-12-30T13:09:23.899704"
+    "created_at": "2025-12-30T14:13:06.749060"
   },
   "Calculation_of_Run_Rate_Sales": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
     "sheet_name": "sales",
     "table_index": 3,
     "row_count": 6,
-    "created_at": "2025-12-30T13:09:23.903001"
+    "created_at": "2025-12-30T14:13:06.753344"
   },
   "Calculation_of_Sales": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
     "sheet_name": "sales",
     "table_index": 4,
     "row_count": 4,
-    "created_at": "2025-12-30T13:09:23.908098"
+    "created_at": "2025-12-30T14:13:06.755855"
   },
   "Freshggies_Shopify_Sales_on_Fulfiilments_November": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
     "sheet_name": "sales",
     "table_index": 5,
     "row_count": 31,
-    "created_at": "2025-12-30T13:09:23.912212"
+    "created_at": "2025-12-30T14:13:06.760608"
   },
   "Calculation_of_Run_Rate_Sales_November_25": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
     "sheet_name": "sales",
     "table_index": 6,
     "row_count": 6,
-    "created_at": "2025-12-30T13:09:23.916307"
+    "created_at": "2025-12-30T14:13:06.764281"
   },
   "Calculation_of_Sales_November_25": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
     "sheet_name": "sales",
     "table_index": 7,
     "row_count": 4,
-    "created_at": "2025-12-30T13:09:23.919736"
+    "created_at": "2025-12-30T14:13:06.768971"
   },
   "Freshggies_Shopify_Sales_on_Fulfiilments_October": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
     "sheet_name": "sales",
     "table_index": 8,
     "row_count": 31,
-    "created_at": "2025-12-30T13:09:23.923482"
+    "created_at": "2025-12-30T14:13:06.773620"
   },
   "Calculation_of_Run_Rate_Sales_October_25": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
     "sheet_name": "sales",
     "table_index": 9,
     "row_count": 6,
-    "created_at": "2025-12-30T13:09:23.926769"
+    "created_at": "2025-12-30T14:13:06.776248"
   },
   "Calculation_of_Sales_October_25": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
     "sheet_name": "sales",
     "table_index": 10,
     "row_count": 4,
-    "created_at": "2025-12-30T13:09:23.929926"
+    "created_at": "2025-12-30T14:13:06.780272"
   },
   "Freshggies_Sales_September": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
     "sheet_name": "sales",
     "table_index": 11,
     "row_count": 30,
-    "created_at": "2025-12-30T13:09:23.933970"
+    "created_at": "2025-12-30T14:13:06.782891"
   },
   "Calculation_of_Run_Rate_Sales_September_25": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
     "sheet_name": "sales",
     "table_index": 12,
     "row_count": 6,
-    "created_at": "2025-12-30T13:09:23.937654"
+    "created_at": "2025-12-30T14:13:06.787626"
   },
   "Calculation_of_Sales_September_25": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
     "sheet_name": "sales",
     "table_index": 13,
     "row_count": 4,
-    "created_at": "2025-12-30T13:09:23.940974"
+    "created_at": "2025-12-30T14:13:06.791262"
   },
   "Freshggies_Sales_August": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
     "sheet_name": "sales",
     "table_index": 14,
     "row_count": 31,
-    "created_at": "2025-12-30T13:09:23.945605"
+    "created_at": "2025-12-30T14:13:06.794319"
   },
   "Calculation_of_Run_Rate_Sales_August_25": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
     "sheet_name": "sales",
     "table_index": 15,
     "row_count": 6,
-    "created_at": "2025-12-30T13:09:23.949206"
+    "created_at": "2025-12-30T14:13:06.798708"
   },
   "Calculation_of_Sales_August_25": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales",
     "sheet_name": "sales",
     "table_index": 16,
     "row_count": 4,
-    "created_at": "2025-12-30T13:09:23.953382"
+    "created_at": "2025-12-30T14:13:06.803339"
   },
   "Freshggies_Shopify_Sales_on_Fulfiilments_October_by_Category": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales by cat",
     "sheet_name": "sales by cat",
     "table_index": 1,
     "row_count": 15,
-    "created_at": "2025-12-30T13:06:52.726424"
+    "created_at": "2025-12-30T14:13:06.812043"
   },
   "Freshggies_Shopify_Sales_on_Fulfiilments_November_By_Category": {
     "source_id": "1mRcD-apkPVAUU_HPZ8KBzMxdct7zdKMp2qPoivSBpl4#sales by cat",
     "sheet_name": "sales by cat",
     "table_index": 2,
     "row_count": 15,
-    "created_at": "2025-12-30T13:06:52.733761"
+    "created_at": "2025-12-30T14:13:06.819097"
   }
 }

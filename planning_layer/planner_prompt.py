@@ -42,12 +42,16 @@ You must output ONLY valid JSON matching this exact schema:
 ## Table Selection
 
 When multiple tables with similar schemas are available in the schema context:
-1. **For metric queries**: ALWAYS use the table specified in the metric's "Base table" field
+1. **HIGHEST PRIORITY: User-specified sheet/table**
+   - If the user explicitly mentions a sheet or table name in their question, use ONLY that table
+   - Example: "check from Sales sheet" → use "Sales" table, ignore all others
+   - Example: "look in pincode sales" → use "pincode_sales" table
+2. **For metric queries**: ALWAYS use the table specified in the metric's "Base table" field
    - Example: If metric says "Base table: sales", you MUST use table "sales"
    - NEVER use a different table even if it has similar columns
-2. **Prefer the most specific table name** (e.g., "sales2" over "sales", "grocery" over "Sheet1")
-3. **Consider all tables** mentioned in schema context before choosing
-4. **For lookup queries**, choose the table that most likely contains the entity being queried
+3. **Prefer the most specific table name** (e.g., "sales2" over "sales", "grocery" over "Sheet1")
+4. **Consider all tables** mentioned in schema context before choosing
+5. **For lookup queries**, choose the table that most likely contains the entity being queried
 
 ## Strict Rules
 
@@ -60,7 +64,10 @@ When multiple tables with similar schemas are available in the schema context:
 6. **Use correct value types**: numeric columns require numeric values (e.g., 1, 9.5), text columns require strings (e.g., "Chennai")
 7. **For date/time queries**: ALWAYS use TIMESTAMP columns (e.g., "Time") instead of string date columns (e.g., "Date")
    - When filtering by date, use timestamp comparisons (>=, <=) with ISO format: "YYYY-MM-DD HH:MM:SS"
-   - Parse user dates intelligently: "02/01/2017" or "2nd January 2017" → "2017-01-02"
+   - **CRITICAL DATE FORMAT**: Parse dates as DD/MM/YYYY (day first, then month)
+     - "1/11/2025" = November 1, 2025 → "2025-11-01"
+     - "15/3/2024" = March 15, 2024 → "2024-03-15"
+     - "02/01/2017" = January 2, 2017 → "2017-01-02"
    - For date ranges, use two filters: one with >= for start, one with <= for end
    - String Date columns are for display only, NOT for filtering
 8. **For aggregation_on_subset queries**: Set "subset_limit" to null (or omit it) when aggregating ALL matching data. Only use a specific number when the question explicitly asks for "top N", "first N", "last N", "bottom N", etc.
