@@ -1,6 +1,4 @@
 
-.env
-
 
 # Python
 __pycache__/
@@ -8,9 +6,6 @@ __pycache__/
 *$py.class
 *.so
 .Python
-env/
-venv/
-ENV/
 build/
 develop-eggs/
 dist/
@@ -37,10 +32,6 @@ wheels/
 # Database files
 *.duckdb
 *.duckdb.wal
-
-# Credentials - exclude JSON files but keep the folder
-credentials/*.json
-**/service_account.json
 
 
 # ChromaDB
