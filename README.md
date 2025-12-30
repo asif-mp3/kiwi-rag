@@ -1,59 +1,44 @@
-# 🥝 Kiwi-RAG Analytics Chatbot
+# 🥝 Kiwi-RAG: AI-Powered Google Sheets Analytics
 
-**AI-Powered Google Sheets Analytics with Multilingual Voice Support**
+**Natural Language Query Interface for Google Sheets with Voice Support**
 
-A production-ready RAG (Retrieval-Augmented Generation) chatbot that enables natural language querying of Google Sheets data with **universal multilingual support** (works in **any language**) and voice input/output capabilities.
-
----
-
-## 📋 Table of Contents
-
-- [Features](#-features)
-- [Architecture](#-architecture)
-- [Project Structure](#-project-structure)
-- [Installation](#-installation)
-- [Configuration](#-configuration)
-- [Usage](#-usage)
-- [Workflow](#-workflow)
-- [API Reference](#-api-reference)
-- [Troubleshooting](#-troubleshooting)
-- [Contributing](#-contributing)
+A production-ready RAG (Retrieval-Augmented Generation) system that enables natural language querying of Google Sheets data with multilingual voice support, intelligent change detection, and complex spreadsheet handling.
 
 ---
 
 ## ✨ Features
 
 ### Core Capabilities
-- 🔍 **Natural Language Queries**: Ask questions in **any language** (English, Tamil, Hindi, Spanish, etc.)
-- 📊 **Google Sheets Integration**: Direct connection to Google Sheets with automatic change detection
-- 🎤 **Voice Input**: Transcribe questions using ElevenLabs Scribe v1 (supports multiple languages)
-- 🔊 **Voice Output**: Text-to-speech in the same language as your question
-- 🌐 **Universal Multilingual**: Works with **any language** - not limited to English or Tamil
+- 🔍 **Natural Language Queries**: Ask questions in any language (English, Tamil, Hindi, Spanish, etc.)
+- 📊 **Google Sheets Integration**: Direct connection via service account with automatic change detection
+- 🎤 **Voice Input**: Speech-to-text using ElevenLabs Scribe v1
+- 🔊 **Voice Output**: Text-to-speech with ElevenLabs multilingual v2 (fallback to gTTS)
+- 🌐 **Universal Multilingual**: Works with any language - not limited to English or Tamil
 - 💬 **Conversation History**: Save and manage multiple chat sessions
-- 🔄 **Smart Change Detection**: Hash-based detection reloads data only when sheets actually change
-- 🧠 **Schema Intelligence**: Semantic search over table schemas using vector embeddings
+- 🔐 **Authentication**: Optional Supabase-based user authentication
 
 ### Query Types Supported
-- **Lookup**: Find specific rows by criteria
-- **Aggregation**: SUM, AVG, MIN, MAX, COUNT
-- **Filtering**: Filter data by conditions
-- **Ranking**: Order and limit results
-- **Extrema**: Find minimum/maximum values
-- **Aggregation on Subset**: Aggregate filtered data
+- **Lookup**: Find specific rows by criteria with LIKE operator for flexible text matching
+- **Aggregation**: SUM, AVG, MIN, MAX, COUNT with metric registry
+- **Filter**: Filter data by multiple conditions
+- **Rank**: Order and limit results
+- **Extrema Lookup**: Find minimum/maximum values
+- **Aggregation on Subset**: Aggregate filtered or ranked data
 
 ### Technical Features
 - ⚡ **Fast Analytics**: DuckDB for in-memory SQL execution
 - 🎯 **RAG Pipeline**: ChromaDB + Hugging Face embeddings for semantic schema search
 - 🤖 **AI Planning**: Gemini 2.5 Pro for intelligent query understanding
-- 🔧 **Type Inference**: Automatic data type detection and normalization
-- 📅 **Date Handling**: Smart date/time column combination with DD/MM/YYYY format support
-- 🔤 **Fuzzy Matching**: Handles name spelling variations
+- 🔧 **Type Inference**: Automatic data type detection and conversion
+- 📅 **Date Handling**: Smart date/time column combination with DD/MM/YYYY format detection
+- 🔤 **Fuzzy Matching**: Handles name spelling variations (e.g., "ksh" ↔ "kch")
 - 🔐 **Sheet-Level Change Detection**: Hash-based atomic rebuilds for data consistency
-- 📝 **Multi-level Header Support**: Handles complex spreadsheet structures
+- 📝 **Multi-Table Detection**: Handles complex spreadsheets with multiple tables per sheet
 - 🎙️ **Voice-Optimized Output**: Natural language responses designed for voice assistants
 - 📊 **Sheet Source Attribution**: Always mentions which sheet data came from
 
-### Change Detection System
+### Sheet-Level Change Detection System
+
 The system uses **sheet-level hash-based change detection** to ensure data consistency:
 
 - **Atomic Unit**: Entire sheet is hashed (not individual tables)
@@ -65,204 +50,164 @@ The system uses **sheet-level hash-based change detection** to ensure data consi
 
 **How it works:**
 1. On each query, compute hash of raw sheet data
-2. Compare with stored hash in registry
+2. Compare with stored hash in registry (`data_sources/snapshots/sheet_state.json`)
 3. If changed: Delete all tables/embeddings from that sheet, rebuild completely
 4. If unchanged: Use cached data (no rebuild needed)
 5. Guarantees no partial updates or data drift
 
-### Voice & Multilingual Features
-- **Date Format**: Correctly interprets DD/MM/YYYY format (1/11/2025 = November 1, 2025)
-- **Sheet Priority**: Respects user-specified sheet names in queries
-- **Source Attribution**: Always mentions which sheet the data came from
-- **Voice-Friendly**: Responses optimized for text-to-speech readout
-- **Natural Language**: Conversational responses that sound natural when spoken
+### Complex Spreadsheet Handling
+
+The **table detector** module handles complex spreadsheets:
+
+- **Multi-Table Detection**: Automatically detects multiple tables within a single sheet
+- **Multi-Level Headers**: Normalizes complex multi-row headers
+- **Wide Format Transformation**: Converts wide-format data to normalized tables
+- **Table Cleaning**: Removes empty rows/columns and normalizes headers
+- **Custom Detection**: Configurable table detection rules
 
 ---
 
 ## 🏗️ Architecture
 
-### High-Level Architecture
+### High-Level Data Flow
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                         USER INTERFACE                          │
-│                    (Streamlit Web App)                          │
-└────────────┬────────────────────────────────────┬───────────────┘
-             │                                    │
-             ▼                                    ▼
-    ┌────────────────┐                  ┌────────────────┐
-    │  Voice Input   │                  │  Text Input    │
-    │  (ElevenLabs)  │                  │  (Chat Input)  │
-    └────────┬───────┘                  └────────┬───────┘
-             │                                    │
-             └────────────────┬───────────────────┘
-                              ▼
-                    ┌──────────────────┐
-                    │  Query Processor │
-                    └────────┬─────────┘
-                             │
-         ┌───────────────────┼───────────────────┐
-         ▼                   ▼                   ▼
-┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐
-│ Schema Search   │ │ Query Planning  │ │ Data Loading    │
-│ (ChromaDB +     │ │ (Gemini AI)     │ │ (Google Sheets) │
-│  HuggingFace)   │ │                 │ │                 │
-└────────┬────────┘ └────────┬────────┘ └────────┬────────┘
-         │                   │                   │
-         └───────────────────┼───────────────────┘
-                             ▼
-                    ┌──────────────────┐
-                    │  SQL Execution   │
-                    │    (DuckDB)      │
-                    └────────┬─────────┘
-                             ▼
-                    ┌──────────────────┐
-                    │  Explanation     │
-                    │  (Gemini AI)     │
-                    └────────┬─────────┘
-                             ▼
-         ┌───────────────────┼───────────────────┐
-         ▼                   ▼                   ▼
-┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐
-│  Text Response  │ │  Voice Output   │ │  Metadata       │
-│                 │ │  (ElevenLabs)   │ │  (Plan, Data)   │
-└─────────────────┘ └─────────────────┘ └─────────────────┘
+User Input (Text/Voice)
+         │
+         ▼
+┌────────────────────┐
+│  Streamlit App     │
+│  (UI Layer)        │
+└────────┬───────────┘
+         │
+         ▼
+┌────────────────────┐
+│  Change Detection  │ ← Checks sheet hashes
+│  (Incremental)     │
+└────────┬───────────┘
+         │
+         ▼
+┌────────────────────┐
+│  Schema Retrieval  │ ← ChromaDB + HuggingFace
+│  (RAG)             │   Semantic search
+└────────┬───────────┘
+         │
+         ▼
+┌────────────────────┐
+│  Query Planning    │ ← Gemini 2.5 Pro
+│  (LLM)             │   Generates JSON plan
+└────────┬───────────┘
+         │
+         ▼
+┌────────────────────┐
+│  Plan Validation   │ ← Schema validation
+│                    │   Type checking
+└────────┬───────────┘
+         │
+         ▼
+┌────────────────────┐
+│  SQL Compilation   │ ← Plan → SQL
+│                    │   Safe templating
+└────────┬───────────┘
+         │
+         ▼
+┌────────────────────┐
+│  Execution         │ ← DuckDB
+│                    │   In-memory analytics
+└────────┬───────────┘
+         │
+         ▼
+┌────────────────────┐
+│  Explanation       │ ← Gemini 2.5 Pro
+│  (Natural Lang)    │   Results → Text
+└────────┬───────────┘
+         │
+         ▼
+┌────────────────────┐
+│  Voice Output      │ ← ElevenLabs TTS
+│  (Optional)        │   Multilingual
+└────────────────────┘
 ```
 
 ### Component Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                     PRESENTATION LAYER                          │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │  app/streamlit_app.py                                     │  │
-│  │  - UI Components                                          │  │
-│  │  - Session Management                                     │  │
-│  │  - Conversation History                                   │  │
-│  └──────────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                     ORCHESTRATION LAYER                         │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │  rag_pipeline/pipeline.py                                 │  │
-│  │  - Coordinates all components                             │  │
-│  │  - Manages data flow                                      │  │
-│  │  - Handles errors and fallbacks                           │  │
-│  └──────────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-        ┌─────────────────────┼─────────────────────┐
-        ▼                     ▼                     ▼
-┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
-│  SCHEMA LAYER    │ │  PLANNING LAYER  │ │  DATA LAYER      │
-│                  │ │                  │ │                  │
-│ schema_          │ │ planning_layer/  │ │ data_sources/    │
-│ intelligence/    │ │                  │ │                  │
-│                  │ │ - planner_       │ │ - gsheet/        │
-│ - chromadb_      │ │   client.py      │ │   connector.py   │
-│   client.py      │ │ - planning_      │ │                  │
-│ - schema_        │ │   prompt.py      │ │ - duckdb_        │
-│   extractor.py   │ │                  │ │   loader.py      │
-│                  │ │ Uses Gemini AI   │ │                  │
-│ Uses ChromaDB +  │ │ to understand    │ │ Loads data from  │
-│ HuggingFace      │ │ queries and      │ │ Google Sheets    │
-│ embeddings for   │ │ generate plans   │ │ into DuckDB      │
-│ semantic search  │ │                  │ │                  │
-└──────────────────┘ └──────────────────┘ └──────────────────┘
-        │                     │                     │
-        └─────────────────────┼─────────────────────┘
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                     EXECUTION LAYER                             │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │  execution_layer/                                         │  │
-│  │  - sql_compiler.py    : Converts plans to SQL             │  │
-│  │  - executor.py        : Executes SQL on DuckDB            │  │
-│  └──────────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                     EXPLANATION LAYER                           │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │  explanation_layer/                                       │  │
-│  │  - explainer_client.py : Generates natural language       │  │
-│  │  - explanation_prompt.py : Prompt templates               │  │
-│  │                                                            │  │
-│  │  Uses Gemini AI to convert results to Tamil/English       │  │
-│  └──────────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                     VOICE LAYER                                 │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │  utils/voice_utils.py                                     │  │
-│  │  - transcribe_audio()  : Speech-to-text (ElevenLabs)      │  │
-│  │  - text_to_speech()    : Text-to-speech (ElevenLabs)      │  │
-│  │                                                            │  │
-│  │  Fallback to gTTS if ElevenLabs quota exceeded            │  │
-│  └──────────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 📁 Project Structure
-
-```
-Google-Sheet-Chatbot/
+kiwi-rag/
 │
 ├── app/
-│   └── streamlit_app.py          # Main Streamlit application
+│   ├── streamlit_app.py          # Main UI with voice features
+│   ├── session_context.py        # Session state management
+│   └── ui_components.py          # Reusable UI components
+│
+├── data_sources/
+│   ├── gsheet/
+│   │   ├── connector.py          # Google Sheets API integration
+│   │   ├── change_detector.py    # Sheet-level hash-based change detection
+│   │   ├── sheet_hasher.py       # SHA-256 hashing of raw sheet data
+│   │   ├── snapshot_loader.py    # DuckDB snapshot management
+│   │   ├── table_detection.py    # Multi-table detection within sheets
+│   │   └── wide_format_transformer.py  # Wide → normalized format
+│   ├── snapshots/
+│   │   ├── latest.duckdb         # DuckDB snapshot
+│   │   ├── sheet_state.json      # Sheet hash registry
+│   │   └── table_metadata.json   # Table metadata cache
+│   └── conversations/            # Saved chat sessions (JSON)
+│
+├── schema_intelligence/
+│   ├── chromadb_client.py        # Vector store for schema embeddings
+│   ├── schema_extractor.py       # Extract schema metadata from tables
+│   ├── embedding_builder.py      # Build embeddings for schemas
+│   └── hybrid_retriever.py       # Semantic schema search
+│
+├── planning_layer/
+│   ├── planner_client.py         # Gemini AI query planner
+│   ├── planner_prompt.py         # System prompt for planning
+│   ├── plan_schema.json          # JSON schema for query plans
+│   └── rule_based_planner.py     # Fallback rule-based planner
+│
+├── validation_layer/
+│   ├── plan_validator.py         # Validate query plans against schema
+│   ├── join_rules.py             # Join validation rules
+│   └── rejection_handler.py      # Handle invalid plans
+│
+├── execution_layer/
+│   ├── sql_compiler.py           # Convert plans to SQL (safe templating)
+│   └── executor.py               # Execute SQL on DuckDB
+│
+├── explanation_layer/
+│   ├── explainer_client.py       # Gemini AI for natural language explanations
+│   └── explanation_prompt.py     # System prompt for explanations
 │
 ├── analytics_engine/
-│   └── metric_registry.py        # Metric definitions
+│   └── metric_registry.py        # Predefined metrics (SUM, AVG, etc.)
+│
+├── table detector/
+│   ├── table_detector.py         # Detect multiple tables in sheets
+│   ├── custom_detector.py        # Custom detection rules
+│   ├── table_cleaner.py          # Clean and normalize tables
+│   ├── extract_tables.py         # Extract tables from sheets
+│   └── sheet_ingestion.py        # Ingest complex spreadsheets
+│
+├── utils/
+│   ├── voice_utils.py            # ElevenLabs voice I/O
+│   ├── conversation_manager.py   # Save/load conversations
+│   ├── question_cache.py         # Cache query results (disabled by default)
+│   ├── context_resolver.py       # Context memory (disabled by default)
+│   ├── auth_integration.py       # Authentication integration
+│   └── supabase_auth.py          # Supabase authentication
 │
 ├── config/
 │   └── settings.yaml             # Configuration file
 │
-├── data_sources/
-│   ├── duckdb_loader.py          # DuckDB data loading
-│   └── gsheet/
-│       └── connector.py          # Google Sheets connector
+├── credentials/
+│   └── service_account.json      # Google Sheets service account
 │
-├── execution_layer/
-│   ├── executor.py               # SQL execution engine
-│   └── sql_compiler.py           # Query plan to SQL compiler
+├── schema_store/
+│   └── chroma.sqlite3            # ChromaDB storage
 │
-├── explanation_layer/
-│   ├── explainer_client.py       # Natural language explanation
-│   └── explanation_prompt.py     # Explanation prompts
-│
-├── planning_layer/
-│   ├── planner_client.py         # Query planning with Gemini
-│   └── planning_prompt.py        # Planning prompts
-│
-├── rag_pipeline/
-│   ├── pipeline.py               # Main RAG orchestration
-│   └── question_cache.py         # Query caching
-│
-├── schema_intelligence/
-│   ├── chromadb_client.py        # Vector store for schemas
-│   └── schema_extractor.py       # Extract schema metadata
-│
-├── utils/
-│   ├── conversation_manager.py   # Conversation persistence
-│   └── voice_utils.py            # Voice input/output
-│
-├── data/
-│   └── duckdb/                   # DuckDB database files
-│
-├── conversations/                # Saved conversations (JSON)
-│
-├── chroma_db/                    # ChromaDB vector store
-│
-├── .env                          # Environment variables
+├── .env                          # Environment variables (API keys)
 ├── requirements.txt              # Python dependencies
-└── README.md                     # This file
+└── run_query.py                  # CLI entry point
 ```
 
 ---
@@ -275,12 +220,13 @@ Google-Sheet-Chatbot/
 - Google Cloud Project with Sheets API enabled
 - Gemini API key
 - ElevenLabs API key (optional, for voice features)
+- Supabase project (optional, for authentication)
 
 ### Step 1: Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/Google-Sheet-Chatbot.git
-cd Google-Sheet-Chatbot
+git clone https://github.com/asif-mp3/kiwi-rag.git
+cd kiwi-rag
 ```
 
 ### Step 2: Install Dependencies
@@ -295,7 +241,9 @@ Create a `.env` file in the root directory:
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key_here
-ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
+ELEVENLABS_API_KEY=your_elevenlabs_api_key_here  # Optional
+SUPABASE_URL=your_supabase_url  # Optional
+SUPABASE_KEY=your_supabase_key  # Optional
 ```
 
 ### Step 4: Configure Google Sheets
@@ -304,7 +252,7 @@ ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
 2. Enable Google Sheets API
 3. Create a Service Account
 4. Download credentials JSON
-5. Save as `config/google_credentials.json`
+5. Save as `credentials/service_account.json`
 
 ### Step 5: Update Configuration
 
@@ -312,42 +260,21 @@ Edit `config/settings.yaml`:
 
 ```yaml
 google_sheets:
-  credentials_path: "config/google_credentials.json"
-  spreadsheet_id: "your_spreadsheet_id_here"
+  credentials_path: "credentials/service_account.json"
+  spreadsheet_id: ""  # Set via UI or here
 
 llm:
-  model: "gemini-2.0-flash-exp"
+  model: "gemini-2.5-pro"
   temperature: 0.0
   api_key_env: "GEMINI_API_KEY"
-```
+  max_retries: 3
 
----
+schema_intelligence:
+  embedding_model: "text-embedding-3-large"
+  top_k: 5
 
-## ⚙️ Configuration
-
-### settings.yaml Structure
-
-```yaml
-# LLM Configuration
-llm:
-  model: "gemini-2.0-flash-exp"
-  temperature: 0.0
-  api_key_env: "GEMINI_API_KEY"
-
-# Google Sheets Configuration
-google_sheets:
-  credentials_path: "config/google_credentials.json"
-  spreadsheet_id: ""  # Set via UI
-
-# Vector Store Configuration
-vector_store:
-  persist_directory: "chroma_db"
-  collection_name: "schema_embeddings"
-  embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
-
-# DuckDB Configuration
 duckdb:
-  database_path: "data/duckdb/analytics.db"
+  snapshot_path: "data_sources/snapshots/latest.duckdb"
 ```
 
 ---
@@ -365,250 +292,227 @@ The app will open at `http://localhost:8501`
 ### Basic Workflow
 
 1. **Connect Data Source**
-   - Paste your Google Sheets URL
+   - Paste your Google Sheets URL in the input field
    - Click "🔄 Load Data"
+   - System automatically detects tables and builds schema
 
 2. **Ask Questions**
-   - Type: "What is the average salary?"
-   - Voice: Click microphone and speak
-   - Tamil: "மீனாட்சி எவ்ளோ சம்பளம் வாங்குறா?"
+   - **Text**: Type your question in the chat input
+   - **Voice**: Click the microphone icon and speak
+   - **Any Language**: Ask in English, Tamil, Hindi, Spanish, etc.
 
 3. **Get Answers**
-   - Audio plays automatically
-   - Click "📝 View Text Answer" to see text
-   - Expand sections for query plan and data
+   - Audio plays automatically (if voice enabled)
+   - Click "📝 View Text Answer" to see text response
+   - Expand sections for query plan, data, and schema context
 
 ### Example Queries
 
 **English:**
-- "What is the total salary of all employees?"
-- "Show me employees earning more than 10000"
+- "What is the total sales in October?"
+- "Show me products with quantity greater than 10"
 - "Who has the highest salary?"
-- "What is the average salary in the Warehouse department?"
+- "What was the gross sales for Dairy and homemade on 6th October?"
 
 **Tamil:**
-- "மொத்த ஊழியர்கள் எத்தனை பேர்?"
+- "மொத்த விற்பனை எவ்வளவு?"
 - "மீனாட்சி எவ்ளோ சம்பளம் வாங்குறா?"
 - "அதிக சம்பளம் யாருக்கு?"
 
 **Hindi:**
-- "कुल कर्मचारी कितने हैं?"
+- "कुल बिक्री कितनी है?"
 - "सबसे ज्यादा वेतन किसका है?"
-
-**Spanish:**
-- "¿Cuál es el salario total de todos los empleados?"
-- "¿Quién tiene el salario más alto?"
 
 **Works in any language!** The AI understands and responds in the same language you use.
 
+### CLI Usage
+
+For command-line usage:
+
+```bash
+python run_query.py
+```
+
+Edit the question in `run_query.py` at the bottom:
+
+```python
+if __name__ == "__main__":
+    run("What was the average temperature on 02/01/2017?")
+```
+
 ---
 
-## 🔄 End-to-End Workflow
+## 🔄 Query Processing Workflow
 
-### 1. User Input Phase
+### 1. Change Detection Phase
 
-```
-User Question (Text/Voice)
-         │
-         ├─→ [Voice] → ElevenLabs Scribe v1 → Transcribed Text
-         │
-         └─→ [Text] → Direct Input
-                │
-                ▼
-         Question Cache Check
-                │
-         ┌──────┴──────┐
-         │             │
-    Cache Hit      Cache Miss
-         │             │
-    Return Result     Continue
+```python
+# Automatic on every query
+sheets_with_tables = fetch_sheets_with_tables()  # Computes hashes
+needs_refresh, full_reset, changed_sheets = needs_refresh(sheets_with_tables)
+
+if needs_refresh:
+    if full_reset:
+        # Spreadsheet ID changed or first run
+        # Clear ChromaDB + DuckDB, rebuild all
+    else:
+        # Incremental rebuild for changed sheets only
+        # Delete old tables/embeddings, rebuild changed sheets
 ```
 
-### 2. Schema Intelligence Phase
+### 2. Schema Retrieval Phase
 
-```
-Question + Available Tables
-         │
-         ▼
-Schema Vector Store (ChromaDB)
-         │
-         ├─→ Embed question using HuggingFace
-         ├─→ Semantic search for relevant tables
-         └─→ Return top 5 matching schemas
-                │
-                ▼
-         Schema Context
+```python
+# Semantic search over table schemas
+schema_context = retrieve_schema(question)
+# Returns top 5 relevant table schemas using ChromaDB + HuggingFace embeddings
 ```
 
 ### 3. Query Planning Phase
 
-```
-Question + Schema Context
-         │
-         ▼
-Gemini AI (Planning Layer)
-         │
-         ├─→ Understand user intent
-         ├─→ Identify query type
-         ├─→ Select table and columns
-         ├─→ Determine filters
-         └─→ Generate query plan (JSON)
-                │
-                ▼
-         Query Plan
-         {
-           "query_type": "lookup",
-           "table": "Employee List",
-           "select_columns": ["Employee Name", "salary"],
-           "filters": [...]
-         }
+```python
+# Gemini AI generates structured query plan
+plan = generate_plan(question, schema_context)
+# Returns JSON plan with query_type, table, filters, etc.
+
+# Example plan:
+{
+  "query_type": "lookup",
+  "table": "Sales_Table1",
+  "select_columns": ["Gross sales - 06/10/2025"],
+  "filters": [
+    {"column": "Sales by Cat", "operator": "LIKE", "value": "%Dairy and homemade%"}
+  ],
+  "limit": 1
+}
 ```
 
-### 4. Data Loading Phase
+### 4. Validation Phase
 
-```
-Google Sheets URL
-         │
-         ▼
-Google Sheets API
-         │
-         ├─→ Fetch all sheets
-         ├─→ Parse data
-         ├─→ Infer data types
-         ├─→ Clean column names
-         └─→ Combine Date+Time columns
-                │
-                ▼
-DuckDB In-Memory Database
-         │
-         └─→ Create tables for each sheet
+```python
+# Validate plan against actual schema
+validate_plan(plan)
+# Checks: table exists, columns exist, types match, operators valid
 ```
 
 ### 5. Execution Phase
 
-```
-Query Plan
-         │
-         ▼
-SQL Compiler
-         │
-         ├─→ Convert plan to SQL
-         ├─→ Handle fuzzy matching (name variations)
-         ├─→ Quote identifiers
-         └─→ Build WHERE/ORDER BY clauses
-                │
-                ▼
-         SQL Query
-                │
-                ▼
-DuckDB Executor
-         │
-         └─→ Execute SQL
-                │
-                ▼
-         Result DataFrame
+```python
+# Compile plan to SQL
+sql = compile_sql(plan)
+# Example: SELECT "Gross sales - 06/10/2025" FROM "Sales_Table1" 
+#          WHERE LOWER(CAST("Sales by Cat" AS VARCHAR)) LIKE LOWER('%Dairy and homemade%')
+#          LIMIT 1
+
+# Execute on DuckDB
+result = execute_plan(plan)
+# Returns pandas DataFrame
 ```
 
 ### 6. Explanation Phase
 
-```
-Result DataFrame + Original Question
-         │
-         ▼
-Language Detection
-         │
-         ├─→ Detect Tamil characters
-         └─→ Determine response language
-                │
-                ▼
-Gemini AI (Explanation Layer)
-         │
-         ├─→ Convert results to natural language
-         ├─→ Write numbers in Tamil words (for Tamil)
-         ├─→ Format numbers with commas (for English)
-         └─→ Generate concise explanation
-                │
-                ▼
-         Natural Language Response
+```python
+# Generate natural language explanation
+explanation = explain_results(result, query_plan=plan, original_question=question)
+# Gemini AI converts DataFrame to conversational response in same language as question
 ```
 
-### 7. Voice Output Phase
+### 7. Voice Output Phase (Optional)
 
-```
-Text Response
-         │
-         ▼
-Language Detection
-         │
-         ├─→ Tamil → Use Tamil TTS
-         └─→ English → Use English TTS
-                │
-                ▼
-ElevenLabs Multilingual v2
-         │
-         ├─→ Generate audio (streaming)
-         └─→ Fallback to gTTS if quota exceeded
-                │
-                ▼
-         Audio Bytes (MP3)
-                │
-                ▼
-Auto-play in Browser
-```
-
-### 8. Response Presentation
-
-```
-Assistant Message
-         │
-         ├─→ 🔊 Auto-play audio
-         ├─→ 📝 Text in collapsible expander
-         ├─→ 📋 Query plan (expandable)
-         ├─→ 📊 Data table (expandable)
-         └─→ 🗂️ Schema context (expandable)
+```python
+# Convert text to speech
+audio_bytes = text_to_speech(explanation)
+# ElevenLabs multilingual v2 with fallback to gTTS
+# Auto-plays in browser
 ```
 
 ---
 
-## 🔧 API Reference
+## 🔧 Key Features Explained
 
-### Core Functions
+### Flexible Text Matching with LIKE Operator
 
-#### `process_query(question: str) -> dict`
-Main entry point for query processing.
+The system uses `LIKE` operator with wildcards for text column filters instead of exact `=` matching:
 
-**Parameters:**
-- `question` (str): User's question in Tamil or English
-
-**Returns:**
 ```python
-{
-    'success': bool,
-    'explanation': str,
-    'plan': dict,
-    'data': DataFrame,
-    'schema_context': list,
-    'error': str  # if success=False
-}
+# User query: "What was the gross sales for Dairy and homemade?"
+
+# Generated filter (correct):
+{"column": "Sales by Cat", "operator": "LIKE", "value": "%Dairy and homemade%"}
+
+# Compiled SQL:
+WHERE LOWER(CAST("Sales by Cat" AS VARCHAR)) LIKE LOWER('%Dairy and homemade%')
 ```
 
-#### `transcribe_audio(audio_path: str) -> str`
-Transcribe audio file to text.
+This handles:
+- Partial matches
+- Case-insensitive matching
+- Variations in spacing
+- More robust than exact `=` matching
 
-**Parameters:**
-- `audio_path` (str): Path to audio file
+### Fuzzy Name Matching
 
-**Returns:**
-- Transcribed text (str)
+The SQL compiler includes fuzzy matching for name variations:
 
-#### `text_to_speech(text: str) -> bytes`
-Convert text to speech audio.
+```python
+# Handles common Tamil name spelling variations:
+# "Meenakshi" ↔ "Meenakchi"
+# "ksh" ↔ "kch" ↔ "kchi"
+# "sh" ↔ "ch"
 
-**Parameters:**
-- `text` (str): Text to convert (Tamil or English)
+# Generates multiple LIKE patterns:
+WHERE (
+  LOWER(CAST(name AS VARCHAR)) LIKE LOWER('%Meenakshi%') OR
+  LOWER(CAST(name AS VARCHAR)) LIKE LOWER('%Meenakchi%')
+)
+```
 
-**Returns:**
-- Audio bytes (MP3 format)
+### Date Format Detection
+
+Automatically detects DD/MM/YYYY vs MM/DD/YYYY format:
+
+```python
+# Looks for unambiguous dates (day > 12)
+# "15/03/2024" → Definitely DD/MM/YYYY (day=15)
+# "03/15/2024" → Definitely MM/DD/YYYY (day=15)
+# Defaults to DD/MM/YYYY if ambiguous
+```
+
+### Date+Time Column Combination
+
+Combines separate Date and Time columns into proper timestamps:
+
+```python
+# Before: Date="02/01/2017" (VARCHAR), Time="08:00:00" (TIME)
+# After:  Date="2017-01-02" (VARCHAR), Time="2017-01-02 08:00:00" (TIMESTAMP)
+
+# Enables time range queries:
+WHERE Time >= '2017-01-02 08:00:00' AND Time <= '2017-01-02 16:00:00'
+```
+
+### Multi-Table Detection
+
+Detects multiple tables within a single sheet:
+
+```python
+# Example: "Sales" sheet contains 16 tables
+# Each table gets unique name: Sales_Table1, Sales_Table2, ..., Sales_Table16
+# All tagged with source_id: "1mRcD...#Sales"
+# Enables atomic cleanup when sheet changes
+```
+
+---
+
+## 🔐 Authentication (Optional)
+
+The system supports optional Supabase authentication:
+
+1. Set up Supabase project
+2. Add `SUPABASE_URL` and `SUPABASE_KEY` to `.env`
+3. Authentication UI appears automatically
+4. Users can sign up, log in, and manage sessions
+
+To disable authentication, simply don't set Supabase environment variables.
 
 ---
 
@@ -617,43 +521,28 @@ Convert text to speech audio.
 ### Common Issues
 
 **1. "Column 'X' does not exist"**
-- **Cause**: Column name has trailing spaces
-- **Solution**: Data is auto-cleaned, reload your sheet
+- **Cause**: Column name mismatch or multi-level headers
+- **Solution**: System auto-detects and normalizes headers. Try reloading data.
 
 **2. "No data found"**
-- **Cause**: Name spelling mismatch
-- **Solution**: Use exact name from sheet or rely on fuzzy matching
+- **Cause**: Exact match failed (old behavior with `=` operator)
+- **Solution**: System now uses `LIKE` operator for text matching (fixed in latest version)
 
 **3. "Voice output failed"**
-- **Cause**: ElevenLabs quota exceeded
+- **Cause**: ElevenLabs quota exceeded or API key missing
 - **Solution**: System auto-falls back to gTTS (free)
 
 **4. "ChromaDB connection error"**
 - **Cause**: Corrupt vector store
-- **Solution**: Delete `chroma_db/` folder and restart
+- **Solution**: Delete `schema_store/` folder and restart
 
 **5. Slow initial load**
-- **Cause**: Vector store initialization
-- **Solution**: Normal, only happens once
+- **Cause**: Vector store initialization and embeddings generation
+- **Solution**: Normal, only happens once per spreadsheet
 
----
-
-## 🤝 Contributing
-
-### Development Setup
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run tests (if any)
-5. Submit a pull request
-
-### Code Style
-
-- Follow PEP 8
-- Use type hints
-- Add docstrings to functions
-- Comment complex logic
+**6. "Incremental rebuild failed"**
+- **Cause**: Sheet hash mismatch or corrupted registry
+- **Solution**: Delete `data_sources/snapshots/sheet_state.json` to force full rebuild
 
 ---
 
@@ -663,23 +552,117 @@ Convert text to speech audio.
 - **Voice Transcription**: 1-3 seconds
 - **Audio Generation**: 1-2 seconds
 - **Data Loading**: 3-10 seconds (depends on sheet size)
+- **Incremental Rebuild**: 1-3 seconds per changed sheet
+- **Full Rebuild**: 5-15 seconds (all sheets)
 - **Supported Data Size**: Up to 100K rows (tested)
 
 ---
 
 ## 🔐 Security Notes
 
-- API keys stored in `.env` (not committed)
-- Google credentials in separate JSON file
+- API keys stored in `.env` (not committed to git)
+- Google credentials in separate JSON file (not committed)
 - Read-only access to Google Sheets
-- No data persistence (except conversations)
-- All processing happens locally
+- Conversation data stored locally (JSON files)
+- All processing happens locally (except LLM API calls)
+- Optional Supabase authentication for multi-user deployments
 
 ---
 
-## 📝 License
+## 📝 Configuration Reference
 
-MIT License - See LICENSE file for details
+### settings.yaml
+
+```yaml
+# Google Sheets
+google_sheets:
+  credentials_path: "credentials/service_account.json"
+  spreadsheet_id: "your_spreadsheet_id"  # Set via UI or here
+
+# LLM (Gemini)
+llm:
+  model: "gemini-2.5-pro"
+  temperature: 0.0
+  api_key_env: "GEMINI_API_KEY"
+  max_retries: 3
+  provider: "gemini"
+
+# Schema Intelligence
+schema_intelligence:
+  embedding_model: "text-embedding-3-large"
+  top_k: 5
+
+# DuckDB
+duckdb:
+  snapshot_path: "data_sources/snapshots/latest.duckdb"
+
+# Project
+project:
+  name: "rag_gsheet_analytics"
+  environment: "local"
+```
+
+### .env
+
+```env
+# Required
+GEMINI_API_KEY=your_gemini_api_key
+
+# Optional (Voice)
+ELEVENLABS_API_KEY=your_elevenlabs_api_key
+
+# Optional (Authentication)
+SUPABASE_URL=your_supabase_url
+SUPABASE_KEY=your_supabase_key
+```
+
+---
+
+## 🧪 Testing
+
+### Manual Testing
+
+1. **Basic Query**: "What is the total sales?"
+2. **Filter Query**: "Show products with quantity > 10"
+3. **Lookup Query**: "What was the gross sales for Dairy and homemade?"
+4. **Date Query**: "What was the average temperature on 02/01/2017?"
+5. **Voice Query**: Click microphone and ask a question
+6. **Multilingual**: Ask in Tamil, Hindi, or any language
+
+### Change Detection Testing
+
+1. Modify a cell in Google Sheets
+2. Run a query in the app
+3. Verify "Incremental rebuild" message appears
+4. Verify only changed sheet is rebuilt
+
+---
+
+## 📦 Dependencies
+
+### Core
+- `google-generativeai>=0.3.0` - Gemini AI
+- `streamlit>=1.28.0` - Web UI
+- `duckdb>=0.9.0` - In-memory analytics
+- `chromadb>=0.4.0` - Vector store
+- `sentence-transformers>=2.2.0` - Embeddings
+
+### Google Sheets
+- `gspread>=5.0.0` - Google Sheets API
+- `google-auth>=2.0.0` - Authentication
+
+### Voice
+- `elevenlabs>=1.0.0` - Voice I/O
+- `gtts>=2.4.0` - Fallback TTS
+- `langdetect>=1.0.9` - Language detection
+
+### Authentication
+- `supabase>=2.0.0` - User authentication
+
+### Utilities
+- `pandas>=2.0.0` - Data processing
+- `pyyaml>=6.0` - Configuration
+- `python-dotenv>=1.0.0` - Environment variables
 
 ---
 
@@ -691,14 +674,15 @@ MIT License - See LICENSE file for details
 - **Hugging Face** - Embeddings
 - **DuckDB** - Fast analytics
 - **Streamlit** - Web framework
+- **Supabase** - Authentication
 
 ---
 
 ## 📞 Support
 
 For issues and questions:
-- GitHub Issues: [Create an issue](https://github.com/yourusername/Google-Sheet-Chatbot/issues)
-- Email: your.email@example.com
+- GitHub Issues: [Create an issue](https://github.com/asif-mp3/kiwi-rag/issues)
+- Repository: [github.com/asif-mp3/kiwi-rag](https://github.com/asif-mp3/kiwi-rag)
 
 ---
 
