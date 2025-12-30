@@ -62,7 +62,14 @@ When multiple tables with similar schemas are available in the schema context:
 4. Infer the correct query_type from the question
 5. Propose appropriate filters and groupings based on the question
 6. **Use correct value types**: numeric columns require numeric values (e.g., 1, 9.5), text columns require strings (e.g., "Chennai")
-7. **For date/time queries**: ALWAYS use TIMESTAMP columns (e.g., "Time") instead of string date columns (e.g., "Date")
+7. **Use correct operators for text matching**:
+   - **ALWAYS use LIKE operator with %wildcards% for TEXT/VARCHAR columns** when filtering by categories, names, descriptions, or any text values
+   - Format: {"column": "Category", "operator": "LIKE", "value": "%Dairy%"}
+   - Use = operator ONLY for:
+     - Exact numeric comparisons (e.g., quantity = 5)
+     - When the user explicitly asks for "exact match" or "equals exactly"
+   - **CRITICAL**: For text columns, LIKE with wildcards handles variations, partial matches, and is more robust than =
+8. **For date/time queries**: ALWAYS use TIMESTAMP columns (e.g., "Time") instead of string date columns (e.g., "Date")
    - When filtering by date, use timestamp comparisons (>=, <=) with ISO format: "YYYY-MM-DD HH:MM:SS"
    - **CRITICAL DATE FORMAT**: Parse dates as DD/MM/YYYY (day first, then month)
      - "1/11/2025" = November 1, 2025 → "2025-11-01"
@@ -70,7 +77,7 @@ When multiple tables with similar schemas are available in the schema context:
      - "02/01/2017" = January 2, 2017 → "2017-01-02"
    - For date ranges, use two filters: one with >= for start, one with <= for end
    - String Date columns are for display only, NOT for filtering
-8. **For aggregation_on_subset queries**: Set "subset_limit" to null (or omit it) when aggregating ALL matching data. Only use a specific number when the question explicitly asks for "top N", "first N", "last N", "bottom N", etc.
+9. **For aggregation_on_subset queries**: Set "subset_limit" to null (or omit it) when aggregating ALL matching data. Only use a specific number when the question explicitly asks for "top N", "first N", "last N", "bottom N", etc.
 
 ### YOU MUST NOT:
 1. Invent column names not in schema context
@@ -82,6 +89,7 @@ When multiple tables with similar schemas are available in the schema context:
 7. Include any text outside the JSON structure
 8. Use string values for numeric columns (e.g., use 1 not "1" for quantities)
 9. Filter by string Date columns when a TIMESTAMP column is available
+10. Use = operator for TEXT/VARCHAR columns (always use LIKE with wildcards instead)
 
 ## Examples
 
@@ -93,7 +101,7 @@ Output:
   "query_type": "metric",
   "table": "sales",
   "metrics": ["student_count"],
-  "filters": [{"column": "campus", "operator": "=", "value": "Chennai"}],
+  "filters": [{"column": "campus", "operator": "LIKE", "value": "%Chennai%"}],
   "group_by": []
 }
 
@@ -104,6 +112,17 @@ Output:
   "table": "sales",
   "select_columns": ["name", "cgpa"],
   "filters": [{"column": "name", "operator": "LIKE", "value": "%Ratshithaa Vijayaraj%"}],
+  "limit": 1
+}
+
+Question: "What was the gross sales for Dairy and homemade?"
+Schema context: Table "sales_by_category" with columns ["Sales by Cat", "Gross sales"]
+Output:
+{
+  "query_type": "lookup",
+  "table": "sales_by_category",
+  "select_columns": ["Gross sales"],
+  "filters": [{"column": "Sales by Cat", "operator": "LIKE", "value": "%Dairy and homemade%"}],
   "limit": 1
 }
 
