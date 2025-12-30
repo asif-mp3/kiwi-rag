@@ -7,6 +7,9 @@ from data_sources.gsheet.connector import fetch_sheets_with_tables
 from data_sources.gsheet.change_detector import needs_refresh
 from data_sources.gsheet.snapshot_loader import load_snapshot
 from schema_intelligence.chromadb_client import SchemaVectorStore # Moved import to top
+from utils.memory_detector import detect_memory_intent
+from utils.permanent_memory import update_memory
+from utils.greeting_detector import is_greeting, get_greeting_response
 
 def run(question: str):
     """
@@ -18,6 +21,34 @@ def run(question: str):
     - Performs targeted rebuilds for changed sheets only
     - Falls back to full reset if spreadsheet ID changed or first run
     """
+    
+    # STEP -1: Check for greetings FIRST
+    if is_greeting(question):
+        greeting_response = get_greeting_response(question)
+        print("\n" + "="*80)
+        print("ANSWER:")
+        print("="*80)
+        print(greeting_response)
+        print("="*80 + "\n")
+        return
+    
+    # STEP 0: Check for memory intent BEFORE any processing
+    memory_result = detect_memory_intent(question)
+    if memory_result and memory_result.get("has_memory_intent"):
+        # Extract memory instruction
+        category = memory_result["category"]
+        key = memory_result["key"]
+        value = memory_result["value"]
+        
+        # Store memory
+        success = update_memory(category, key, value)
+        
+        if success:
+            print(f"\n✓ Memory stored: {category}.{key} = {value}")
+            print("Got it. I'll remember that.\n")
+            return  # Exit early - memory storage is the only action needed
+        else:
+            print(f"\n⚠️  Failed to store memory")
     
     # STEP 1: Fetch sheets and detect changes
     # This computes raw sheet hashes before any processing

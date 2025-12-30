@@ -5,6 +5,7 @@ import google.generativeai as genai
 from pathlib import Path
 from explanation_layer.explanation_prompt import EXPLANATION_SYSTEM_PROMPT
 from dotenv import load_dotenv
+from utils.permanent_memory import format_memory_for_prompt
 
 # Load environment variables
 load_dotenv()
@@ -19,7 +20,7 @@ def load_config():
 
 
 def initialize_gemini_client(config):
-    """Initialize Gemini API client with configuration"""
+    """Initialize Gemini API client with configuration and memory injection"""
     api_key_env = config.get("api_key_env", "GEMINI_API_KEY")
     api_key = os.getenv(api_key_env)
     
@@ -37,10 +38,14 @@ def initialize_gemini_client(config):
         "temperature": temperature,
     }
     
+    # Load and inject permanent memory into system prompt
+    memory_constraints = format_memory_for_prompt()
+    system_prompt = EXPLANATION_SYSTEM_PROMPT + memory_constraints
+    
     model = genai.GenerativeModel(
         model_name=model_name,
         generation_config=generation_config,
-        system_instruction=EXPLANATION_SYSTEM_PROMPT
+        system_instruction=system_prompt
     )
     
     return model

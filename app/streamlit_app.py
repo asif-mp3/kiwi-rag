@@ -31,6 +31,9 @@ from utils.conversation_manager import ConversationManager
 from utils.question_cache import QuestionCache
 # from utils.context_resolver import ContextResolver  # DISABLED: Context memory feature removed
 from utils.auth_integration import setup_authentication, add_auth_sidebar
+from utils.memory_detector import detect_memory_intent
+from utils.permanent_memory import update_memory
+from utils.greeting_detector import is_greeting, get_greeting_response
 
 # Page configuration
 st.set_page_config(
@@ -268,6 +271,50 @@ def save_message(role: str, content: str, metadata: dict = None):
 def process_query(question: str):
     """Process a user query through the full RAG pipeline with context memory."""
     try:
+        # STEP -1: Check for greetings FIRST
+        if is_greeting(question):
+            greeting_response = get_greeting_response(question)
+            return {
+                'success': True,
+                'explanation': greeting_response,
+                'data': None,
+                'plan': None,
+                'schema_context': [],
+                'data_refreshed': False,
+                'from_cache': False,
+                'is_greeting': True
+            }
+        
+        # STEP 0: Check for memory intent BEFORE any processing
+        memory_result = detect_memory_intent(question)
+        if memory_result and memory_result.get("has_memory_intent"):
+            # Extract memory instruction
+            category = memory_result["category"]
+            key = memory_result["key"]
+            value = memory_result["value"]
+            
+            # Store memory
+            success = update_memory(category, key, value)
+            
+            if success:
+                confirmation = "Got it. I'll remember that."
+                return {
+                    'success': True,
+                    'explanation': confirmation,
+                    'data': None,
+                    'plan': None,
+                    'schema_context': [],
+                    'data_refreshed': False,
+                    'from_cache': False,
+                    'is_memory_storage': True
+                }
+            else:
+                return {
+                    'success': False,
+                    'error': "Failed to store memory",
+                    'from_cache': False
+                }
+        
         # DISABLED: Question cache causes similar questions to return wrong cached answers
         # Step 0: Check question cache for similar questions
         # cache_result = st.session_state.question_cache.find_similar(question)
